@@ -1,0 +1,17 @@
+test list2lexical.table.sparse
+
+Corriger le calcul de la fréquence théorique dans specificites.probabilites.
+ne pas utiliser une règle de trois, mais la fonction quantile
+
+
+Ajouter MI, log-Likelihood, Fisher comme alternative à hypergeo
+Ajouter option dans spécificité pour spécificier la méthode.
+
+Dans print.specificites : pouvoir trier par freq ou sous-freq (Sélectionner sur ce critère, ou seulement trier sur ce critère et pouvoir toujours sélectionner sur l'autre ?)
+À la rigueur il faut les deux :
+select.key=c("freq", "sousfreq", "score"), limit=x, from=y, to=z, sort.key=c("freq", "sousfreq", "score").
+
+Mettre plus de tests.
+Essayer d'en faire un package R publié...
+
+

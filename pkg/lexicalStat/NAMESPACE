@@ -1,0 +1,51 @@
+## Either
+import(Matrix)
+### or {for now sufficient}
+#importFrom(Matrix
+#    ,"sparseMatrix"
+#    ,"diag" # <- need (generic, with its methods!)
+#    )
+
+import(XML)
+
+# functions exported from file "R/main.R"
+export(compare.txts);
+
+# functions exported from file "R/ngram.R"
+export(ngram.parts, ngram, ngram.matrix.parts, ngram.matrix);
+
+# functions exported from file "R/corpus.R"
+export(list2lexical.table, list2lexical.table.sparse, .add.to.lexical.table);
+
+# functions exported from file "R/subcorpus.R"
+export(get.parts.with.token.fl, get.parts.with.token, get.parts.with.tokens);
+
+# functions exported from file "R/read.corpus.R"
+export(read.corpus.txt, read.corpus.txts);
+
+# functions exported from file "R/tokenize.R"
+export(tokenize, tokenize.treetagger, tokenize.simple);
+
+# functions exported from file "R/tactique.R"
+export(get.words.by.slices, remove.inner.part, flip.inner.outer.parts, get.words.by.slices.by.parts, get.sub.corpus.in.tactique, slice.mot.specificites);
+
+# functions exported from file "R/syntex.R"
+export(seq.apply);
+
+# functions exported from file "R/specificites.R"
+export(specificites, specificites.lexicon, specificites.probabilities, print.specificites, write.specificites, writeAsXML.specificites);
+
+# functions exported from file "R/conc.R"
+export(conc.tokens.by.part, conc, word.conc, text.conc, get.tokens.by.context.by.part);
+
+# functions exported from file "R/xml.R"
+export(element.content2list, xml.attr2lexical.table, elementcontent2list.sax, xml.attr2vector);
+
+# functions exported from file "R/sparse.matrix.R"
+export(readSparseMatrix, writeSparseMatrix);
+
+# functions exported from file "R/tokens.by.parts.R"
+export(print.tokens.by.parts, untokenize);
+
+# functions exported from file "R/treetagger.R"
+export(extract.field.in.treetagger.struct, remove.unknown.in.treetagger.struct, repair.unknown.in.treetagger.struct, get.treetagger.struct.in.xml.element, characters2treetagger.struct, extract.word.on.pos.in.treetagger.struct);
