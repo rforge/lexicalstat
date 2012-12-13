@@ -1,0 +1,56 @@
+
+R version 2.10.1 (2009-12-14)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R est un logiciel libre livré sans AUCUNE GARANTIE.
+Vous pouvez le redistribuer sous certaines conditions.
+Tapez 'license()' ou 'licence()' pour plus de détails.
+
+R est un projet collaboratif avec de nombreux contributeurs.
+Tapez 'contributors()' pour plus d'information et
+'citation()' pour la façon de le citer dans les publications.
+
+Tapez 'demo()' pour des démonstrations, 'help()' pour l'aide
+en ligne ou 'help.start()' pour obtenir l'aide au format HTML.
+Tapez 'q()' pour quitter R.
+
+> library(dicograph);
+Le chargement a nécessité le package : igraph
+Le chargement a nécessité le package : MASS
+Le chargement a nécessité le package : Matrix
+Le chargement a nécessité le package : lattice
+Le chargement a nécessité le package : XML
+> # checking that the output of specificites() remains the same...
+> data(robespierre); # loading the sample data set
+> specificites(robespierre);
+Printing specificites for 10 parts; threshold: 1.5 
+word                 |  specif. | sub freq | tot freq 
+    ---- Part: D1 ; 8395 tokens ----
+patrie               |    -4.24 |        6 |      153 
+    ---- Part: D2 ; 2558 tokens ----
+de                   |     2.69 |      165 |     3173 
+ennemi               |     1.68 |       13 |      165 
+others               |    -3.64 |     2347 |    57455 
+    ---- Part: D3 ; 3920 tokens ----
+    ---- Part: D4 ; 6903 tokens ----
+de                   |     1.65 |      392 |     3173 
+patrie               |    -2.09 |        8 |      153 
+peuple               |    -4.17 |       14 |      296 
+    ---- Part: D5 ; 7896 tokens ----
+peuple               |     2.11 |       53 |      296 
+    ---- Part: D6 ; 4555 tokens ----
+    ---- Part: D7 ; 10142 tokens ----
+patrie               |     1.60 |       35 |      153 
+ennemi               |    -2.06 |       16 |      165 
+republique           |    -2.20 |       21 |      207 
+    ---- Part: D8 ; 2063 tokens ----
+republique           |     1.97 |       14 |      207 
+    ---- Part: D9 ; 1084 tokens ----
+    ---- Part: D10 ; 13933 tokens ----
+others               |     2.44 |    13096 |    57455 
+de                   |    -2.21 |      662 |     3173 
+> 
+> proc.time()
+utilisateur     système      écoulé 
+      2.947       0.099       3.047 

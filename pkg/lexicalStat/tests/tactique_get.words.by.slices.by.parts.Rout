@@ -1,0 +1,108 @@
+
+R version 2.10.1 (2009-12-14)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R est un logiciel libre livré sans AUCUNE GARANTIE.
+Vous pouvez le redistribuer sous certaines conditions.
+Tapez 'license()' ou 'licence()' pour plus de détails.
+
+R est un projet collaboratif avec de nombreux contributeurs.
+Tapez 'contributors()' pour plus d'information et
+'citation()' pour la façon de le citer dans les publications.
+
+Tapez 'demo()' pour des démonstrations, 'help()' pour l'aide
+en ligne ou 'help.start()' pour obtenir l'aide au format HTML.
+Tapez 'q()' pour quitter R.
+
+[Sauvegarde de la session précédente restaurée]
+
+> library(textcorpus);
+Le chargement a nécessité le package : Matrix
+Le chargement a nécessité le package : lattice
+Le chargement a nécessité le package : XML
+> 
+> ##
+> ## Test 1
+> ##
+> 
+> l <- list("un possible ennui.", "un vrai emmerdement");
+> tokenized <- tokenize(as.character(l));
+> 
+> found <- get.words.by.slices.by.parts(tokenized, nslice=3, min=3);
+> print(found);
+[[1]]
+[[1]]$`1`
+[1] "un"
+
+[[1]]$`2`
+[1] "possible"
+
+[[1]]$`3`
+[1] "ennui"
+
+
+[[2]]
+[[2]]$`1`
+[1] "un"
+
+[[2]]$`2`
+[1] "vrai"
+
+[[2]]$`3`
+[1] "emmerdement"
+
+
+> 
+> expected <- list(
++     list(
++       "1"="un",
++       "2"="possible",
++       "3"="ennui"
++       ),
++     list(
++       "1"="un",
++       "2"="vrai",
++       "3"="emmerdement"
++       )
++     );
+> 
+> identical(found, expected);
+[1] TRUE
+> 
+> ##
+> ## Test 1 : applying "min" argument
+> ##
+> 
+> l <- list("un possible ennui un vrai emmerdement.", "un vrai emmerdement");
+> tokenized <- tokenize(as.character(l));
+> 
+> found <- get.words.by.slices.by.parts(tokenized, nslice=3, min=6);
+> print(found);
+[[1]]
+[[1]]$`1`
+[1] "un"       "possible"
+
+[[1]]$`2`
+[1] "ennui" "un"   
+
+[[1]]$`3`
+[1] "vrai"        "emmerdement"
+
+
+> 
+> expected <- list(
++     list(
++       "1"=c("un", "possible"),
++       "2"=c("ennui", "un"),
++       "3"=c("vrai", "emmerdement")
++       )
++     );
+> 
+> identical(found, expected);
+[1] TRUE
+> 
+> 
+> proc.time()
+utilisateur     système      écoulé 
+      2.751       0.100       2.934 

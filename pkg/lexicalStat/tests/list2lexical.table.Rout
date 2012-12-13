@@ -1,0 +1,47 @@
+
+R version 2.10.1 (2009-12-14)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R est un logiciel libre livré sans AUCUNE GARANTIE.
+Vous pouvez le redistribuer sous certaines conditions.
+Tapez 'license()' ou 'licence()' pour plus de détails.
+
+R est un projet collaboratif avec de nombreux contributeurs.
+Tapez 'contributors()' pour plus d'information et
+'citation()' pour la façon de le citer dans les publications.
+
+Tapez 'demo()' pour des démonstrations, 'help()' pour l'aide
+en ligne ou 'help.start()' pour obtenir l'aide au format HTML.
+Tapez 'q()' pour quitter R.
+
+[Sauvegarde de la session précédente restaurée]
+
+> library(textcorpus);
+Le chargement a nécessité le package : igraph
+Le chargement a nécessité le package : MASS
+Le chargement a nécessité le package : Matrix
+Le chargement a nécessité le package : lattice
+Le chargement a nécessité le package : XML
+> l <- list(
++ paste("A", 1:3, sep=""),
++ paste("B", 1:3, sep=""),
++ c(paste("A", 1:3, sep=""), "A1")
++ );
+> 
+> list2lexical.table(l);
+  A1 A2 A3 B1 B2 B3
+1  1  1  1  0  0  0
+2  0  0  0  1  1  1
+3  2  1  1  0  0  0
+> 
+> names(l) <- c("part1", "part2", "part3");
+> list2lexical.table(l);
+      A1 A2 A3 B1 B2 B3
+part1  1  1  1  0  0  0
+part2  0  0  0  1  1  1
+part3  2  1  1  0  0  0
+> 
+> proc.time()
+utilisateur     système      écoulé 
+      2.894       0.099       3.029 

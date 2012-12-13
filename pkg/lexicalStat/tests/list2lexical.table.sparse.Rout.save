@@ -1,0 +1,84 @@
+
+R version 2.10.1 (2009-12-14)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R est un logiciel libre livré sans AUCUNE GARANTIE.
+Vous pouvez le redistribuer sous certaines conditions.
+Tapez 'license()' ou 'licence()' pour plus de détails.
+
+R est un projet collaboratif avec de nombreux contributeurs.
+Tapez 'contributors()' pour plus d'information et
+'citation()' pour la façon de le citer dans les publications.
+
+Tapez 'demo()' pour des démonstrations, 'help()' pour l'aide
+en ligne ou 'help.start()' pour obtenir l'aide au format HTML.
+Tapez 'q()' pour quitter R.
+
+> library(textcorpus);
+Le chargement a nécessité le package : Matrix
+Le chargement a nécessité le package : lattice
+Le chargement a nécessité le package : XML
+> l <- list(
++ paste("A", 1:3, sep=""),
++ paste("B", 1:3, sep=""),
++ c(paste("A", 1:3, sep=""), "A1")
++ );
+> 
+> list2lexical.table.sparse(l);
+[1] "[list2lexical.table.sparse] checking argument..."
+[1] "[list2lexical.table.sparse] ...forms and tokens..."
+[1] "[list2lexical.table.sparse] ...tables and tables length..."
+[1] "[list2lexical.table.sparse] ...i..."
+[1] "[list2lexical.table.sparse] ...j..."
+[1] "[list2lexical.table.sparse] ...v..."
+[1] "[list2lexical.table.sparse] ...creating matrix..."
+[1] "[list2lexical.table.sparse] ...ok."
+3 x 6 sparse Matrix of class "dgTMatrix"
+     A1 A2 A3 B1 B2 B3
+[1,]  1  1  1  .  .  .
+[2,]  .  .  .  1  1  1
+[3,]  2  1  1  .  .  .
+> 
+> names(l) <- c("part1", "part2", "part3");
+> list2lexical.table.sparse(l);
+[1] "[list2lexical.table.sparse] checking argument..."
+[1] "[list2lexical.table.sparse] ...forms and tokens..."
+[1] "[list2lexical.table.sparse] ...tables and tables length..."
+[1] "[list2lexical.table.sparse] ...i..."
+[1] "[list2lexical.table.sparse] ...j..."
+[1] "[list2lexical.table.sparse] ...v..."
+[1] "[list2lexical.table.sparse] ...creating matrix..."
+[1] "[list2lexical.table.sparse] ...ok."
+3 x 6 sparse Matrix of class "dgTMatrix"
+      A1 A2 A3 B1 B2 B3
+part1  1  1  1  .  .  .
+part2  .  .  .  1  1  1
+part3  2  1  1  .  .  .
+> 
+> l2 <- list(
++     c("A", "B", "C"),
++     c("A", "A"),
++     c("A", "B", "D")
++     );
+> 
+> expected <- spMatrix(3, 4, c(1, 1, 1, 2, 3, 3, 3), c(1, 2, 3, 1, 1, 2, 4), c(1, 1, 1, 2, 1, 1, 1));
+> rownames(expected) <- NULL;
+> colnames(expected) <- c("A", "B", "C", "D")
+> 
+> found <- list2lexical.table.sparse(l2);
+[1] "[list2lexical.table.sparse] checking argument..."
+[1] "[list2lexical.table.sparse] ...forms and tokens..."
+[1] "[list2lexical.table.sparse] ...tables and tables length..."
+[1] "[list2lexical.table.sparse] ...i..."
+[1] "[list2lexical.table.sparse] ...j..."
+[1] "[list2lexical.table.sparse] ...v..."
+[1] "[list2lexical.table.sparse] ...creating matrix..."
+[1] "[list2lexical.table.sparse] ...ok."
+> 
+> identical(expected, found);
+[1] TRUE
+> 
+> proc.time()
+utilisateur     système      écoulé 
+      2.788       0.107       3.309 
