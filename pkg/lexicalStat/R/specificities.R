@@ -16,7 +16,6 @@ function(lexicaltable, types=NULL, parts=NULL) {
   spelog[spe < 0.5] <- log10(2*spe[spe < 0.5]);
   spelog[spe > 0.5] <- abs(log10(2 - 2*spe[spe > 0.5]));
   spelog[spe == 0.5] <- 0;
-  spelog[is.infinite(spe)] <- 0;
   spelog <- round(spelog, digits=4);
   rownames(spelog) <- rownames(spe);
   colnames(spelog) <- colnames(spe);
