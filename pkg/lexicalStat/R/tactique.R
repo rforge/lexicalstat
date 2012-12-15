@@ -2,17 +2,17 @@
 # ====================== # ====================== # ======================
 
 # slice : the number of the slice we are interested in
-slice.specificites <- function(words.by.slice, slice, n=50, threshold=2) {
+slice.specificities <- function(words.by.slice, slice, n=50, threshold=2) {
   l.t <- list2lexical.table(words.by.slices);
-  specif <- specificites(l.t);
+  specif <- specificities(l.t);
   #rownames(specif) <- paste("tranche", 1:10);
   if (slice > nslice) stop(paste("max:", nslide));
-  print.specificites(specif, parts=slice, threshold=threshold );
+  print.specificities(specif, parts=slice, threshold=threshold );
 }
 
 # slice : the number of the slice we are interested in
-# mode : how to extract the corpus ofr computing specificites: see get.sub.corpus.in.tactique
-slice.mot.specificites <- function(words.by.parts.by.slices, slice, word, method="ps(w)", n=50) {
+# mode : how to extract the corpus ofr computing specificities: see get.sub.corpus.in.tactique
+slice.mot.specificities <- function(words.by.parts.by.slices, slice, word, method="ps(w)", n=50) {
 
   #
   # checking consistency of data
@@ -72,11 +72,11 @@ slice.mot.specificites <- function(words.by.parts.by.slices, slice, word, method
   }
 
   #
-  # computing specificites
+  # computing specificities
   #
 
   print("Computing specificity");
-  spe <- specificites.lexicon(table(corpus), souscorpus.fl);
+  spe <- specificities.lexicon(table(corpus), souscorpus.fl);
   return(spe);
 }
 

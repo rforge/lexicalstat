@@ -18,6 +18,6 @@ compare.txts <- function(files, encoding="UTF-8") {
     cat("Constitution du tableau lexical\n");
     lt <- list2lexical.table(tokens)
     cat("Calcul des spécificités\n");
-    specificites(lt);
+    specificities(lt);
 }
 
