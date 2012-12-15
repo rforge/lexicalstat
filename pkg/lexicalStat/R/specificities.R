@@ -1,17 +1,26 @@
-# lexicaltable = a matrix of nrow parts and ncol type
-`specificites` <-
+
+## 
+ # ------------------------------------------------------------------------
+ # 
+ # "specificities" --
+ # 
+ # lexicaltable = a matrix of nrow types and ncol parts
+ # 
+ # ------------------------------------------------------------------------
+ ##
+specificities <-
 function(lexicaltable, types=NULL, parts=NULL) {
-  spe <- specificites.probabilities(lexicaltable, types, parts);
+  spe <- specificities.probabilities(lexicaltable, types, parts);
   #dim(spe);
   spelog <- matrix(0, nrow=nrow(spe), ncol=ncol(spe));
-  spelog[spe < 0.5] <- log10(spe[spe < 0.5]);
-  spelog[spe > 0.5] <- abs(log10(1 - spe[spe > 0.5]));
+  spelog[spe < 0.5] <- log10(2*spe[spe < 0.5]);
+  spelog[spe > 0.5] <- abs(log10(2 - 2*spe[spe > 0.5]));
   spelog[spe == 0.5] <- 0;
   spelog[is.infinite(spe)] <- 0;
   spelog <- round(spelog, digits=4);
   rownames(spelog) <- rownames(spe);
   colnames(spelog) <- colnames(spe);
-  class(spelog) <- "specificites";
+  class(spelog) <- "specificities";
   attr(spelog, "frequency.table") <- lexicaltable;
   attr(spelog, "types") <- types;
   attr(spelog, "parts") <- parts;
@@ -20,25 +29,35 @@ function(lexicaltable, types=NULL, parts=NULL) {
   return(spelog);
 }
 
-# lexicaltable = a matrix of nrow parts and ncol type
-`specificites.probabilities` <-
+ 
+## 
+ # ------------------------------------------------------------------------
+ # 
+ # "specificities.probabilities" --
+ # 
+ # lexicaltable = a matrix of nrow types and ncol parts
+ # 
+ # ------------------------------------------------------------------------
+ ##
+specificities.probabilities <-
 function(lexicaltable, types=NULL, parts=NULL) {
 
   #if (!is.numeric(lexicaltable)) stop("The lexical table must contain numeric values.");
 
-  colMargin <- colSums(lexicaltable); # or "F" (the total frequency of all the types).
-  rowMargin <- rowSums(lexicaltable); # or "T" (the size of the parts).
-  if (any(rowMargin == 0)) {
+  partMargin <- colSums(lexicaltable); # or "F" (the total frequency of all the types).
+  typeMargin <- rowSums(lexicaltable); # or "T" (the size of the parts).
+  if (any(typeMargin == 0)) {
     stop("Row without any occurrence");
   }
-  if (any(colMargin == 0)) {
+  if (any(partMargin == 0)) {
     stop("Column without any occurrence");
   }
 
-  F <- sum(colMargin);             # The grand total (number of tokens in the corpus).
+  F <- sum(partMargin);             # The grand total (number of tokens in the corpus).
 
-  if (! is.null(types)) {      # Filter on tokens to be considered.
-    if(is.character(types)) {  # convert the name of types given with "types" into row index numbers.
+  # Filter on tokens to be considered.
+  if (! is.null(types)) {      
+    if (is.character(types)) {
       if (is.null(rownames(lexicaltable))) {
         stop("The lexical table has no row names and the \"types\" argument is a character vector.");
       }
@@ -51,12 +70,13 @@ function(lexicaltable, types=NULL, parts=NULL) {
       if (any(types < 1)) stop("The row index must be greater than 0.");
       if (max(types) > nrow(lexicaltable)) stop("Row index must be smaller than the number of rows.");
     }
-    lexicaltable <- lexicaltable[ , types, drop = FALSE];
-    colMargin <- colMargin[types];
+    lexicaltable <- lexicaltable[types, , drop = FALSE];
+    typeMargin <- typeMargin[types];
   }
 
-  if (! is.null(parts)) {      # Filter on parts to be considered.
-    if(is.character(parts)) {  # convert the name of parts given with "parts" into col index numbers.
+  # Filter on parts to be considered.
+  if (! is.null(parts)) {      
+    if (is.character(parts)) {
       if (is.null(colnames(lexicaltable))) {
         stop("The lexical table has no col names and the \"parts\" argument is a character vector.");
       }
@@ -68,8 +88,8 @@ function(lexicaltable, types=NULL, parts=NULL) {
       if (max(parts) > ncol(lexicaltable)) stop("Column index must be smaller than the number of cols.");
       if (any(parts < 1)) stop("The col index must be greater than 0.");
     }
-    lexicaltable <- lexicaltable[parts, , drop=FALSE];
-    rowMargin <- rowMargin[parts];
+    lexicaltable <- lexicaltable[ ,parts, drop=FALSE];
+    partMargin <- partMargin[parts];
   }
 
   if (nrow(lexicaltable) == 0 | ncol(lexicaltable) == 0) {
@@ -78,23 +98,23 @@ function(lexicaltable, types=NULL, parts=NULL) {
 
   specif <- matrix(0.0, nrow=nrow(lexicaltable), ncol=ncol(lexicaltable));
 
-  for(i in 1:nrow(lexicaltable)) {    # We proceed the whole lexical table by row (i.e. by part).
+  for(i in 1:ncol(lexicaltable)) {
+	  # We proceed the whole lexical table by col (i.e. by part).
+     whiteDrawn <- lexicaltable[,i];  # The frequencies observed in this part for each type.
+     allWhites <- typeMargin;         # The total frequencies in the corpus for each type.
+     allBlacks <- F-allWhites;        # The total complement frequency in the corpus for each type.
+     drawn <- partMargin[i];          # The total number of occurrences in the part.
 
-     whiteDrawn <- lexicaltable[i,];  # The frequencies observed in this part for each type.
-     white <- colMargin;     # The total frequencies in the corpus for each type.
-     black <- F-white;       # The total complement frequency in the corpus for each type.
-     drawn <- rowMargin[i];  # The total number of occurrences in the part.
-
-     independance    <- (white * drawn) / F;         # The theoretic frequency of each type.
+     independance    <- (allWhites * drawn) / F;     # The theoretic frequency of each type.
      specif_negative <- whiteDrawn <  independance;  # index of observed frequencies below the theoretic frequencies.
      specif_positive <- whiteDrawn >= independance;  # index of observed frequencies above the theoretic frequencies.
 
-     specif[i, specif_negative] <- phyper (
-         whiteDrawn[specif_negative], white[specif_negative], black[specif_negative], drawn
+     specif[specif_negative, i] <- phyper (
+         whiteDrawn[specif_negative], allWhites[specif_negative], allBlacks[specif_negative], drawn
          );
 
-     specif[i, specif_positive] <- phyper (
-         whiteDrawn[specif_positive] - 1, white[specif_positive], black[specif_positive], drawn
+     specif[specif_positive, i] <- phyper (
+         whiteDrawn[specif_positive] - 1, allWhites[specif_positive], allBlacks[specif_positive], drawn
          );
   }
 
@@ -103,6 +123,7 @@ function(lexicaltable, types=NULL, parts=NULL) {
   attr(specif, "F") <- F;
   return(specif);
 }
+
 
 #        --------------------------------
 #        |        | Col 1 | Col 2 |  T  |
@@ -155,7 +176,7 @@ function(lexicaltable, types=NULL, parts=NULL) {
 #    );
 #
 
-`specificites.lexicon` <-
+specificities.lexicon <-
 function(lexicon, sublexicon) {
 
   if (!is.numeric(lexicon)) stop("lexicon must be numeric vector");
@@ -196,26 +217,33 @@ function(lexicon, sublexicon) {
   colnames(lexical.table) <- names(lexicon);
   rownames(lexical.table) <- c("sublexicon", "complementary");
   # for debuging, instead of 
-  #return(specificites(lexical.table, parts=1));
-  sss <- specificites(lexical.table);
+  #return(specificities(lexical.table, parts=1));
+  sss <- specificities(lexical.table);
   return(sss);
 }
 
-write.specificites <-
+
+write.specificities <-
 function(x, file, from=1, to=50, threshold=NULL, types=NULL, parts=NULL) {
-  if(!class(x) == "specificites") stop("x must be of class specificites");
+  if(!class(x) == "specificities") stop("x must be of class specificities");
   if(is.null(file)) stop("file cannot be null");
+  if (is.null(types)) types <- attr(x, "types")
+  if (is.null(parts)) parts <- attr(x, "parts")
   printable <- .get.printable(x, from, to, threshold, types, parts);
   for (i in 1:length(printable)) {
       write.csv(printable[[i]], file=paste(file, "_", i, ".csv", sep=""));
   }
 }
 
-print.specificites <-
+
+print.specificities <-
 function(x, from=1, to=50, threshold=NULL, types=NULL, parts=NULL, file="", append=FALSE, ...) {
+  if (is.null(types)) types <- attr(x, "types")
+  if (is.null(parts)) parts <- attr(x, "parts")
+
   printable <- .get.printable(x, from, to, threshold, types, parts);
 
-  msg <- paste("Printing specificites for", length(printable), "part(s);");
+  msg <- paste("Printing specificities for", length(printable), "part(s);");
   if (!is.null(threshold)) {
     msg <- paste(msg, "threshold:", threshold, "\n");
   } else {
@@ -232,8 +260,8 @@ function(x, from=1, to=50, threshold=NULL, types=NULL, parts=NULL, file="", appe
     cat(".....................................................\n", file=file, append=append);
     cat(paste("Part name:", attr(part, "Part name"), "\n"), file=file, append=append);
     cat(paste("Part size:", attr(part, "Part size"), "tokens.", "\n"), file=file, append=append);
-    cat(paste("Positive specificites:", sum(part[,2] > 0), "\n"), file=file, append=append);
-    cat(paste("Negative specificites:", sum(part[,2] < 0), "\n"), file=file, append=append);
+    cat(paste("Positive specificities:", sum(part[,2] > 0), "\n"), file=file, append=append);
+    cat(paste("Negative specificities:", sum(part[,2] < 0), "\n"), file=file, append=append);
     if (nrow(part) > 0) {
       for (i_word in 1:nrow(part)) {
         word_name <- part[i_word, 1];
@@ -246,10 +274,13 @@ function(x, from=1, to=50, threshold=NULL, types=NULL, parts=NULL, file="", appe
   }
 }
 
-writeAsXML.specificites <-
+
+writeAsXML.specificities <-
 function(x, file, from=1, to=100, threshold=NULL, types=NULL, parts=NULL) {
-  if(!class(x) == "specificites") stop("x must be of class specificites");
+  if(!class(x) == "specificities") stop("x must be of class specificities");
   if(is.null(file)) stop("file cannot be null");
+  if (is.null(types)) types <- attr(x, "types")
+  if (is.null(parts)) parts <- attr(x, "parts")
   printable <- .get.printable(x, from, to, threshold, types, parts);
   .saveDataFrameAsXML(as.data.frame(printable), file);
 }
@@ -257,7 +288,7 @@ function(x, file, from=1, to=100, threshold=NULL, types=NULL, parts=NULL) {
 # .get.printable <-
 # function(x, frequency.table) {
 #   if (any(dim(frequency.table) != dim(x))) {
-#     stop("specificites and frequency table must have same dimensions");
+#     stop("specificities and frequency table must have same dimensions");
 #   }
 # 
 #   part_names <- rownames(x);
@@ -296,17 +327,17 @@ function(x, file, from=1, to=100, threshold=NULL, types=NULL, parts=NULL) {
 .get.printable <-
 function(x, from, to, threshold, types=NULL, parts=NULL ) {
 
-  if(!class(x) == "specificites") stop("x must be of class specificites");
+  if(!class(x) == "specificities") stop("x must be of class specificities");
 
   if (is.null(threshold)) {
     if (is.null(from) | is.null(to)) {
-      stop("either \"threshold\" or \"from\" and \"to\" options must be given");
+      stop("either 'threshold' or 'from' and 'to' options must be given");
     }
     if ((!is.numeric(from)) | (!is.numeric(to))) {
-      stop("both from and to must be numeric");
+      stop("both 'from' and 'to' must be numeric");
     }
     if (from >= to) {
-      stop("to must be greater than from");
+      stop("'to' must be greater than 'from'");
     }
   } else {
     if (!is.numeric(threshold)) {
@@ -316,33 +347,30 @@ function(x, from, to, threshold, types=NULL, parts=NULL ) {
       stop("threshold must be greater than 0");
     }
   }
+  if (is.null(types)) types <- 1:nrow(x);
+  if (is.null(parts)) parts <- 1:ncol(x);
 
-  if (is.null(types)) types <- 1:ncol(x);
-  if (is.null(parts)) parts <- 1:nrow(x);
-
-  frequency.table <- attr(x, "frequency.table");
-  if (any(dim(frequency.table) != dim(x))) {
-    stop("specificites and frequency table must have same dimensions");
-  }
-
-  part_names <- rownames(x);
-  forms <- colnames(x);
-  part_lengths <- rowSums(frequency.table);
-  form_freqs <- colSums(frequency.table);
+  freqtable <- attr(x, "frequency.table");
+  part_names <- colnames(x);
+  forms <- rownames(x);
+  part_lengths <- colSums(freqtable);
+  form_freqs <- rowSums(freqtable);
 
   printable <- list();
 
   for (i_part in 1:length(parts)) {
-    spe_part <- x[ parts[i_part], ];
-    fre_part <- frequency.table[ parts[i_part], ];
-
+    spe_part <- x[ , part_names[i_part] ];
+    fre_part <- freqtable[ , parts[i_part] ];
     i_sorted <- order(spe_part, decreasing=TRUE);
     if (!is.null(threshold)) {
       i_selected_words <- which(abs(spe_part) > threshold);
       i_sorted <- i_sorted [ i_sorted %in% i_selected_words ];
-    } else {
-      i_min <- which.min(spe_part[i_sorted][spe_part[i_sorted] > 0]); # index of min positive specificites
-      if (from < i_min) {
+	} else {
+      i_min <- which.min(spe_part[i_sorted][spe_part[i_sorted] > 0]); # index of min positive specificities
+	  if (length(i_min) == 0) {
+		  i_min <- 0
+	  }
+      if (from <= i_min) {
         ii_positive <- from:min(to, i_min);
       } else {
         ii_positive <- numeric(0);
@@ -358,7 +386,7 @@ function(x, from, to, threshold, types=NULL, parts=NULL ) {
     }
     nbr_form <- length(i_sorted);
     p <- data.frame("Type"=character(nbr_form), "Specificites"=numeric(nbr_form), "Sub frequency"=integer(nbr_form), "Total frequency"=integer(nbr_form), stringsAsFactors=F);
-    attr(p, "Part name") <- part_names[parts[i_part]];
+	attr(p, "Part name") <- part_names[i_part];
     attr(p, "Part size") <- part_lengths[parts[i_part]];
     if (nbr_form > 0) {
       p[, 1] <- forms[i_sorted];
@@ -371,9 +399,9 @@ function(x, from, to, threshold, types=NULL, parts=NULL ) {
   return(printable);
 }
 
-# `specificites.lexicon` <-
+# specificities.lexicon <-
 # function(lexicon, sublexicon) {
-#   spe <- specificites.lexicon.probabilities(lexicon, sublexicon);
+#   spe <- specificities.lexicon.probabilities(lexicon, sublexicon);
 #   spelog <- matrix(0, nrow=nrow(spe), ncol=ncol(spe));
 #   spelog[spe < 0.5] <- log10(spe[spe < 0.5]);
 #   spelog[spe > 0.5] <- abs(log10(1 - spe[spe > 0.5]));
@@ -382,12 +410,12 @@ function(x, from, to, threshold, types=NULL, parts=NULL ) {
 #   spelog <- round(spelog, digits=4);
 #   rownames(spelog) <- rownames(spe);
 #   colnames(spelog) <- colnames(spe);
-#   #class(spelog) <- "specificites";
+#   #class(spelog) <- "specificities";
 #   #attr(spelog, "l.t") <- spe;
 #   return(spelog);
 # }
 # 
-# `specificites.lexicon.probabilities` <-
+# specificities.lexicon.probabilities <-
 # function(lexicon, sublexicon) {
 # 
 #   if (!is.numeric(lexicon)) stop("The lexicon must contain numeric values.");
@@ -444,7 +472,7 @@ function(x, from, to, threshold, types=NULL, parts=NULL ) {
 #   return(specif);
 # }
 # 
-# #print.specificites(x, line=20, part=1, form=NULL, ...) {
+# #print.specificities(x, line=20, part=1, form=NULL, ...) {
 # #  if (all(is.null(line, part))) {
 # #    stop("either a line or a part must be specified");
 # #  }
