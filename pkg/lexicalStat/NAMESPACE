@@ -6,6 +6,7 @@ import(Matrix)
 #    ,"diag" # <- need (generic, with its methods!)
 #    )
 
+
 import(XML)
 
 # functions exported from file "R/main.R"
@@ -27,13 +28,13 @@ export(read.corpus.txt, read.corpus.txts);
 export(tokenize, tokenize.treetagger, tokenize.simple);
 
 # functions exported from file "R/tactique.R"
-export(get.words.by.slices, remove.inner.part, flip.inner.outer.parts, get.words.by.slices.by.parts, get.sub.corpus.in.tactique, slice.mot.specificites);
+export(get.words.by.slices, remove.inner.part, flip.inner.outer.parts, get.words.by.slices.by.parts, get.sub.corpus.in.tactique, slice.mot.specificities);
 
 # functions exported from file "R/syntex.R"
 export(seq.apply);
 
-# functions exported from file "R/specificites.R"
-export(specificites, specificites.lexicon, specificites.probabilities, print.specificites, write.specificites, writeAsXML.specificites);
+# functions exported from file "R/specificities.R"
+export(specificities, specificities.lexicon, specificities.probabilities, print.specificities, write.specificities, writeAsXML.specificities);
 
 # functions exported from file "R/conc.R"
 export(conc.tokens.by.part, conc, word.conc, text.conc, get.tokens.by.context.by.part);

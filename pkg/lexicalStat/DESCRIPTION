@@ -3,9 +3,15 @@ Type: Package
 Title: Lexical statistics for linguistic corpora 
 Version: 1.0
 Date: 2010-04-06
-Author: Sylvain Loiseau
+Author: Sylvain Loiseau <sylvain.loiseau@univ-paris13.fr>, Bernard Desgraupes <bernard.desgraupes@u-paris10.fr>
 Maintainer: Sylvain Loiseau <sloiseau@univ-paris13.fr>
 Description: Different methods for statistics for textual corpora.
 Depends: R (>= 2.9.0), Matrix, XML
 License: BSD
 LazyLoad: yes
+Suggests: 
+Description: Implementations of statistical methods such as measure of word attraction for statistical analysis of large corpora through lexical phenomena.
+URL: http://www.r-project.org
+Collate: conc.R corpus.R corpus.pseudo.R main.R ngram.R read.corpus.R sparse.matrix.R specificities.R subcorpus.R syntex.R tactique.R tokenize.R tokens.by.parts.R treetagger.R xml.R xml_pr2.R
+Encoding: latin1
+

@@ -1,3 +1,4 @@
+
 read.corpus.txt <- function(file, enc, skipEmpty=FALSE) {
   corpus <- readLines(file, encoding=enc);
 # remove empty lines
