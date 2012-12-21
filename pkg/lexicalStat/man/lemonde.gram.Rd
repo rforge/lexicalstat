@@ -8,11 +8,6 @@
   The tagging is produced by Syntex parser for French (see References below).
 }
 
-\references{
-Bourigault D., Fabre C., Fr\'erot C., Jacques M.-P. and Ozdowska S. (2005), Syntex, analyseur syntaxique de corpus, in \emph{Actes des 12\'emes journ\'ees sur le Traitement Automatique des Langues Naturelles}, Dourdan, France.
-
-}
-
 \usage{data(lemonde.gram)}
 \format{
   A matrix with 840 observations and 93 variables.

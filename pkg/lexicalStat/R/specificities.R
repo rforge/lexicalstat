@@ -9,13 +9,18 @@
  # ------------------------------------------------------------------------
  ##
 specificities <-
-function(lexicaltable, types=NULL, parts=NULL) {
+function(lexicaltable, types=NULL, parts=NULL, log=TRUE) {
   spe <- specificities.probabilities(lexicaltable, types, parts);
   #dim(spe);
   spelog <- matrix(0, nrow=nrow(spe), ncol=ncol(spe));
-  spelog[spe < 0.5] <- log10(2*spe[spe < 0.5]);
-  spelog[spe > 0.5] <- abs(log10(2 - 2*spe[spe > 0.5]));
-  spelog[spe == 0.5] <- 0;
+  
+  if (log) {
+	  spelog[spe < 0.5] <- log10(2*spe[spe < 0.5]);
+	  spelog[spe > 0.5] <- abs(log10(2 - 2*spe[spe > 0.5]));
+	  spelog[spe == 0.5] <- 0;
+  } else {
+  	spelog <- spe
+  }
   spelog <- round(spelog, digits=4);
   rownames(spelog) <- rownames(spe);
   colnames(spelog) <- colnames(spe);
@@ -24,6 +29,7 @@ function(lexicaltable, types=NULL, parts=NULL) {
   attr(spelog, "types") <- types;
   attr(spelog, "parts") <- parts;
   attr(spelog, "corpussize") <- attr(spe, "F");
+  attr(spelog, "log") <- log;
 
   return(spelog);
 }
@@ -259,15 +265,21 @@ function(x, from=1, to=50, threshold=NULL, types=NULL, parts=NULL, file="", appe
     cat(".....................................................\n", file=file, append=append);
     cat(paste("Part name:", attr(part, "Part name"), "\n"), file=file, append=append);
     cat(paste("Part size:", attr(part, "Part size"), "tokens.", "\n"), file=file, append=append);
-    cat(paste("Positive specificities:", sum(part[,2] > 0), "\n"), file=file, append=append);
-    cat(paste("Negative specificities:", sum(part[,2] < 0), "\n"), file=file, append=append);
+	
+	if (attr(x, "log")) {
+		seuil <- 0
+	} else {
+		seuil <- 0.5
+	}
+	cat(paste("Positive specificities:", sum(part[,2] > seuil), "\n"), file=file, append=append);
+	cat(paste("Negative specificities:", sum(part[,2] < seuil), "\n"), file=file, append=append);
     if (nrow(part) > 0) {
       for (i_word in 1:nrow(part)) {
         word_name <- part[i_word, 1];
         word_specif <- part[i_word, 2];
         word_sub_freq <- part[i_word, 3];
         word_tot_freq <- part[i_word, 4];
-        cat(sprintf("%-20s | %8.2f | %8.0f | %8.0f \n", word_name, word_specif, word_sub_freq, word_tot_freq), file=file, append=append);
+        cat(sprintf("%-20s | %8.3f | %8.0f | %8.0f \n", word_name, word_specif, word_sub_freq, word_tot_freq), file=file, append=append);
       }
     }
   }
