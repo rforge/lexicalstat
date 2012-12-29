@@ -139,7 +139,7 @@ wam.lexicalTable <- function(corpus, measure="specificities", parts=NULL, types=
   k <- as.vector(lexicaltable);
 
   n <- as.vector(partMargin);
-  n <- rep(n, times=nrow(lexicaltable);
+  n <- rep(n, times=nrow(lexicaltable));
 
   K <- as.vector(typeMargin);
   K <- rep(f, ncol(lexicaltable));
@@ -357,7 +357,7 @@ print.mwa <- function(x, from=1, to=50, threshold=NULL, types=NULL, parts=NULL, 
 }
 
 
-writeAsXML.specificities <-
+writeAsXML.wma <-
 function(x, file, from=1, to=100, threshold=NULL, types=NULL, parts=NULL) {
   if(!class(x) == "specificities") stop("x must be of class specificities");
   if(is.null(file)) stop("file cannot be null");

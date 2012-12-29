@@ -1,8 +1,13 @@
-# lines <- list(c("un", "première", "ligne", "de", "mots"), c("une", "seconde", "ligne", "et", "encore", "ligne"), c("une", "troisième"))
-# lines2 <- sapply(lines, function(x) paste(x, collapse=" "))
+##
+ #
+ # Kwic = keyword in context, or concordancer.
+ #
+ ##
 
-# tokens.by.part = is list of character vector, each character vector
-# representing the words of a lines
+kwic <- function(x, ...) UseMethod("kwic");
+
+kwic.fullText <- function(x) {
+}
 
 get.tokens.by.context.by.part <- function(tokens.by.part, form, span.size) {
   if (!is.list(tokens.by.part)) stop("tokens.by.part must be a list");

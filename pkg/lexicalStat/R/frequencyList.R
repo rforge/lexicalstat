@@ -1,3 +1,7 @@
+#setGeneric("frequencyList", function(x, ...) {
+#  return(standardGeneric("frequencyList"));
+#})
+#setMethod("frequencyList", signature(x="numeric"), vector2frequencyList);
 
 vector2frequencyList <- function(x) {
   if (!is.numeric(x)) {
@@ -10,8 +14,6 @@ vector2frequencyList <- function(x) {
   class(x) <- "frequencyList";
   return(x);
 }
-
-setMethod("frequencyList", signature(x="numeric"), vector2frequencyList);
 
 print.frequencyList <- function(x) {
   cat(paste("A frequency list:\n"));

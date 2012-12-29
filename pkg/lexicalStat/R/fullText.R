@@ -49,8 +49,11 @@
  # Each line of a text file is tokenized and used as a part of the corpus
  #
  ##
-lines2fullText <- function(file, enc, skipEmpty=FALSE) {
-  lines <- readLines(f, encoding=enc);
+lines2fullText <- function(file, enc="UTF-8", skipEmpty=FALSE) {
+  if (!file.exists(file)) {
+    stop("cannot read or access file");
+  }
+  lines <- readLines(file, encoding=enc);
   index_empty_lines <- grep("^\\W*$", lines);
   if (length(index_empty_lines) > 0) {
     if (skipEmpty) {
@@ -68,10 +71,13 @@ lines2fullText <- function(file, enc, skipEmpty=FALSE) {
 #
 # Each file of a group of text files is tokenized and used as a part of the corpus
 #
-files2fullText <- function(files, enc, skipEmpty=FALSE) {
+files2fullText <- function(files, enc="UTF-8", skipEmpty=FALSE) {
+  if (any(!file.exists(files))) {
+    stop("cannot read or access some files");
+  }
   parts <- vector(mode="list", length=length(files));
-  for (f in 1:length(files)) {
-    lines <- readLines(f, encoding=enc);
+  for (i in 1:length(files)) {
+    lines <- readLines(files[i], encoding=enc);
     index_empty_lines <- grep("^\\W*$", lines);
     if (length(index_empty_lines) > 0) {
       if (skipEmpty) {
@@ -83,6 +89,7 @@ files2fullText <- function(files, enc, skipEmpty=FALSE) {
     part <- unlist(tokenize(lines));
     parts[[i]] <- part;
   }
+  names(parts) <- files;
   class(parts) <- "fullText";
   attr(parts, "depth") <- 1;
   return(parts);
@@ -99,7 +106,7 @@ print.fullText <- function(fullText) {
   for (i in 1:min(length(fullText), 10)) {
     part <- fullText[[i]]
     tokens <- part[1:min(10, length(part))];
-    cat(paste(paste(tokens, collapse=" "), "\n", sep=""));
+    cat(paste(paste(tokens, collapse=" "), "...\n", sep=""));
   }
 }
 
@@ -115,11 +122,18 @@ summary.fullText <- function(fullText) {
 
 asFullText <- function(x, ...) UseMethod("asFullText");
 
-asFullText.corpus <- function(corpus, positional, structural) {
+asFullText.tabulated <- function(corpus, positional, structural) {
+  if (is.null(positional)) {
+    stop("positional cannot be NULL");
+  }
+  if (is.null(structural)) {
+    stop("structural cannot be NULL");
+  }
+# TODO check if structural and positional exist
   fullText <- split(corpus[,positional], corpus[,structural])
   fullText <- lapply(fullText, as.character);
   class(fullText) <- "fullText";
-  attr(parts, "depth") <- 1;
+  attr(fullText, "depth") <- 1;
   return(fullText);
 }
 
@@ -146,7 +160,11 @@ tokenize.simple <- function(parts) {
 .tokenize <- function(parts, regexp) {
   if (!is.character(parts)) stop("part must be a character vector");
   corpus.tokenized <- strsplit(parts, regexp, perl=T);
-  corpus.tokenized <- corpus.tokenized[sapply(corpus.tokenized, function(x) length(x) > 0)];
+  index <- sapply(corpus.tokenized, function(x) {length(x) > 0});
+  if (!is.logical(index)) {
+    stop("index must be logical");
+  }
+  corpus.tokenized <- corpus.tokenized[index];
   corpus.tokenized <- lapply(corpus.tokenized, function(v) {  if (any(v == "")) v[-which(v=="")] else v });
   return(corpus.tokenized);
 }

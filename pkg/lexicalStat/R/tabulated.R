@@ -36,7 +36,7 @@ subcorpus <- function(tabulated, part, attribute=NULL, value=NULL) {
 
 asTabulated <- function(x, ...) UseMethod("asTabulated");
 
-asTabulated <- function(fullText) {
+asTabulated.fullText <- function(fullText) {
   x <- unlist(fullText);
   tabulated <- data.frame(word=x);
   y <- sapply(fullText, length);
