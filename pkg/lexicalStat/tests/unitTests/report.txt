@@ -1,0 +1,32 @@
+RUNIT TEST PROTOCOL -- Sun Dec 30 00:15:16 2012 
+*********************************************** 
+Number of test functions: 7 
+Number of errors: 0 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+lexicalStat unit testing - 7 test functions, 0 errors, 0 failures
+
+
+
+Details 
+*************************** 
+Test Suite: lexicalStat unit testing 
+Test function regexp: ^test.+ 
+Test file regexp: ^runit.+\.[rR]$ 
+Involved directory: 
+/Users/sylvainloiseau/workspace/LexicalStat/Current/pkg/lexicalStat/tests/../tests/unitTests 
+--------------------------- 
+Test file: /Users/sylvainloiseau/workspace/LexicalStat/Current/pkg/lexicalStat/tests/../tests/unitTests/runit.fullText.R 
+test_as_fullText_tabulated: (2 checks) ... OK (0.01 seconds)
+test_print_fullText: (0 checks) ... OK (0.01 seconds)
+test_readFile: (1 checks) ... OK (0 seconds)
+test_readFiles: (0 checks) ... OK (0.01 seconds)
+test_summary_fullText: (0 checks) ... OK (0 seconds)
+--------------------------- 
+Test file: /Users/sylvainloiseau/workspace/LexicalStat/Current/pkg/lexicalStat/tests/../tests/unitTests/runit.lexicalTable.R 
+test_creation_with_dense_matrix: (0 checks) ... OK (0.01 seconds)
+--------------------------- 
+Test file: /Users/sylvainloiseau/workspace/LexicalStat/Current/pkg/lexicalStat/tests/../tests/unitTests/runit.treetagger.R 
+test_read_treetagger_file_with_xml: (0 checks) ... OK (0.01 seconds)
