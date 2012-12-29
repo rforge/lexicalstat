@@ -1,0 +1,108 @@
+\documentclass{article}
+
+%\VignetteIndexEntry{Introduction to lexicalStat}
+%\VignetteDepends{reshape}
+\usepackage{lmodern}
+\usepackage{makeidx}
+\usepackage{hyperref}
+
+\makeindex 
+
+\title{Introduction to the lexicalStat package}
+
+\author{Bernard Desgraupes and Sylvain Loiseau\\<bernard.desgraupes@u-paris10.fr>, <sylvain.loiseau@univ-paris13.fr>}
+
+\date{\today}
+
+\usepackage{Sweave}
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The \texttt{lexicalStat} R library provide functions for reading corpora,
+converting them between several representations, and applying exploratory
+functions like word attraction measure and keyword in context.
+\end{abstract}
+
+
+\vspace{5mm}
+\hrule
+\tableofcontents
+\vspace{5mm}
+\hrule
+
+\newpage
+
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+\section{Introduction}
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+\label{sec:Intro}
+
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+\section{Classes for representing corpora}
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+\label{sec:classes}
+
+\section{\texttt{fullText}}
+\label{subsec:classes-fullText}
+
+jeux de données : article du monde
+
+kwic
+
+Fonctions pour tokenizer, lire différents fichiers ou les lignes d'un fichier.
+
+\section{\texttt{tabulated}}
+\label{subsec:classes-tabulated}
+
+plusieurs facettes pour un mot
+
+Dickens
+Treetagger
+
+\section{\texttt{lexicalTable}}
+\label{subsec:classes-lexicalTable}
+
+Robespierre
+
+\section{\texttt{frequencyList}}
+\label{sec:classes}
+\label{subsec:classes-frequencyList}
+
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+\section{Conversion between classes}
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+\label{sec:classes}
+
+(\texttt{fullText} <-> \texttt{tabulated}) -> \texttt{lexicalTable} -> \texttt{frequencyList}
+
+The first two data structures can be converted back and forth.
+
+The last two are \index{bag of words} : they lost the order of the tokens and
+keep only frequency. The penultimate keep the distribution of sub-frequency
+between parts of a corpus, while the last one represent only total frequency.
+
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+\section{KWIC}
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+\section{Word attraction measure}
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+
+\printindex
+
+\end{document}
+
+
