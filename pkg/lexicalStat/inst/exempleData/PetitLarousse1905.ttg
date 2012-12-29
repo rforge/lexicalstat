@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntryFree>
+<form>
+baba	ADJ	baba
+</form>
+<def>
+Gâteau	NOM	gâteau
+dans	PRP	dans
+lequel	PRO:REL	lequel
+il	PRO:PER	il
+entre	VER:pres	entrer
+du	PRP:det	du
+cédrat	NOM	cédrat
+,	PUN	,
+du	PRP:det	du
+raisin	NOM	raisin
+de	PRP	de
+Corinthe	NAM	Corinthe
+et	KON	et
+du	PRP:det	du
+rhum	NOM	rhum
+ou	KON	ou
+du	PRP:det	du
+kirsch	NOM	kirsch
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babeurre	NOM	babeurre
+</form>
+<def>
+Liquide	NAM	<unknown>
+séreux	ADJ	séreux
+qui	PRO:REL	qui
+reste	VER:pres	rester
+après	PRP	après
+le	DET:ART	le
+barattage	NOM	barattage
+de	PRP	de
+la	DET:ART	le
+crème	NOM	crème
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babi	NOM	<unknown>
+</form>
+<def>
+Nom	NAM	<unknown>
+donné	VER:pper	donner
+au	PRP:det	au
+partisan	NOM	partisan
+du	PRP:det	du
+babisme	NOM	<unknown>
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babil	NOM	babil
+</form>
+<def>
+Abondance	NAM	<unknown>
+de	PRP	de
+paroles	NOM	parole
+inutiles	ADJ	inutile
+.	SENT	.
+Langage	NOM	langage
+des	PRP:det	du
+petits	ADJ	petit
+enfants	NOM	enfant
+.	SENT	.
+Chant	NOM	chant
+babillard	ADJ	babillard
+de	PRP	de
+quelques	PRO:IND	quelque
+oiseaux	NOM	oiseau
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babillage	NOM	babillage
+</form>
+<def>
+Action	NAM	<unknown>
+de	PRP	de
+babiller	VER:infi	babiller
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babillard	NOM	babillard
+</form>
+<def>
+Qui	NAM	<unknown>
+parle	VER:pres	parler
+beaucoup	ADV	beaucoup
+et	KON	et
+inutilement	ADV	inutilement
+.	SENT	.
+Bavard	ADJ	bavard
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babiller	VER:infi	babiller
+</form>
+<def>
+Parler	VER:infi	parler
+beaucoup	ADV	beaucoup
+,	PUN	,
+sans	PRP	sans
+suite	NOM	suite
+et	KON	et
+à	PRP	à
+propos	NOM	propos
+de	PRP	de
+rien	NOM	rien
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babine	NOM	babine
+</form>
+<def>
+Lèvre	NAM	<unknown>
+pendante	ADJ	pendant
+de	PRP	de
+certains	PRO:IND	certain
+animaux	NOM	animal
+(	PUN	(
+chien	NOM	chien
+,	PUN	,
+singe	NOM	singe
+,	PUN	,
+etc	ABR	etc
+.	SENT	.
+)	PUN	)
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babiole	NOM	babiole
+</form>
+<def>
+Jouet	NAM	<unknown>
+d'	PRP	de
+enfant	NOM	enfant
+</def>
+<def>
+Chose	NOM	chose
+sans	PRP	sans
+importance	NOM	importance
+,	PUN	,
+sans	PRP	sans
+valeur	NOM	valeur
+;	PUN	;
+bagatelle	NOM	bagatelle
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babiroussa	NOM	babiroussa
+</form>
+<def>
+Genre	NAM	<unknown>
+de	PRP	de
+pachydermes	NOM	pachyderme
+,	PUN	,
+famille	NOM	famille
+des	PRP:det	du
+suidés	NOM	suidés
+,	PUN	,
+voisins	NOM	voisin
+des	PRP:det	du
+porcs	NOM	porc
+et	KON	et
+originaires	ADJ	originaire
+de	PRP	de
+Malaisie	NAM	<unknown>
+</def>
+<cit>
+:	PUN	:
+le	DET:ART	le
+babiroussa	NOM	babiroussa
+atteint	VER:pres	atteindre
+la	DET:ART	le
+taille	NOM	taille
+d'	PRP	de
+un	DET:ART	un
+petit	ADJ	petit
+âne	NOM	âne
+.	SENT	.
+</cit>
+</EntryFree>
+<EntryFree>
+<form>
+babisme	NOM	<unknown>
+</form>
+<def>
+Doctrine	NAM	<unknown>
+professée	VER:pper	professer
+par	PRP	par
+Bab	NAM	<unknown>
+et	KON	et
+ses	DET:POS	son
+successeurs	NOM	successeur
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+bablah	NOM	<unknown>
+</form>
+<def>
+Nom	NAM	<unknown>
+dans	PRP	dans
+l'	DET:ART	le
+Inde	NAM	Inde
+des	PRP:det	du
+fruits	NOM	fruit
+de	PRP	de
+divers	ADJ	divers
+acacias	NOM	acacia
+employés	VER:pper	employer
+pour	PRP	pour
+le	DET:ART	le
+tannage	NOM	tannage
+et	KON	et
+la	DET:ART	le
+teinture	NOM	teinture
+en	PRP	en
+noir	ADJ	noir
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+bÂbord	NOM	bâbord
+</form>
+<def>
+Côté	VER:pper	<unknown>
+gauche	ADJ	gauche
+d'	PRP	de
+un	DET:ART	un
+navire	NOM	navire
+quand	KON	quand
+on	PRO:PER	on
+regarde	VER:pres	regarder
+l'	PRO:PER	la|le
+avant	PRP	avant
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babouche	NOM	babouche
+</form>
+<def>
+Pantoufle	NOM	pantoufle
+orientale	ADJ	oriental
+en	PRP	en
+cuir	NOM	cuir
+de	PRP	de
+couleur	NOM	couleur
+,	PUN	,
+sans	PRP	sans
+quartier	NOM	quartier
+et	KON	et
+sans	PRP	sans
+talon	NOM	talon
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babouin	NOM	babouin
+</form>
+<def>
+Espèce	NAM	<unknown>
+de	PRP	de
+gros	ADJ	gros
+singe	NOM	singe
+d'	PRP	de
+Afrique	NAM	Afrique
+,	PUN	,
+du	PRP:det	du
+genre	NOM	genre
+cynocéphale	ADJ	cynocéphale
+</def>
+<def>
+Petit	NAM	Petit
+bouton	NOM	bouton
+aux	PRP:det	au
+lèvres	NOM	lèvre
+</def>
+<def>
+et	KON	et
+</def>
+<def>
+Enfant	NOM	enfant
+folâtre	ADJ	folâtre
+,	PUN	,
+turbulent	ADJ	turbulent
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babouvisme	NOM	babouvisme
+</form>
+<def>
+Doctrine	NAM	<unknown>
+de	PRP	de
+Babeuf	NAM	<unknown>
+,	PUN	,
+qui	PRO:REL	qui
+tendait	VER:impf	tendre
+à	PRP	à
+établir	VER:infi	établir
+l'	DET:ART	le
+égalité	NOM	égalité
+des	PRP:det	du
+fortunes	NOM	fortune
+par	PRP	par
+l'	DET:ART	le
+application	NOM	application
+d'	PRP	de
+une	DET:ART	un
+nouvelle	ADJ	nouveau
+loi	NOM	loi
+agraire	ADJ	agraire
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babouviste	NOM	babouviste
+</form>
+<def>
+Partisan	NAM	<unknown>
+de	PRP	de
+Babeuf	NAM	<unknown>
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+baby	NOM	baby
+</form>
+<def>
+Mot	NAM	<unknown>
+anglais	ADJ	anglais
+,	PUN	,
+synonyme	ADJ	synonyme
+de	PRP	de
+bébé	NOM	bébé
+.	SENT	.
+</def>
+</EntryFree>
+<EntryFree>
+<form>
+babylonien	ADJ	babylonien
+</form>
+<def>
+De	NAM	<unknown>
+Babylone	NAM	Babylone
+;	PUN	;
+de	PRP	de
+la	DET:ART	le
+Babylonie	NAM	<unknown>
+.	SENT	.
+</def>
+</EntryFree>
