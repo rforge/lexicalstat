@@ -13,6 +13,16 @@
 # - some other columns are numeric and regroup range of consecutive tokens by giving them
 #   a common id.
 
+setClass("Tabulated",
+         representation(positional = "character", structural = "character"),
+         contains = "data.frame");
+
+############################################################
+##
+## Constructor
+##
+############################################################
+
 tabulated <- function(m, positional.attributes, structural.attributes) {
   if (!is.data.frame(m)) {
     stop("m must be a data.frame");
@@ -42,48 +52,47 @@ tabulated <- function(m, positional.attributes, structural.attributes) {
     stop("positional attributes must be character column-vector");
   }
 
-  attr(m, "positional") <- positional.attributes;
-  attr(m, "structural") <- structural.attributes;
-
-  class(m) <- c(class(m), "tabulated");
-  return(m);
+  obj <- new("Tabulated", m, positionnal=positional.attributes, structural=structural.attributes);
+  return(obj);
 }
 
+############################################################
 ##
- # Keep the part with id != -1.
- # or
-# Keep the _part_ containing at least one token whose _attribute_
-# has _value_.
-#
+## Attribute
 ##
-subcorpus <- function(tabulated, structural, positional=NULL, value=NULL) {
-  if (! structural %in% attr(tabulated, "structural")) {
-    stop("structural attribute not found");
-  }
-  if (is.null(positional) & is.null(value)) {
-    p <- tabulated[,structural];
-    return(tabulated[ p != -1 , ]);
-  } else if (!is.null(positional) & !is.null(value)) {
-    if (! positional %in% attr(tabulated, "positional")) {
-      stop("positional attribute not found");
-    }
-    p <- tabulated[,structural];
-    a <- tabulated[,positional];
-    ids <- unique(p[ a == value ]);
-    return(tabulated[ p == ids , ]);
-  } else {
-    stop("both 'positional' and 'value' must be NULL, or none of them");
-  }
+############################################################
+
+setGeneric("structural", function(obj) {
+  return(standardGeneric("structural"));
+})
+
+setMethod("structural", "Tabulated", function(obj) obj@structural)
+
+setGeneric("positional", function(obj) {
+  return(standardGeneric("positional"));
+})
+
+setMethod("positional", "Tabulated", function(obj) obj@positional)
+
+############################################################
+##
+## Utility functions
+##
+############################################################
+
+printTabulated <- function(x) {
+  summary(x);
+  print(head(x));
 }
 
-asTabulated <- function(x, ...) UseMethod("asTabulated");
+setMethod("print", signature(x="Tabulated"), printTabulated)
 
-asTabulated.fullText <- function(fullText) {
-  x <- unlist(fullText);
-  m <- data.frame(word=x);
-  y <- sapply(fullText, length);
-  m[, "part"] <- rep(0:(length(fullText) - 1), times=y);
-  t <- tabulated(m, "word", "part");
-  return(t);
+summaryTabulated <- function(object){
+  cat(paste("A corpus with", nrow(object), "tokens\n"));
+  cat(paste("Positional attributes:", paste(positional(object), collapse=" "), "\n"));
+  cat(paste("Structural attributes:", paste(structural(object), collapse=" "), "\n"));
+  invisible(object);
 }
+
+setMethod("summary", signature(object = "Tabulated"), summaryTabulated)
 

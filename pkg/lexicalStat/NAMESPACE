@@ -6,22 +6,19 @@ import(Matrix)
 #    ,"diag" # <- need (generic, with its methods!)
 #    )
 
-
 import(XML)
 
-# functions exported from file "R/conc.R"
-export(kwic, kwic.fullText, conc, word.conc, text.conc);
-
-# functions exported from file "R/frequencyList.R"
-export(vector2frequencyList);
-export(print.frequencyList);
-export(asFrequencyList, asFrequencyList.tabulated, asFrequencyList.fullText);
-export(frequencyList, lexicalTable2frequencyList);
+# S4 methods to be exported :
+#
+# is.subcorpus.of.R as.R subcorpus.R
+#
+# export: including generics
+# exportMethods: for methods on generics defined in other packages, e.g., show, initialize
 
 # functions exported from file "R/fullText.R"
+export(fullText);
 export(lines2fullText, files2fullText);
-export(print.fullText, summary.fullText);
-export(asFullText, asFullText.tabulated);
+#export(asFullText, asFullText.tabulated);
 export(tokenize, tokenize.treetagger, tokenize.simple);
 export(print.tokens.by.parts, untokenize.by.parts);
 export(flip.inner.outer.parts, remove.inner.part);
@@ -30,20 +27,28 @@ export(get.parts.containing.form, get.parts.containing.all.forms, get.tokens.by.
 
 # functions exported from file "R/lexicalTable.R"
 export(lexicalTable);
-export(printLexicalTable, summaryLexicalTable);
 export(readLexicalTable, writeLexicalTable);
-export(asLexicalTable, asLexicalTable.fullText);
+#export(asLexicalTable, asLexicalTable.fullText);
+
+# functions exported from file "R/frequencyList.R"
+export(frequencyList);
+#export(asFrequencyList, asFrequencyList.tabulated, asFrequencyList.fullText);
+
+# functions exported from file "R/tabulated.R"
+export(tabulated);
+export(subcorpus);
+#export(asTabulated, asTabulated.fullText);
+
+
+
+# functions exported from file "R/conc.R"
+export(kwic, kwic.fullText, conc, word.conc, text.conc);
 
 # functions exported from file "R/main.R"
 export(compare.txts);
 
 # functions exported from file "R/ngram.R"
 export(ngram.parts, ngram, ngram.matrix.parts, ngram.matrix);
-
-# functions exported from file "R/tabulated.R"
-export(tabulated);
-export(subcorpus);
-export(asTabulated, asTabulated.fullText);
 
 # functions exported from file "R/tactique.R"
 export(get.words.by.slices, remove.inner.part, flip.inner.outer.parts, get.words.by.slices.by.parts, get.sub.corpus.in.tactique, slice.mot.specificities);

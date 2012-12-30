@@ -1,5 +1,5 @@
 
-## Corpus as waw character vectors into a list.
+## Corpus as raw character vectors into a list.
 
 # TODO :
 
@@ -38,9 +38,24 @@
 # 	m[names(complementaire.fl),] <- complementaire.fl;
 # }
 
+setClass("FullText",
+         representation(depth = "numeric"),
+         contains = "list");
+
 ############################################################
 ##
-## Constructors/readers
+## Constructor
+##
+############################################################
+
+fullText <- function(l, depth=1) {
+  obj <- new("FullText", l, depth=depth);
+  return(obj);
+}
+
+############################################################
+##
+## Reader
 ##
 ############################################################
 
@@ -64,9 +79,8 @@ lines2fullText <- function(file, enc="UTF-8", skipEmpty=FALSE) {
   }
   parts <- tokenize(lines);
   names(parts) <- 1:length(parts);
-  class(parts) <- "fullText";
-  attr(parts, "depth") <- 1;
-  return(parts);
+  obj <- fullText(parts);
+  return(obj);
 }
 
 #
@@ -91,9 +105,8 @@ files2fullText <- function(files, enc="UTF-8", skipEmpty=FALSE) {
     parts[[i]] <- part;
   }
   names(parts) <- files;
-  class(parts) <- "fullText";
-  attr(parts, "depth") <- 1;
-  return(parts);
+  obj <- fullText(parts);
+  return(obj);
 }
 
 ############################################################
@@ -102,41 +115,23 @@ files2fullText <- function(files, enc="UTF-8", skipEmpty=FALSE) {
 ##
 ############################################################
 
-print.fullText <- function(fullText) {
-  summary(fullText);
-  for (i in 1:min(length(fullText), 10)) {
-    part <- fullText[[i]]
+printFullText <- function(x) {
+  summary(x);
+  for (i in 1:min(length(x), 10)) {
+    part <- x[[i]]
     tokens <- part[1:min(10, length(part))];
     cat(paste(paste(tokens, collapse=" "), "...\n", sep=""));
   }
 }
 
-summary.fullText <- function(fullText) {
-  print(paste("A raw corpus with", length(fullText), "parts and ", sum(sapply(fullText, length)), "tokens"));
+setMethod("print", signature(x="FullText"), printFullText)
+
+summaryFullText <- function(object){
+  print(paste("A raw corpus with", length(object), "parts and ", sum(sapply(object, length)), "tokens"));
+  invisible(object);
 }
 
-############################################################
-##
-## As functions
-##
-############################################################
-
-asFullText <- function(x, ...) UseMethod("asFullText");
-
-asFullText.tabulated <- function(corpus, positional, structural) {
-  if (is.null(positional)) {
-    stop("positional cannot be NULL");
-  }
-  if (is.null(structural)) {
-    stop("structural cannot be NULL");
-  }
-# TODO check if structural and positional exist
-  fullText <- split(corpus[,positional], corpus[,structural])
-  fullText <- lapply(fullText, as.character);
-  class(fullText) <- "fullText";
-  attr(fullText, "depth") <- 1;
-  return(fullText);
-}
+setMethod("summary", signature(object = "FullText"), summaryFullText)
 
 ############################################################
 ##

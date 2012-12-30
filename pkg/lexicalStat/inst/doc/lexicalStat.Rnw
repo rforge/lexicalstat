@@ -1,7 +1,5 @@
 \documentclass{article}
-
 %\VignetteIndexEntry{Introduction to lexicalStat}
-%\VignetteDepends{reshape}
 \usepackage{lmodern}
 \usepackage{makeidx}
 \usepackage{hyperref}

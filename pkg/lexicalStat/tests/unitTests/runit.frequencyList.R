@@ -1,34 +1,34 @@
-test_frequencyList_vector2frequencyList <- function() {
+test_frequencyList_frequencyList <- function() {
 	x <- c(1, 2, 1, 2, 1, 3);
 	names(x) <- LETTERS[1:length(x)];
-	fl <- vector2frequencyList(x);
+	fl <- frequencyList(x);
 }
 
-test_frequencyList_vector2frequencyList_nonames <- function() {
+test_frequencyList_frequencyList_nonames <- function() {
 	x <- c(1, 2, 1, 2, 1, 3);
-	checkException(vector2frequencyList(x));
+	checkException(frequencyList(x));
 }
 
-test_frequencyList_vector2frequencyList_empty_names <- function() {
+test_frequencyList_frequencyList_empty_names <- function() {
 	x <- c(1, 2, 1, 2, 1, 3);
 	names(x) <- c(LETTERS[1:(length(x)-1)], "");
-	checkException(vector2frequencyList(x));
+	checkException(frequencyList(x));
 }
 
-test_frequencyList_vector2frequencyList_not_numeric <- function() {
-	checkException(vector2frequencyList(LETTERS[1:10]));
+test_frequencyList_frequencyList_not_numeric <- function() {
+	checkException(frequencyList(LETTERS[1:10]));
 }
 
-test_frequencyList_vector2frequencyList2 <- function() {
+test_frequencyList_frequencyList2 <- function() {
 	c <- LETTERS[sample(1:20, 20, replace=T)];
 	f <- table(c)
-	fl <- vector2frequencyList(f);
+	fl <- frequencyList(f);
 }
 
 test_frequencyList_print <- function() {
 	c <- LETTERS[sample(1:20, 20, replace=T)];
 	f <- table(c)
-	fl <- vector2frequencyList(f);
+	fl <- frequencyList(f);
 	print(fl);
 }
 
@@ -42,7 +42,7 @@ test_frequencyList_print <- function() {
 
 ############################################################
 ##
-## is.a.subcorpus.of
+## is.subcorpus.of
 ##
 ############################################################
 

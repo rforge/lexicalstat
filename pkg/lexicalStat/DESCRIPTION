@@ -12,6 +12,6 @@ LazyLoad: yes
 Suggests: 
 Description: Implementations of statistical methods such as measure of word attraction for statistical analysis of large corpora through lexical phenomena.
 URL: http://www.r-project.org
-Collate: conc.R frequencyList.R fullText.R lexicalTable.R main.R ngram.R tabulated.R tactique.R treetagger.R word.association.R
+Collate: frequencyList.R fullText.R lexicalTable.R tabulated.R conc.R main.R ngram.R tactique.R treetagger.R word.association.R is.subcorpus.of.R as.R subcorpus.R
 Encoding: latin1
 

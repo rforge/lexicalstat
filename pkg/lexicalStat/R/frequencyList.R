@@ -3,7 +3,16 @@
 #})
 #setMethod("frequencyList", signature(x="numeric"), vector2frequencyList);
 
-vector2frequencyList <- function(x) {
+setClass("FrequencyList",
+         contains = "numeric");
+
+############################################################
+##
+## Constructor
+##
+############################################################
+
+frequencyList <- function(x) {
   if (!is.numeric(x)) {
       stop("frequencyList needs an numeric vector");
   }
@@ -12,10 +21,17 @@ vector2frequencyList <- function(x) {
   }
   if (any("" == names(x))) stop("empty string cannot be a type name");
   class(x) <- "frequencyList";
-  return(x);
+  obj <- new("FrequencyList", x);
+  return(obj);
 }
 
-print.frequencyList <- function(x) {
+############################################################
+##
+## Utility functions
+##
+############################################################
+
+printFrequencyList <- function(x) {
   cat(paste("A frequency list:\n"));
   cat(paste("Number of forms:", length(x), "\n"));
   cat(paste("Number of tokens:", sum(x), "\n"));
@@ -32,66 +48,11 @@ print.frequencyList <- function(x) {
   invisible(x);
 }
 
-############################################################
-##
-## As functions
-##
-############################################################
+setMethod("print", signature(x="FrequencyList"), printFrequencyList)
 
-asFrequencyList <- function(x, ...) UseMethod("asFrequencyList");
-
-asFrequencyList.tabulated <- function(corpus, structural) {
-  if (! structural %in% attr(corpus, "positional")) {
-    stop("Unknown structural attribute");
-  }
-  freq <- table(corpus[,structural]);
-  return(vector2frequencyList(freq));
+summaryFrequencyList <- function(object){
+  print(paste("A FrequencyList with", length(object), "forms and ", sum(objecit), "tokens\n"));
+  invisible(object);
 }
 
-asFrequencyList.fullText <- function(fullText) {
-  if (! "fullText" %in% class(fullText)) {
-    stop("not a fullText object");
-  }
-  freq <- table(unlist(fullText));
-  return(vector2frequencyList(freq));
-}
-
-setGeneric("frequencyList", function(x) {
-  return(standardGeneric("frequencyList"));
-})
-
-lexicalTable2frequencyList <- function(x) {
-   fl <- rowSums(x);
-   n <- rownames(x);
-   names(fl) <- n;
-   return(frequencyList(fl));
-}
-
-setMethod("frequencyList", signature(x="LexicalTable"), lexicalTable2frequencyList);
-
-############################################################
-##
-## is.a.subcorpus.of
-##
-############################################################
-
-.is.a.subcorpus.of <- function(subcorpus, corpus) {
-  if (!class(subcorpus) == "frequencyList") stop("subcorpus must be a frequencyList");
-  if (!class(corpus) == "frequencyList") stop("corpus must be a frequencyList");
-  if (! all(names(subcorpus) %in% names(corpus))) {
-    i <- names(subcorpus) %in% names(corpus);
-    stop(
-        paste(
-          sum(! i),
-          "types of the subcorpus not found in the corpus: ",
-          paste(names(subcorpus)[!i], collapse=", ")
-          )
-        );
-  }
-  if (any(subcorpus > corpus[names(subcorpus)])) {
-    stop("type cannot be more frequent in the subcorpus than in the corpus");
-  }
-
-  return(TRUE);
-}
-
+setMethod("summary", signature(object = "FrequencyList"), summaryFrequencyList)

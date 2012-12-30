@@ -19,6 +19,11 @@ setClass("LexicalTable",
 #> z
 #10 x 10 sparse Matrix of class "dgCMatrix"
 
+############################################################
+##
+## Constructor
+##
+############################################################
 
 lexicalTable <- function(mat) {
   if (is.data.frame(mat)) {
@@ -58,21 +63,17 @@ lexicalTable <- function(mat) {
 ##
 ############################################################
 
-printLexicalTable <- function(x) {
+setMethod("print", signature(x="LexicalTable"), function(x) {
   cat(paste("A lexical table\n"));
-}
+})
 
-setMethod("print", signature(x="LexicalTable"), printLexicalTable)
-
-summaryLexicalTable <- function(object){
+setMethod("summary", signature(object = "LexicalTable"), function(object){
   cat(paste("A lexical table:\n"));
   cat(paste("Number of parts (columns):", ncol(object), "\n"));
   cat(paste("Number of forms (rows):", nrow(object), "\n"));
   cat(paste("Number of tokens:", sum(object), "\n"));
   invisible(x);
-}
-
-setMethod("summary", signature(object = "LexicalTable"), summaryLexicalTable)
+})
 
 ############################################################
 ##
@@ -123,60 +124,3 @@ setGeneric("write", function(obj, file) {
 
 setMethod("write", "LexicalTable", writeLexicalTable);
 
-############################################################
-##
-## As functions
-##
-############################################################
-
-asLexicalTable <- function(x, ...) UseMethod("asLexicalTable");
-
-asLexicalTable.tabulated <- function(tabulated, positional, structural) {
-  if (! structural %in% attr(tabulated, "structural")) {
-    stop("structural attribute not known");
-  }
-  positional.factor <- as.factor(tabulated[, positional]);
-  structural.factor <- as.factor(tabulated[, structural]);
-  forms <- levels(positional.factor);
-  parts <- levels(structural.factor);
-
-  f <- count(data.frame(as.numeric(positional.factor), as.numeric(structural.factor)));
-  i <- f[,1];
-  j <- f[,2];
-
-  m <- sparseMatrix(i=i, j=j, x=f[,3]);
-  rownames(m) <- forms;
-  colnames(m) <- parts;
-
-  return(lexicalTable(m));
-}
-
-asLexicalTable.fullText <- function(fullText) {
-  debug <- FALSE;
-  if (debug) print("[list2lexical.table.sparse] checking argument...");
-  all.character <- sapply(fullText, is.character);
-  if (!all(all.character)) stop("all element of the list must be character vector of token");
-  if (debug) print("[list2lexical.table.sparse] ...forms and tokens...");
-
-  tokens <- unlist(fullText);
-  forms <- unique(tokens);
-
-  if (debug) print("[list2lexical.table.sparse] ...tables and tables length...");
-  #part.lengths <- sapply(fullText, length);
-  part.tables <- lapply(fullText, table);
-  part.table.lengths <- sapply(part.tables, length);
-
-  if (debug) print("[list2lexical.table.sparse] ...i...");
-  i <- unlist(sapply(part.tables, function(t) which(forms %in% names(t))));
-  if (debug) print("[list2lexical.table.sparse] ...j...");
-  j <- rep(1:length(fullText), part.table.lengths);
-  if (debug) print("[list2lexical.table.sparse] ...v...");
-  v <- unlist(sapply(part.tables, as.numeric));
-
-  if (debug) print("[list2lexical.table.sparse] ...creating matrix...");
-  #m <- spMatrix(nrow=length(fullText), ncol=length(forms), i=i, j=j, x=v);
-  m <- sparseMatrix(i=i, j=j, x=v);
-  rownames(m) <- forms;
-  colnames(m) <- names(fullText);
-  return(lexicalTable(m));
-}

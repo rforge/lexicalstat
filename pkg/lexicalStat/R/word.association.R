@@ -70,7 +70,7 @@ wam.frequencyList <- function(corpus, corpusFrequencyList, measure="specificitie
     stop("second argument must be a frequency list");
   }
 
-  .is.a.subcorpus.of(corpus, corpusFrequencyList);
+  is.subcorpus.of(corpus, corpusFrequencyList);
 
   N <- sum(corpusFrequencyList);
   n <- sum(corpus);
