@@ -9,6 +9,8 @@
 #}
 
 ##
+##
+ # ----------------------------------------------------
  #
  # Read a file produced by treetagger and convert it into a dataframe of class "corpus".
  #
@@ -105,6 +107,7 @@
  # 
  # 
  #
+ # ----------------------------------------------------
  ##
 read.treetagger <- function(file, contains.xml=TRUE, discard.xml=FALSE) {
   if (!file.exists(file)) {
@@ -166,9 +169,11 @@ read.treetagger <- function(file, contains.xml=TRUE, discard.xml=FALSE) {
 
 
 ##
+ # ----------------------------------------------------
  #
+ # Private function for dealing with XML markup
  #
- #
+ # ----------------------------------------------------
  ##
 .get.markup.matrix <- function(x, is.markup, debug) {
   markup <- x[is.markup];
