@@ -12,10 +12,10 @@
 ##
  # ----------------------------------------------------
  #
- # Read a file produced by treetagger and convert it into a dataframe of class "corpus".
+ # Read a file produced by treetagger and convert it into a dataframe of class "tabulated".
  #
  # If XML tags are found in the file, they are represented "ala CWB" (see documentation
- # of class "corpus"). In extra column of the data frame: each element has it own column
+ # of class "tabulated"). In extra column of the data frame: each element has it own column
  # and each start/end tag pair is representend as an id in this column
  #
  # For instance, the following file :
@@ -114,7 +114,7 @@ read.treetagger <- function(file, contains.xml=TRUE, discard.xml=FALSE) {
     stop("cannot read or access file");
   }
 
-  debug <- TRUE;
+  debug <- FALSE;
   if (debug) print("Read lines");
   x <- readLines(file);
 
@@ -154,16 +154,18 @@ read.treetagger <- function(file, contains.xml=TRUE, discard.xml=FALSE) {
 ## Markup
 ##
 
+  positional.attributes <- colnames(corpus);
+  structural.attributes <- character();
   if (contains.xml) {
     if(!discard.xml) {
       markup.matrix <- .get.markup.matrix(x, is.markup, debug);
+      structural.attributes <- colnames(markup.matrix);
       corpus <- cbind(corpus, markup.matrix);
     }
     corpus <- corpus[-which(is.markup),];
   }
 
-  class(corpus) <- c(class(corpus), "corpus");
-
+  corpus <- tabulated(corpus, positional.attributes, structural.attributes);
   return(corpus);
 }
 
@@ -239,9 +241,11 @@ read.treetagger <- function(file, contains.xml=TRUE, discard.xml=FALSE) {
 	    sep=""));
     }
     if (debug) print(paste("... ... itérations:", length(index.start)));
-    start.and.end <- mapply(`:`, index.start, index.end)
+    start.and.end <- mapply(`:`, index.start, index.end, SIMPLIFY=FALSE); # If TRUE, produces a vector-matrix when length(index.start) == 1
+    if(debug) print(start.and.end);
     size.of.chunk <- sapply(start.and.end, length);
     index <- rep(0:(length(start.and.end)-1), times=size.of.chunk)
+    if(debug) print(index);
     markup.matrix[unlist(start.and.end), t] <- index;
   }
   return(markup.matrix);

@@ -41,6 +41,7 @@ export(compare.txts);
 export(ngram.parts, ngram, ngram.matrix.parts, ngram.matrix);
 
 # functions exported from file "R/tabulated.R"
+export(tabulated);
 export(subcorpus);
 export(asTabulated, asTabulated.fullText);
 
