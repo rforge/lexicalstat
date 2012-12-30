@@ -10,7 +10,7 @@ import(Matrix)
 import(XML)
 
 # functions exported from file "R/conc.R"
-export(conc.tokens.by.part, conc, word.conc, text.conc, get.tokens.by.context.by.part);
+export(kwic, kwic.fullText, conc, word.conc, text.conc);
 
 # functions exported from file "R/frequencyList.R"
 export(vector2frequencyList);
@@ -25,7 +25,8 @@ export(asFullText, asFullText.tabulated);
 export(tokenize, tokenize.treetagger, tokenize.simple);
 export(print.tokens.by.parts, untokenize.by.parts);
 export(flip.inner.outer.parts, remove.inner.part);
-export(get.parts.with.token.fl, get.parts.with.token, get.parts.with.tokens);
+export(get.parts.containing.form, get.parts.containing.all.forms, get.tokens.by.context.by.part);
+# get.parts.with.token.fl, 
 
 # functions exported from file "R/lexicalTable.R"
 export(lexicalTable);

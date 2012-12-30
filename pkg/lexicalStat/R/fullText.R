@@ -158,7 +158,8 @@ tokenize.simple <- function(parts) {
 }
 
 .tokenize <- function(parts, regexp) {
-  if (!is.character(parts)) stop("part must be a character vector");
+  if (!is.character(parts)) stop("parts must be a character vector");
+  if (any(parts == "")) stop("parts must not contain empty string");
   corpus.tokenized <- strsplit(parts, regexp, perl=T);
   index <- sapply(corpus.tokenized, function(x) {length(x) > 0});
   if (!is.logical(index)) {
@@ -168,8 +169,6 @@ tokenize.simple <- function(parts) {
   corpus.tokenized <- lapply(corpus.tokenized, function(v) {  if (any(v == "")) v[-which(v=="")] else v });
   return(corpus.tokenized);
 }
-
-
 
 print.tokens.by.parts <- function(tokens.by.parts) {
   if (!is.list(tokens.by.parts)) stop("tokens.by.parts must be a list");
@@ -189,9 +188,9 @@ untokenize.by.parts <- function(tokens.by.parts) {
 ##
 ############################################################
 
-# Inverse the part/slice ordering. Suppose that each inner part have the same number of part.  make:
-# input (e.g. the output of get.words.by.slices.by.parts()) : 
-# words.by.slices.by.parts  == list(
+# Inverse the part/subpart ordering. Suppose that each inner part have the same number of part.  make:
+# input (e.g. the output of get.words.by.subparts.by.parts()) : 
+# tokens.by.subparts.by.parts  == list(
 #   partA1=list(
 #     partB1=c(word1, word2),
 #     partB2=c(word1, word2)
@@ -207,7 +206,7 @@ untokenize.by.parts <- function(tokens.by.parts) {
 # );
 #
 # output :
-# words.by.parts.by.slices == list(
+# words.by.parts.by.subparts == list(
 #   list(
 #     partA1=c(word1, word2),
 #     partA2=c(word1, word2),
@@ -219,41 +218,40 @@ untokenize.by.parts <- function(tokens.by.parts) {
 #     partA3=c(word1, word2)
 #   )
 # );
-flip.inner.outer.parts <- function(words.by.slices.by.parts, nslice=10) {
-  check.slice.length <- sapply(words.by.slices.by.parts, function(part) {
-      length(part) == nslice
+flip.inner.outer.parts <- function(tokens.by.subparts.by.parts, nsubpart=10) {
+  check.subpart.length <- sapply(tokens.by.subparts.by.parts, function(part) {
+      length(part) == nsubpart;
   });
-  if (!all(check.slice.length)) {
-    stop(paste("all part must contains", nslice, "slice"));
+  if (!all(check.subpart.length)) {
+    stop(paste("all part must contains", nsubpart, "subpart"));
   }
 
-  words.by.parts.by.slices <- lapply(
-      1:nslice,
-      function(slice.idx, part) # slice.idx: index of a slice
+  words.by.parts.by.subparts <- lapply(
+      1:subpart,
+      function(subpart.idx, part) # subpart.idx: index of a subpart
       { 
       lapply(
         part,
-        function(part, slice.idx) {
-        if (length(part) < slice.idx) stop(paste("slice index too hight", slice.idx));
-        return(part[[slice.idx]])
+        function(part, subpart.idx) {
+        if (length(part) < subpart.idx) stop(paste("subpart index too hight", subpart.idx));
+        return(part[[subpart.idx]])
         },
-        slice.idx)
+        subpart.idx)
       },
-      words.by.slices.by.parts
+      tokens.by.subparts.by.parts
       );
-  return(words.by.parts.by.slices);
+  return(words.by.parts.by.subparts);
 }
 
-# keep only the division in slice:
+# keep only the division in subpart:
 # corpus == list(
-#   slice1=c(word1, word2, word1, word2),
-#   slice2=c(word1, word2, word1, word2)
+#   subpart1=c(word1, word2, word1, word2),
+#   subpart2=c(word1, word2, word1, word2)
 # );
-remove.inner.part <- function(words.by.parts.by.slices) {
-  words.by.slices <- lapply(words.by.parts.by.slices, function(x) {unlist(x)});
-  return(words.by.slices);
+remove.inner.part <- function(tokens.by.parts.by.subparts) {
+  tokens.by.subparts <- lapply(tokens.by.parts.by.subparts, function(x) {unlist(x)});
+  return(tokens.by.subparts);
 }
-
 
 ############################################################
 ##
@@ -262,20 +260,60 @@ remove.inner.part <- function(words.by.parts.by.slices) {
 ############################################################
 
 
-get.parts.with.token.fl <- function(tokens.by.part, token) {
-  subcorpus <- get.parts.with.token(tokens.by.part, token);
-  subcorpus.fl <- table(unlist(subcorpus));
-  return(subcorpus.fl);
-}
+# TO BE DELETED
+#get.parts.with.token.fl <- function(tokens.by.part, token) {
+#  subcorpus <- get.parts.with.token(tokens.by.part, token);
+#  subcorpus.fl <- table(unlist(subcorpus));
+#  return(subcorpus.fl);
+#}
 
-get.parts.with.token <- function(tokens.by.part, token) {
-  contain.token <- sapply(tokens.by.part, function(part) token %in% part);
-  subcorpus <- tokens.by.part[contain.token];
+get.parts.containing.form <- function(tokens.by.part, form) {
+  if (length(form) != 1) stop("form must have one element");
+  if (!is.character(form)) stop("form must be a character vector");
+  if (attr(tokens.by.part, "depth") != 1) stop("depth must be 1");
+  contain.form <- sapply(tokens.by.part, function(part) form %in% part);
+  if (all(!contain.form)) {
+    stop("No occurrence found");
+  }
+  subcorpus <- tokens.by.part[contain.form];
   return(subcorpus);
 }
 
-get.parts.with.tokens <- function(tokens.by.part, tokens) {
-  contain.token <- sapply(tokens.by.part, function(part) all(tokens %in% part));
-  subcorpus <- tokens.by.part[contain.token];
+get.parts.containing.all.forms <- function(tokens.by.part, forms) {
+  if (!is.character(forms)) stop("token must be a character vector");
+  if (attr(tokens.by.part, "depth") != 1) stop("depth must be 1");
+  contain.form <- sapply(tokens.by.part, function(part) all(forms %in% part));
+  if (all(!contain.form)) {
+    stop("No occurrence found");
+  }
+  subcorpus <- tokens.by.part[contain.form];
   return(subcorpus);
+}
+
+##
+ #
+ # Get each occurrence found of a form with a given number of cooccurrent
+ #
+ ##
+get.tokens.by.context.by.part <- function(tokens.by.part, form, span.size) {
+  if (!is.list(tokens.by.part)) stop("tokens.by.part must be a list");
+  subcorpus.by.context.by.part <- lapply(tokens.by.part, function(tokens) {
+      idx <- which(form == tokens);
+      if (length(idx) > 0) {
+        contexts <- vector(mode="list", length=length(idx));
+        for(i in 1:length(idx)) {
+          j <- idx[i];
+          id <- (j-span.size):(j+span.size);
+          id <- id[id > 0 & id <= length(tokens)];
+          contexts[[i]] <- tokens[id];
+        }
+        return(contexts);
+      } else {
+        return(NULL);
+      }
+  });
+  subcorpus.by.context.by.part <- subcorpus.by.context.by.part[
+    ! sapply(subcorpus.by.context.by.part, is.null)
+    ];
+  return(subcorpus.by.context.by.part);
 }

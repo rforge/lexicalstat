@@ -6,39 +6,16 @@
 
 kwic <- function(x, ...) UseMethod("kwic");
 
-kwic.fullText <- function(x) {
-}
-
-get.tokens.by.context.by.part <- function(tokens.by.part, form, span.size) {
-  if (!is.list(tokens.by.part)) stop("tokens.by.part must be a list");
-  subcorpus.by.context.by.part <- lapply(tokens.by.part, function(tokens) {
-      idx <- which(form == tokens);
-      if (length(idx) > 0) {
-        contexts <- vector(mode="list", length=length(idx));
-        for(i in 1:length(idx)) {
-          j <- idx[i];
-          id <- (j-span.size):(j+span.size);
-          id <- id[id > 0 & id <= length(tokens)];
-          contexts[[i]] <- tokens[id];
-        }
-        return(contexts);
-      } else {
-        return(NULL);
-      }
-  });
-  subcorpus.by.context.by.part <- subcorpus.by.context.by.part[
-    ! sapply(subcorpus.by.context.by.part, is.null)
-    ];
-  return(subcorpus.by.context.by.part);
-}
-
-conc.tokens.by.part <- function(tokens.by.part, pattern, left, right) {
-  if (!is.list(tokens.by.part)) stop("tokens.by.part must be a list");
+kwic.fullText <- function(x, pattern, left, right) {
   lines.names <- names(tokens.by.part);
   lines <- lapply(tokens.by.part, function(x) paste(x, collapse=" "));
   lines <- as.character(lines);
   names(lines) <- lines.names;
   return(conc(lines, pattern, left, right));
+}
+
+kwic.tabulated <- function(x, pattern, left, right) {
+  stop("not implemented yet");
 }
 
 conc <- function(lines, pattern, left, right) {
@@ -76,6 +53,8 @@ conc <- function(lines, pattern, left, right) {
 
   return(data.frame(ref=ref, concordance=unlist(conc)));
 }
+
+######################################### TODO Following functions to be tested/debugged/reused?
 
 ###
 ### To be debugged
