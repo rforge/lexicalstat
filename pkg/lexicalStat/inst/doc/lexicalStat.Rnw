@@ -14,7 +14,6 @@
 
 \date{\today}
 
-\usepackage{Sweave}
 \begin{document}
 
 \maketitle
@@ -48,31 +47,80 @@ functions like word attraction measure and keyword in context.
 % ----------------------------------------------------------------
 \label{sec:classes}
 
-\section{\texttt{fullText}}
+There are four classes for representing a corpus. Each may be more
+suited for a given task or for a given source. Functions allow
+conversion between them.
+
+\subsection{\texttt{fullText}}
 \label{subsec:classes-fullText}
 
-jeux de données : article du monde
+The \texttt{fullText} class is the more simplistic representation of
+a corpus: it is a list whose elements are vectors containing tokens.
 
-kwic
+It may be usefull for reading any file containing text and tokenizing it.  The
+function \texttt{lines2fullText} receive a filename in argument; each line is
+tokenized separatly and give an element of the list.
 
-Fonctions pour tokenizer, lire différents fichiers ou les lignes d'un fichier.
+\texttt{summary} and \texttt{print} functions pretty print a fullText corpus.
 
-\section{\texttt{tabulated}}
+<<fullText, echo=TRUE>>=
+library(lexicalStat);
+fileName <- system.file(c("exempleData"),
+                        "LeMondeEco.small.lines",
+                        package="lexicalStat")
+c <- lines2fullText(fileName);
+summary(c);
+print(c);
+@
+
+- kwic
+
+- Fonctions pour tokenizer, lire diff\' erents fichiers ou les lignes d'un fichier.
+
+\subsection{\texttt{tabulated}}
 \label{subsec:classes-tabulated}
 
-plusieurs facettes pour un mot
+A tabulated corpus is a more rich representation:
+\begin{itemize}
+\item several features can be represented for each token (such as inflected form, lemma and pos) and not only one feature as in \texttt{fullText}). 
+\item several partition of the corpus can be represented, and not only one as in \texttt{fullText} (the repartition of tokens between list slot).
+\end{itemize}
 
-Dickens
-Treetagger
+This representation is inspired by the representation found in the \texttt{CWB}\index{CWB} corpus software.
 
-\section{\texttt{lexicalTable}}
+A common use of this data structure is for representing tabulated data produced
+by part-of-speech tagger. A function allows for reading treetagger output file.
+XML tag are interpreted as 
+
+<<tabulated, echo=TRUE>>=
+  fileName <- system.file(c("inst", "exempleData"), "sample.ttg", package="lexicalStat")
+  tabulated <- read.treetagger(fileName);
+  summary(tabulated);
+  print(tabulated);
+@
+
+\subsection{\texttt{lexicalTable}}
 \label{subsec:classes-lexicalTable}
 
-Robespierre
+A lexical table is a contingency table where rows are the given forms found in
+the corpus, and columns the differents parts of the corpus.
 
-\section{\texttt{frequencyList}}
-\label{sec:classes}
+LexicalTable object are reprensented using sparse matrix (from the package
+\texttt{Matrix}). They can be read from files or created thanks to data.frame,
+matrix, or other corpus representations such as \texttt{fullText} or
+\texttt{tabulated}.
+
+<<tabulated, echo=TRUE>>=
+  base <- paste(system.file(package = "lexicalStat"), "exempleData", "lemonde.lemme", sep="/")
+  x <- readLexicalTable(base);
+  summary(x);
+  print(x);
+@
+
+\subsection{\texttt{frequencyList}}
 \label{subsec:classes-frequencyList}
+
+A frequencyList is a simple named vector of total frequency.
 
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
