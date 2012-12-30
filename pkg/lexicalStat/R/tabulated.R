@@ -52,7 +52,7 @@ tabulated <- function(m, positional.attributes, structural.attributes) {
     stop("positional attributes must be character column-vector");
   }
 
-  obj <- new("Tabulated", m, positionnal=positional.attributes, structural=structural.attributes);
+  obj <- new("Tabulated", m, positional=positional.attributes, structural=structural.attributes);
   return(obj);
 }
 
