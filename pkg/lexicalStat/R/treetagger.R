@@ -68,57 +68,63 @@
  # Results in the following data frame :
  #
  ################################################
- #               V1       V2          V3 EntryFree form def cit
- # 3           baba      ADJ        baba         1    1   0   0
- # 6         Gâteau      NOM      gâteau         1    0   1   0
- # 7           dans      PRP        dans         1    0   1   0
- # 8         lequel  PRO:REL      lequel         1    0   1   0
- # 9             il  PRO:PER          il         1    0   1   0
- # 10         entre VER:pres      entrer         1    0   1   0
- # 11            du  PRP:det          du         1    0   1   0
- # 12        cédrat      NOM      cédrat         1    0   1   0
- # 13             ,      PUN           ,         1    0   1   0
- # 14            du  PRP:det          du         1    0   1   0
- # 15        raisin      NOM      raisin         1    0   1   0
- # 16            de      PRP          de         1    0   1   0
- # 17      Corinthe      NAM    Corinthe         1    0   1   0
- # 18            et      KON          et         1    0   1   0
- # 19            du  PRP:det          du         1    0   1   0
- # 20          rhum      NOM        rhum         1    0   1   0
- # 21            ou      KON          ou         1    0   1   0
- # 22            du  PRP:det          du         1    0   1   0
- # 23        kirsch      NOM      kirsch         1    0   1   0
- # 24             .     SENT           .         1    0   1   0
- # 29      babeurre      NOM    babeurre         2    2   0   0
- # 32       Liquide      NAM   <unknown>         2    0   2   0
- # 33        séreux      ADJ      séreux         2    0   2   0
- # 34           qui  PRO:REL         qui         2    0   2   0
- # 35         reste VER:pres      rester         2    0   2   0
- # 36         après      PRP       après         2    0   2   0
- # 37            le  DET:ART          le         2    0   2   0
- # 38     barattage      NOM   barattage         2    0   2   0
- # 39            de      PRP          de         2    0   2   0
- # 40            la  DET:ART          le         2    0   2   0
- # 41         crème      NOM       crème         2    0   2   0
- # 42             .     SENT           .         2    0   2   0
+ #             word      pos       lemma cit def EntryFree form
+ # 3           baba      ADJ        baba   0   0         1    1
+ # 6         Gâteau      NOM      gâteau   0   1         1    0
+ # 7           dans      PRP        dans   0   1         1    0
+ # 8         lequel  PRO:REL      lequel   0   1         1    0
+ # 9             il  PRO:PER          il   0   1         1    0
+ # 10         entre VER:pres      entrer   0   1         1    0
+ # 11            du  PRP:det          du   0   1         1    0
+ # 12        cédrat      NOM      cédrat   0   1         1    0
+ # 13             ,      PUN           ,   0   1         1    0
+ # 14            du  PRP:det          du   0   1         1    0
+ # 15        raisin      NOM      raisin   0   1         1    0
+ # 16            de      PRP          de   0   1         1    0
+ # 17      Corinthe      NAM    Corinthe   0   1         1    0
+ # 18            et      KON          et   0   1         1    0
+ # 19            du  PRP:det          du   0   1         1    0
+ # 20          rhum      NOM        rhum   0   1         1    0
+ # 21            ou      KON          ou   0   1         1    0
+ # 22            du  PRP:det          du   0   1         1    0
+ # 23        kirsch      NOM      kirsch   0   1         1    0
+ # 24             .     SENT           .   0   1         1    0
+ # 29      babeurre      NOM    babeurre   0   0         2    2
+ # 32       Liquide      NAM   <unknown>   0   2         2    0
+ # 33        séreux      ADJ      séreux   0   2         2    0
+ # 34           qui  PRO:REL         qui   0   2         2    0
+ # 35         reste VER:pres      rester   0   2         2    0
+ # 36         après      PRP       après   0   2         2    0
+ # 37            le  DET:ART          le   0   2         2    0
+ # 38     barattage      NOM   barattage   0   2         2    0
+ # 39            de      PRP          de   0   2         2    0
+ # 40            la  DET:ART          le   0   2         2    0
+ # 41         crème      NOM       crème   0   2         2    0
+ # 42             .     SENT           .   0   2         2    0
  ################################################
  # 
  # 
  #
  ##
+read.treetagger <- function(file, contains.xml=TRUE, discard.xml=FALSE) {
+  if (!file.exists(file)) {
+    stop("cannot read or access file");
+  }
 
-read.treetagger <- function(file) {
   debug <- TRUE;
   if (debug) print("Read lines");
   x <- readLines(file);
 
-  if (debug) print("Removing XML header if any");
-  if (grepl("^<\\?xml", x[1])) {
-    x <- x[-1];
+  if (contains.xml) {
+    if (debug) print("Removing XML header if any");
+    if (grepl("^<\\?xml", x[1])) {
+      x <- x[-1];
+    }
+    if (debug) print("Is markup ?");
+    is.markup <- grepl("^<", x);
+  } else {
+    is.markup <- FALSE;
   }
-
-  if (debug) print("Is markup ?");
-  is.markup <- grepl("^<", x);
 
   if (debug) print("Field length ?");
   fields <- strsplit(x, "\t", fixed=TRUE);
@@ -129,7 +135,6 @@ read.treetagger <- function(file) {
 
   neither.markup.nor.field <- (!is.markup) & (!is.field);
   if (any(neither.markup.nor.field)) {
-#  print(which(neither.markup.nor.field))
     stop(paste("Some lines are strange:", paste(x[neither.markup.nor.field], collapse="\n"), sep="\n"));
   }
 
@@ -146,6 +151,26 @@ read.treetagger <- function(file) {
 ## Markup
 ##
 
+  if (contains.xml) {
+    if(!discard.xml) {
+      markup.matrix <- .get.markup.matrix(x, is.markup, debug);
+      corpus <- cbind(corpus, markup.matrix);
+    }
+    corpus <- corpus[-which(is.markup),];
+  }
+
+  class(corpus) <- c(class(corpus), "corpus");
+
+  return(corpus);
+}
+
+
+##
+ #
+ #
+ #
+ ##
+.get.markup.matrix <- function(x, is.markup, debug) {
   markup <- x[is.markup];
 
 #
@@ -168,8 +193,8 @@ read.treetagger <- function(file) {
   tags.name.end.tag <- substr(markup[is.end.tag], 3, nchar(markup[is.end.tag])-1);
   tags.name.start.tag <- substr(markup[!is.end.tag], 2, nchar(markup[!is.end.tag])-1);
 
-  unique.end.tag <- unique(tags.name.end.tag);
-  unique.start.tag <- unique(tags.name.start.tag);
+  unique.end.tag <- sort(unique(tags.name.end.tag));
+  unique.start.tag <- sort(unique(tags.name.start.tag));
 
   if (debug) print(unique.end.tag);
   if (debug) print(unique.start.tag);
@@ -214,16 +239,8 @@ read.treetagger <- function(file) {
     index <- rep(0:(length(start.and.end)-1), times=size.of.chunk)
     markup.matrix[unlist(start.and.end), t] <- index;
   }
-
-  corpus <- corpus[-which(is.markup),];
-  markup.matrix <- markup.matrix[-which(is.markup),];
-  corpus <- cbind(corpus, markup.matrix);
-
-  class(corpus) <- c(class(corpus), "corpus");
-
-  return(corpus);
+  return(markup.matrix);
 }
-
 
 
 
