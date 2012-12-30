@@ -63,6 +63,7 @@ lines2fullText <- function(file, enc="UTF-8", skipEmpty=FALSE) {
     }
   }
   parts <- tokenize(lines);
+  names(parts) <- 1:length(parts);
   class(parts) <- "fullText";
   attr(parts, "depth") <- 1;
   return(parts);
@@ -116,7 +117,7 @@ summary.fullText <- function(fullText) {
 
 ############################################################
 ##
-## Conversion from other corpus classes
+## As functions
 ##
 ############################################################
 

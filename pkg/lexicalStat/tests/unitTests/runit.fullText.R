@@ -43,11 +43,17 @@ test_summary.fullText <- function() {
   summary(c);
 }
 
+############################################################
+##
+## As functions
+##
+############################################################
+
 test_asFullText.tabulated <- function() {
   fileName <- system.file(c("inst",  "exempleData"), "LeMondeEco.small.lines", package="lexicalStat")
   c <- lines2fullText(fileName);
   t <- asTabulated(c);
-  d <- asFullText(t, "word", "Part");
+  d <- asFullText(t, "word", "part");
   checkEqualsNumeric(length(c), length(d));
   checkEquals(length(c), length(d));
 }

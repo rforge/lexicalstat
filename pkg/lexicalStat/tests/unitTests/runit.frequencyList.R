@@ -6,7 +6,6 @@ test_frequencyList_vector2frequencyList <- function() {
 
 test_frequencyList_vector2frequencyList_nonames <- function() {
 	x <- c(1, 2, 1, 2, 1, 3);
-	names(x) <- LETTERS[1:length(x)];
 	checkException(vector2frequencyList(x));
 }
 
@@ -32,3 +31,19 @@ test_frequencyList_print <- function() {
 	fl <- vector2frequencyList(f);
 	print(fl);
 }
+
+############################################################
+##
+## As functions
+##
+############################################################
+
+# TODO
+
+############################################################
+##
+## is.a.subcorpus.of
+##
+############################################################
+
+# TODO

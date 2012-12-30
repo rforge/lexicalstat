@@ -1,9 +1,10 @@
 ##
 ## wam = Word association measure
 ##
-## 1/ A "wam.*" function for each corpus data structure (fullText, lexicalTable, frequencyList, corpus).
+## 1/ "wam.*" functions for each corpus data structure (fullText,
+## lexicalTable, frequencyList, corpus).
 ##
-## 2/ All these call wam.numeric() with four arguments.
+## 2/ All these functions call wam.numeric() with four arguments.
 ##
 ## 3/ wam.numeric(), in turn, calls all one (or several) of the functions
 ## computing attraction measure (loglikelihood, binomial, specificities, etc).
@@ -13,7 +14,8 @@
 # TODO : dans l'impression : mettre option si "+" ou "-".
 
 
-###########################################################################
+############################################################
+##
 ##
 ## 1/
 ##
@@ -24,7 +26,7 @@
 ## types on which the attraction measures are to be computed.
 ##
 ##
-###########################################################################
+############################################################
 
 wam <- function(corpus, ...) UseMethod("wam");
 
@@ -35,22 +37,33 @@ wam <- function(corpus, ...) UseMethod("wam");
  ##
 wam.fullText <- function(corpus, measure="specificities", types=NULL) {
   m <- asLexicalTable(corpus);
-  return (wam(m));
+  return(wam(m));
 }
 
 ##
  # ------------------------------------------------------------------------
  # for "tabulated" object
- # - positional = the column giving the form (should inflected form, lemma, or
+ # - positional = the column giving the forms (should inflected form, lemma, or
  # pos be used if they are available?)
- # - 
+ # - structural = the column giving the partition factor for the forms.
  # ------------------------------------------------------------------------
  ##
-wam.tabulated <- function(corpus, positional="word", value=NULL, structural=NULL, measure="specificities", types=NULL) {
+wam.tabulated <- function(corpus, positional="word", structural=NULL, measure="specificities", types=NULL) {
+  if (is.null(positional)) {
+    stop("positional cannot be null");
+  }
+  if (is.null(structural)) {
+    stop("structural cannot be null");
+  }
+  m <- asLexicalTable(corpus, positional, structural);
+  return(wam(m));
 }
 
 ##
+ # ------------------------------------------------------------------------
+ # For "frequencyList" object
  # TODO : problem with the formal name "corpus": actually it is the subcorpus
+ # ------------------------------------------------------------------------
  ##
 wam.frequencyList <- function(corpus, corpusFrequencyList, measure="specificities", types=NULL) {
   if (!class(corpusFrequencyList) == "frequencyList") {
@@ -62,7 +75,7 @@ wam.frequencyList <- function(corpus, corpusFrequencyList, measure="specificitie
   N <- sum(corpusFrequencyList);
   n <- sum(corpus);
   k <- corpus;
-  K <- corpusFrequencyList[names(k)];
+  K <- corpusFrequencyList[ names(k) ];
 
   measured <- wam(N, n, K, k);
 
@@ -78,7 +91,10 @@ wam.frequencyList <- function(corpus, corpusFrequencyList, measure="specificitie
 } 
 
 ##
+ # ------------------------------------------------------------------------
+ # for "lexicalTable" object
  # wam called on a "lexicalTable" corpus
+ # ------------------------------------------------------------------------
  ##
 wam.lexicalTable <- function(corpus, measure="specificities", parts=NULL, types=NULL) {
 
@@ -157,7 +173,7 @@ wam.lexicalTable <- function(corpus, measure="specificities", parts=NULL, types=
   return(measured);
 }
 
-###########################################################################
+############################################################
 ##
 ## 2/
 ##
@@ -165,7 +181,7 @@ wam.lexicalTable <- function(corpus, measure="specificities", parts=NULL, types=
 ## The generic method
 ##
 ##
-###########################################################################
+############################################################
 
 ##
  #
@@ -178,7 +194,14 @@ wam.lexicalTable <- function(corpus, measure="specificities", parts=NULL, types=
  # k : Number of occurrences of a form in the subcorpus
  #
  ##
-wam.numeric <- function(N, n, K, k, measure=c("fisher", "specificites", "binomial", "loglikelihood")) {
+wam.numeric <- function(N, n, K, k, measure="specificities") {
+  if (is.null(N) | is.null(n) | is.null(K) | is.null(k)) {
+    stop("none of the four arguments N, n, K, k can be null");
+  }
+  # TODO : a association name/function on top level, in order for the user to be able to extend the list.
+  if (any(!measure %in% c("fisher", "specificities", "binomial", "loglikelihood"))) {
+    stop(paste("unknown measure in ", paste(measure, collapse=" "), sep=""));
+  }
   wa <- matrix(0, nrow=max(N, n, K, k), ncol=length(measure));
   colnames(wa) <- measure;
   for (m in measure) {
@@ -186,7 +209,7 @@ wam.numeric <- function(N, n, K, k, measure=c("fisher", "specificites", "binomia
   }
 }
 
-###########################################################################
+############################################################
 ##
 ## 3/
 ##
@@ -194,7 +217,7 @@ wam.numeric <- function(N, n, K, k, measure=c("fisher", "specificites", "binomia
 ## The function for the various word attraction indicators
 ##
 ##
-###########################################################################
+############################################################
 
 ##
  #
@@ -231,9 +254,9 @@ specificities <- function(N, n, K, k) {
       );
 
   spelog <- double(length=length);
-  spelog[spe < 0.5] <- log10(2*spe[spe < 0.5]);
-  spelog[spe > 0.5] <- abs(log10(2 - 2*spe[spe > 0.5]));
-  spelog[spe == 0.5] <- 0;
+  spelog[specif < 0.5] <- log10(2*specif[specif < 0.5]);
+  spelog[specif > 0.5] <- abs(log10(2 - 2*specif[specif > 0.5]));
+  spelog[specif == 0.5] <- 0;
   spelog <- round(spelog, digits=4);
   return(spelog);
 }

@@ -98,12 +98,46 @@ $pathToUnitTests
 Le chargement a nécessité le package : Matrix
 Le chargement a nécessité le package : lattice
 Le chargement a nécessité le package : XML
+Le chargement a nécessité le package : plyr
 
 Attachement du package : ‘lexicalStat’
 
 The following object(s) are masked from ‘package:stats’:
 
     binomial
+
+
+
+Executing test function test_frequencyList_print  ... A frequency list:
+Number of forms: 11 
+Number of tokens: 20 
+Number of hapax: 6 
+Top frequencies :K (4) B (3) P (3) C (2) L (2) E (1) I (1) M (1) N (1) Q (1)
+ done successfully.
+
+
+
+Executing test function test_frequencyList_vector2frequencyList  ...  done successfully.
+
+
+
+Executing test function test_frequencyList_vector2frequencyList_empty_names  ... Error in vector2frequencyList(x) : empty string cannot be a type name
+ done successfully.
+
+
+
+Executing test function test_frequencyList_vector2frequencyList_nonames  ... Error in vector2frequencyList(x) : frequencyList needs an named vector
+ done successfully.
+
+
+
+Executing test function test_frequencyList_vector2frequencyList_not_numeric  ... Error in vector2frequencyList(LETTERS[1:10]) : 
+  frequencyList needs an numeric vector
+ done successfully.
+
+
+
+Executing test function test_frequencyList_vector2frequencyList2  ...  done successfully.
 
 
 
@@ -170,422 +204,63 @@ De plus : Messages d'avis :
 
 
 
-Executing test function test_creation_with_dense_matrix  ...  done successfully.
+Executing test function test_lexicalTable_creation_with_data.frame  ...  done successfully.
 
 
 
-Executing test function test_read.reetagger_contains.xml.no  ... [1] "Read lines"
-[1] "Removing XML header if any"
-[1] "Is markup ?"
-[1] "Field length ?"
-[[1]]
-[1] "babiroussa" "NOM"        "babiroussa"
+Executing test function test_lexicalTable_creation_with_dense_matrix  ...  done successfully.
 
-[[2]]
-[1] "Genre"     "NAM"       "<unknown>"
 
-[[3]]
-[1] "de"  "PRP" "de" 
 
-[[4]]
-[1] "pachydermes" "NOM"         "pachyderme" 
-
-[[5]]
-[1] ","   "PUN" ","  
-
-[[6]]
-[1] "famille" "NOM"     "famille"
-
-[[7]]
-[1] "des"     "PRP:det" "du"     
-
-[[8]]
-[1] "suidés" "NOM"    "suidés"
-
-[[9]]
-[1] ","   "PUN" ","  
-
-[[10]]
-[1] "voisins" "NOM"     "voisin" 
-
-[[11]]
-[1] "des"     "PRP:det" "du"     
-
-[[12]]
-[1] "porcs" "NOM"   "porc" 
-
-[[13]]
-[1] "et"  "KON" "et" 
-
-[[14]]
-[1] "originaires" "ADJ"         "originaire" 
-
-[[15]]
-[1] "de"  "PRP" "de" 
-
-[[16]]
-[1] "Malaisie"  "NAM"       "<unknown>"
-
-[[17]]
-[1] ":"   "PUN" ":"  
-
-[[18]]
-[1] "le"      "DET:ART" "le"     
-
-[[19]]
-[1] "babiroussa" "NOM"        "babiroussa"
-
-[[20]]
-[1] "atteint"   "VER:pres"  "atteindre"
-
-[1] "Is field ?"
-[[1]]
-[1] "babiroussa" "NOM"        "babiroussa"
-
-[[2]]
-[1] "Genre"     "NAM"       "<unknown>"
-
-[[3]]
-[1] "de"  "PRP" "de" 
-
-[[4]]
-[1] "pachydermes" "NOM"         "pachyderme" 
-
-[[5]]
-[1] ","   "PUN" ","  
-
-[[6]]
-[1] "famille" "NOM"     "famille"
-
-[[7]]
-[1] "des"     "PRP:det" "du"     
-
-[[8]]
-[1] "suidés" "NOM"    "suidés"
-
-[[9]]
-[1] ","   "PUN" ","  
-
-[[10]]
-[1] "voisins" "NOM"     "voisin" 
-
-[[11]]
-[1] "des"     "PRP:det" "du"     
-
-[[12]]
-[1] "porcs" "NOM"   "porc" 
-
-[[13]]
-[1] "et"  "KON" "et" 
-
-[[14]]
-[1] "originaires" "ADJ"         "originaire" 
-
-[[15]]
-[1] "de"  "PRP" "de" 
-
-[[16]]
-[1] "Malaisie"  "NAM"       "<unknown>"
-
-[[17]]
-[1] ":"   "PUN" ":"  
-
-[[18]]
-[1] "le"      "DET:ART" "le"     
-
-[[19]]
-[1] "babiroussa" "NOM"        "babiroussa"
-
-[[20]]
-[1] "atteint"   "VER:pres"  "atteindre"
-
-[1] "Is well formed ?"
-[1] "Is end tag ?"
-character(0)
-character(0)
-[1] "Checking start and end tag match"
-[1] "Iterating on each tag"
+Executing test function test_lexicalTable_creation_with_dense_matrix_nocolnames  ... Error in lexicalTable(m) : must have rownames
  done successfully.
 
 
 
-Executing test function test_read.reetagger_discard.xml  ... [1] "Read lines"
-[1] "Removing XML header if any"
-[1] "Is markup ?"
-[1] "Field length ?"
-[[1]]
-[1] "<EntryFree>"
-
-[[2]]
-[1] "<form>"
-
-[[3]]
-[1] "babiroussa" "NOM"        "babiroussa"
-
-[[4]]
-[1] "</form>"
-
-[[5]]
-[1] "<def>"
-
-[[6]]
-[1] "Genre"     "NAM"       "<unknown>"
-
-[[7]]
-[1] "de"  "PRP" "de" 
-
-[[8]]
-[1] "pachydermes" "NOM"         "pachyderme" 
-
-[[9]]
-[1] ","   "PUN" ","  
-
-[[10]]
-[1] "famille" "NOM"     "famille"
-
-[[11]]
-[1] "des"     "PRP:det" "du"     
-
-[[12]]
-[1] "suidés" "NOM"    "suidés"
-
-[[13]]
-[1] ","   "PUN" ","  
-
-[[14]]
-[1] "voisins" "NOM"     "voisin" 
-
-[[15]]
-[1] "des"     "PRP:det" "du"     
-
-[[16]]
-[1] "porcs" "NOM"   "porc" 
-
-[[17]]
-[1] "et"  "KON" "et" 
-
-[[18]]
-[1] "originaires" "ADJ"         "originaire" 
-
-[[19]]
-[1] "de"  "PRP" "de" 
-
-[[20]]
-[1] "Malaisie"  "NAM"       "<unknown>"
-
-[1] "Is field ?"
-[[1]]
-[1] "<EntryFree>" ""            ""           
-
-[[2]]
-[1] "<form>" ""       ""      
-
-[[3]]
-[1] "babiroussa" "NOM"        "babiroussa"
-
-[[4]]
-[1] "</form>" ""        ""       
-
-[[5]]
-[1] "<def>" ""      ""     
-
-[[6]]
-[1] "Genre"     "NAM"       "<unknown>"
-
-[[7]]
-[1] "de"  "PRP" "de" 
-
-[[8]]
-[1] "pachydermes" "NOM"         "pachyderme" 
-
-[[9]]
-[1] ","   "PUN" ","  
-
-[[10]]
-[1] "famille" "NOM"     "famille"
-
-[[11]]
-[1] "des"     "PRP:det" "du"     
-
-[[12]]
-[1] "suidés" "NOM"    "suidés"
-
-[[13]]
-[1] ","   "PUN" ","  
-
-[[14]]
-[1] "voisins" "NOM"     "voisin" 
-
-[[15]]
-[1] "des"     "PRP:det" "du"     
-
-[[16]]
-[1] "porcs" "NOM"   "porc" 
-
-[[17]]
-[1] "et"  "KON" "et" 
-
-[[18]]
-[1] "originaires" "ADJ"         "originaire" 
-
-[[19]]
-[1] "de"  "PRP" "de" 
-
-[[20]]
-[1] "Malaisie"  "NAM"       "<unknown>"
-
+Executing test function test_lexicalTable_creation_with_dense_matrix_norownames  ... Error in lexicalTable(m) : must have rownames
  done successfully.
 
 
 
-Executing test function test_read.reetagger_test_header  ... [1] "Read lines"
-[1] "Removing XML header if any"
-[1] "Is markup ?"
-[1] "Field length ?"
-[[1]]
-[1] "<EntryFree>"
+Executing test function test_lexicalTable_creation_with_sparse_matrix  ...  done successfully.
 
-[[2]]
-[1] "<form>"
 
-[[3]]
-[1] "babiroussa" "NOM"        "babiroussa"
 
-[[4]]
-[1] "</form>"
-
-[[5]]
-[1] "<def>"
-
-[[6]]
-[1] "Genre"     "NAM"       "<unknown>"
-
-[[7]]
-[1] "de"  "PRP" "de" 
-
-[[8]]
-[1] "pachydermes" "NOM"         "pachyderme" 
-
-[[9]]
-[1] ","   "PUN" ","  
-
-[[10]]
-[1] "famille" "NOM"     "famille"
-
-[[11]]
-[1] "des"     "PRP:det" "du"     
-
-[[12]]
-[1] "suidés" "NOM"    "suidés"
-
-[[13]]
-[1] ","   "PUN" ","  
-
-[[14]]
-[1] "voisins" "NOM"     "voisin" 
-
-[[15]]
-[1] "des"     "PRP:det" "du"     
-
-[[16]]
-[1] "porcs" "NOM"   "porc" 
-
-[[17]]
-[1] "et"  "KON" "et" 
-
-[[18]]
-[1] "originaires" "ADJ"         "originaire" 
-
-[[19]]
-[1] "de"  "PRP" "de" 
-
-[[20]]
-[1] "Malaisie"  "NAM"       "<unknown>"
-
-[1] "Is field ?"
-[[1]]
-[1] "<EntryFree>" ""            ""           
-
-[[2]]
-[1] "<form>" ""       ""      
-
-[[3]]
-[1] "babiroussa" "NOM"        "babiroussa"
-
-[[4]]
-[1] "</form>" ""        ""       
-
-[[5]]
-[1] "<def>" ""      ""     
-
-[[6]]
-[1] "Genre"     "NAM"       "<unknown>"
-
-[[7]]
-[1] "de"  "PRP" "de" 
-
-[[8]]
-[1] "pachydermes" "NOM"         "pachyderme" 
-
-[[9]]
-[1] ","   "PUN" ","  
-
-[[10]]
-[1] "famille" "NOM"     "famille"
-
-[[11]]
-[1] "des"     "PRP:det" "du"     
-
-[[12]]
-[1] "suidés" "NOM"    "suidés"
-
-[[13]]
-[1] ","   "PUN" ","  
-
-[[14]]
-[1] "voisins" "NOM"     "voisin" 
-
-[[15]]
-[1] "des"     "PRP:det" "du"     
-
-[[16]]
-[1] "porcs" "NOM"   "porc" 
-
-[[17]]
-[1] "et"  "KON" "et" 
-
-[[18]]
-[1] "originaires" "ADJ"         "originaire" 
-
-[[19]]
-[1] "de"  "PRP" "de" 
-
-[[20]]
-[1] "Malaisie"  "NAM"       "<unknown>"
-
-[1] "Is well formed ?"
-[1] "Is end tag ?"
-[1] "cit"       "def"       "EntryFree" "form"     
-[1] "cit"       "def"       "EntryFree" "form"     
-[1] "Checking start and end tag match"
-[1] "Iterating on each tag"
-[1] "... cit"
-[1] 22
-[1] 34
-[1] "... ... itÃ©rations: 1"
-[1] "... def"
-[1] 5
-[1] 21
-[1] "... ... itÃ©rations: 1"
-[1] "... EntryFree"
-[1] 1
-[1] 35
-[1] "... ... itÃ©rations: 1"
-[1] "... form"
-[1] 2
-[1] 4
-[1] "... ... itÃ©rations: 1"
+Executing test function test_readLexicalTable  ... Read 845268 items
+Read 11274 items
+Read 840 items
  done successfully.
+
+
+
+Executing test function test_tabulated_subcorpus_all.arguments  ...  done successfully.
+
+
+
+Executing test function test_tabulated_subcorpus_all.arguments_positional_not_found  ... Error in subcorpus(c, "cit", "foobar", "taille") : 
+  positional attribute not found
+ done successfully.
+
+
+
+Executing test function test_tabulated_subcorpus_structural  ...  done successfully.
+
+
+
+Executing test function test_tabulated_subcorpus_structural_not_found  ... Error in subcorpus(c, "foo") : structural attribute not found
+ done successfully.
+
+
+
+Executing test function test_read.reetagger_contains.xml.no  ...  done successfully.
+
+
+
+Executing test function test_read.reetagger_discard.xml  ...  done successfully.
+
+
+
+Executing test function test_read.reetagger_test_header  ...  done successfully.
 
 
 
@@ -594,168 +269,70 @@ Executing test function test_read.treetagger_file_doesnot_exist  ... Error in re
 
 
 
-Executing test function test_read.treetagger_file_with_xml  ... [1] "Read lines"
-[1] "Removing XML header if any"
-[1] "Is markup ?"
-[1] "Field length ?"
-[[1]]
-[1] "<EntryFree>"
+Executing test function test_read.treetagger_file_with_xml  ...  done successfully.
 
-[[2]]
-[1] "<form>"
 
-[[3]]
-[1] "baba" "ADJ"  "baba"
 
-[[4]]
-[1] "</form>"
-
-[[5]]
-[1] "<def>"
-
-[[6]]
-[1] "Gâteau" "NOM"    "gâteau"
-
-[[7]]
-[1] "dans" "PRP"  "dans"
-
-[[8]]
-[1] "lequel"  "PRO:REL" "lequel" 
-
-[[9]]
-[1] "il"      "PRO:PER" "il"     
-
-[[10]]
-[1] "entre"    "VER:pres" "entrer"  
-
-[[11]]
-[1] "du"      "PRP:det" "du"     
-
-[[12]]
-[1] "cédrat" "NOM"    "cédrat"
-
-[[13]]
-[1] ","   "PUN" ","  
-
-[[14]]
-[1] "du"      "PRP:det" "du"     
-
-[[15]]
-[1] "raisin" "NOM"    "raisin"
-
-[[16]]
-[1] "de"  "PRP" "de" 
-
-[[17]]
-[1] "Corinthe" "NAM"      "Corinthe"
-
-[[18]]
-[1] "et"  "KON" "et" 
-
-[[19]]
-[1] "du"      "PRP:det" "du"     
-
-[[20]]
-[1] "rhum" "NOM"  "rhum"
-
-[1] "Is field ?"
-[[1]]
-[1] "<EntryFree>" ""            ""           
-
-[[2]]
-[1] "<form>" ""       ""      
-
-[[3]]
-[1] "baba" "ADJ"  "baba"
-
-[[4]]
-[1] "</form>" ""        ""       
-
-[[5]]
-[1] "<def>" ""      ""     
-
-[[6]]
-[1] "Gâteau" "NOM"    "gâteau"
-
-[[7]]
-[1] "dans" "PRP"  "dans"
-
-[[8]]
-[1] "lequel"  "PRO:REL" "lequel" 
-
-[[9]]
-[1] "il"      "PRO:PER" "il"     
-
-[[10]]
-[1] "entre"    "VER:pres" "entrer"  
-
-[[11]]
-[1] "du"      "PRP:det" "du"     
-
-[[12]]
-[1] "cédrat" "NOM"    "cédrat"
-
-[[13]]
-[1] ","   "PUN" ","  
-
-[[14]]
-[1] "du"      "PRP:det" "du"     
-
-[[15]]
-[1] "raisin" "NOM"    "raisin"
-
-[[16]]
-[1] "de"  "PRP" "de" 
-
-[[17]]
-[1] "Corinthe" "NAM"      "Corinthe"
-
-[[18]]
-[1] "et"  "KON" "et" 
-
-[[19]]
-[1] "du"      "PRP:det" "du"     
-
-[[20]]
-[1] "rhum" "NOM"  "rhum"
-
-[1] "Is well formed ?"
-[1] "Is end tag ?"
-[1] "cit"       "def"       "EntryFree" "form"     
-[1] "cit"       "def"       "EntryFree" "form"     
-[1] "Checking start and end tag match"
-[1] "Iterating on each tag"
-[1] "... cit"
-[1] 189
-[1] 201
-[1] "... ... itÃ©rations: 1"
-[1] "... def"
-[1] 5
-[1] 25
-[1] "... ... itÃ©rations: 23"
-[1] "... EntryFree"
-[1] 1
-[1] 26
-[1] "... ... itÃ©rations: 19"
-[1] "... form"
-[1] 2
-[1] 4
-[1] "... ... itÃ©rations: 19"
+Executing test function test_wam.frequencyList  ... Timing stopped at: 0.008 0.001 0.009 
+Error in attr(measured, "N") <- N : 
+  tentative de changer un attribut en NULL
+De plus : Messages d'avis :
+1: In specif[specif_negative] <- phyper(whiteDrawn[specif_negative],  :
+  le nombre d'objets à remplacer n'est pas multiple de la taille du remplacement
+2: In specif[specif_positive] <- phyper(whiteDrawn[specif_positive] -  :
+  le nombre d'objets à remplacer n'est pas multiple de la taille du remplacement
  done successfully.
+
+
+
+Executing test function test_wam.fullText  ... Timing stopped at: 0.009 0 0.009 
+Error in UseMethod("wam") : 
+  pas de méthode pour 'wam' applicable pour un objet de classe "c('LexicalTable', 'dgCMatrix', 'CsparseMatrix', 'dsparseMatrix', 'generalMatrix', 'dMatrix', 'sparseMatrix', 'compMatrix', 'Matrix')"
+ done successfully.
+
+
+
+Executing test function test_wam.lexicalTable  ... Timing stopped at: 0.032 0.002 0.033 
+Error in UseMethod("wam") : 
+  pas de méthode pour 'wam' applicable pour un objet de classe "c('LexicalTable', 'dgCMatrix', 'CsparseMatrix', 'dsparseMatrix', 'generalMatrix', 'dMatrix', 'sparseMatrix', 'compMatrix', 'Matrix')"
+ done successfully.
+
+
+
+Executing test function test_wam.numeric  ...  done successfully.
+
+
+
+Executing test function test_wam.tabulated  ... Timing stopped at: 0.013 0 0.013 
+Error in UseMethod("wam") : 
+  pas de méthode pour 'wam' applicable pour un objet de classe "c('LexicalTable', 'dgCMatrix', 'CsparseMatrix', 'dsparseMatrix', 'generalMatrix', 'dMatrix', 'sparseMatrix', 'compMatrix', 'Matrix')"
+ done successfully.
+
+
+
+Executing test function test.specificities  ...  done successfully.
 
 ------------------- UNIT TEST SUMMARY ---------------------
 
-RUNIT TEST PROTOCOL -- Sun Dec 30 09:48:42 2012 
+RUNIT TEST PROTOCOL -- Sun Dec 30 15:47:33 2012 
 *********************************************** 
-Number of test functions: 18 
-Number of errors: 0 
+Number of test functions: 39 
+Number of errors: 4 
 Number of failures: 0 
 
  
 1 Test Suite : 
-lexicalStat unit testing - 18 test functions, 0 errors, 0 failures
-> 
-> 
-> proc.time()
-utilisateur     système      écoulé 
-      4.226       0.102       4.327 
+lexicalStat unit testing - 39 test functions, 4 errors, 0 failures
+ERROR in test_wam.frequencyList: Error in attr(measured, "N") <- N : 
+  tentative de changer un attribut en NULL
+ERROR in test_wam.fullText: Error in UseMethod("wam") : 
+  pas de méthode pour 'wam' applicable pour un objet de classe "c('LexicalTable', 'dgCMatrix', 'CsparseMatrix', 'dsparseMatrix', 'generalMatrix', 'dMatrix', 'sparseMatrix', 'compMatrix', 'Matrix')"
+ERROR in test_wam.lexicalTable: Error in UseMethod("wam") : 
+  pas de méthode pour 'wam' applicable pour un objet de classe "c('LexicalTable', 'dgCMatrix', 'CsparseMatrix', 'dsparseMatrix', 'generalMatrix', 'dMatrix', 'sparseMatrix', 'compMatrix', 'Matrix')"
+ERROR in test_wam.tabulated: Error in UseMethod("wam") : 
+  pas de méthode pour 'wam' applicable pour un objet de classe "c('LexicalTable', 'dgCMatrix', 'CsparseMatrix', 'dsparseMatrix', 'generalMatrix', 'dMatrix', 'sparseMatrix', 'compMatrix', 'Matrix')"
+Erreur : 
+
+unit testing failed (#test failures: 0, #R errors: 4)
+
+Exécution arrêtée

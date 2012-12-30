@@ -32,10 +32,19 @@ print.frequencyList <- function(x) {
   invisible(x);
 }
 
+############################################################
+##
+## As functions
+##
+############################################################
+
 asFrequencyList <- function(x, ...) UseMethod("asFrequencyList");
 
-asFrequencyList.tabulated <- function(corpus, attribute) {
-  freq <- table(corpus[,attribute]);
+asFrequencyList.tabulated <- function(corpus, structural) {
+  if (! structural %in% attr(corpus, "positional")) {
+    stop("Unknown structural attribute");
+  }
+  freq <- table(corpus[,structural]);
   return(vector2frequencyList(freq));
 }
 
@@ -59,6 +68,12 @@ lexicalTable2frequencyList <- function(x) {
 }
 
 setMethod("frequencyList", signature(x="LexicalTable"), lexicalTable2frequencyList);
+
+############################################################
+##
+## is.a.subcorpus.of
+##
+############################################################
 
 .is.a.subcorpus.of <- function(subcorpus, corpus) {
   if (!class(subcorpus) == "frequencyList") stop("subcorpus must be a frequencyList");
