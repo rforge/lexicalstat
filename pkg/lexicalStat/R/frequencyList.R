@@ -19,8 +19,13 @@ frequencyList <- function(x) {
   if (is.null(names(x))) {
       stop("frequencyList needs an named vector");
   }
+  
+  if (class(x) == "table") {
+    n <- names(x);
+    x <- as.numeric(x);
+    names(x) <- n;
+  }
   if (any("" == names(x))) stop("empty string cannot be a type name");
-  class(x) <- "frequencyList";
   obj <- new("FrequencyList", x);
   return(obj);
 }
@@ -31,7 +36,7 @@ frequencyList <- function(x) {
 ##
 ############################################################
 
-printFrequencyList <- function(x) {
+setMethod("print", signature(x="FrequencyList"), function(x) {
   cat(paste("A frequency list:\n"));
   cat(paste("Number of forms:", length(x), "\n"));
   cat(paste("Number of tokens:", sum(x), "\n"));
@@ -46,13 +51,9 @@ printFrequencyList <- function(x) {
 	"\n", sep="")
      );
   invisible(x);
-}
+});
 
-setMethod("print", signature(x="FrequencyList"), printFrequencyList)
-
-summaryFrequencyList <- function(object){
+setMethod("summary", signature(object = "FrequencyList"), function(object){
   print(paste("A FrequencyList with", length(object), "forms and ", sum(objecit), "tokens\n"));
   invisible(object);
-}
-
-setMethod("summary", signature(object = "FrequencyList"), summaryFrequencyList)
+});

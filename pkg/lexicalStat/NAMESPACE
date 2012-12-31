@@ -57,9 +57,10 @@ export(get.words.by.slices, remove.inner.part, flip.inner.outer.parts, get.words
 export(read.treetagger);
 
 # functions exported from file "R/word.association.R"
-export(wam, wam.fullText, wam.tabulated, wam.frequencyList, wam.lexicalTable, wam.numeric);
+#export(wam, wam.fullText, wam.tabulated, wam.frequencyList, wam.lexicalTable, wam.numeric);
+export(wam);
 export(fisher, specificities, binomial, loglikelihood);
-export(write.mwa, print.mwa, writeAsXML.wma);
+#export(write.mwa, print.mwa, writeAsXML.wma);
 
 #export(extract.field.in.treetagger.struct, remove.unknown.in.treetagger.struct, repair.unknown.in.treetagger.struct, get.treetagger.struct.in.xml.element, characters2treetagger.struct, extract.word.on.pos.in.treetagger.struct);
 

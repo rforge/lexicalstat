@@ -108,10 +108,7 @@ The following object(s) are masked from ‘package:stats’:
 
 
 
-Executing test function test_frequencyList_frequencyList  ... Timing stopped at: 0.002 0 0.002 
-Error in initialize(value, ...) : 
-  cannot use object of class “frequencyList” in new():  class “FrequencyList” does not extend that class
- done successfully.
+Executing test function test_frequencyList_frequencyList  ...  done successfully.
 
 
 
@@ -131,21 +128,20 @@ Executing test function test_frequencyList_frequencyList_not_numeric  ... Error 
 
 
 
-Executing test function test_frequencyList_frequencyList2  ... Timing stopped at: 0.002 0 0.002 
-Error in initialize(value, ...) : 
-  cannot use object of class “frequencyList” in new():  class “FrequencyList” does not extend that class
+Executing test function test_frequencyList_frequencyList2  ...  done successfully.
+
+
+
+Executing test function test_frequencyList_print  ... A frequency list:
+Number of forms: 13 
+Number of tokens: 20 
+Number of hapax: 7 
+Top frequencies :O (3) I (2) J (2) L (2) M (2) Q (2) B (1) E (1) F (1) H (1)
  done successfully.
 
 
 
-Executing test function test_frequencyList_print  ... Timing stopped at: 0.001 0 0.001 
-Error in initialize(value, ...) : 
-  cannot use object of class “frequencyList” in new():  class “FrequencyList” does not extend that class
- done successfully.
-
-
-
-Executing test function test_asFullText.tabulated  ... Timing stopped at: 0.004 0 0.005 
+Executing test function test_asFullText.tabulated  ... Timing stopped at: 0.004 0 0.004 
 Error in func() : impossible de trouver la fonction "asTabulated"
  done successfully.
 
@@ -239,52 +235,44 @@ Read 840 items
 
 
 
-Executing test function test_tabulated_subcorpus_all.arguments  ... Timing stopped at: 0.011 0 0.01 
-Error in .nextMethod(structure(list(word = structure(c(14L, 20L, 16L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
+Executing test function test_tabulated_subcorpus_all.arguments  ... Timing stopped at: 0.011 0 0.011 
+Error in subcorpus(c, "cit", "word", "taille") : 
+  structural attribute not found
  done successfully.
 
 
 
-Executing test function test_tabulated_subcorpus_all.arguments_positional_not_found  ... Timing stopped at: 0.007 0 0.008 
-Error in .nextMethod(structure(list(word = structure(c(14L, 20L, 16L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
+Executing test function test_tabulated_subcorpus_all.arguments_positional_not_found  ... Error in subcorpus(c, "cit", "foobar", "taille") : 
+  structural attribute not found
  done successfully.
 
 
 
-Executing test function test_tabulated_subcorpus_structural  ... Timing stopped at: 0.004 0 0.004 
-Error in .nextMethod(structure(list(word = structure(c(14L, 20L, 16L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
+Executing test function test_tabulated_subcorpus_structural  ... Timing stopped at: 0.005 0 0.005 
+Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "subcorpus", for signature "Tabulated", "character", "missing", "missing"
  done successfully.
 
 
 
-Executing test function test_tabulated_subcorpus_structural_not_found  ... Timing stopped at: 0.004 0 0.004 
-Error in .nextMethod(structure(list(word = structure(c(14L, 20L, 16L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
+Executing test function test_tabulated_subcorpus_structural_not_found  ... Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "subcorpus", for signature "Tabulated", "character", "missing", "missing"
  done successfully.
 
 
 
-Executing test function test_read.reetagger_contains.xml.no  ... Timing stopped at: 0.003 0 0.004 
-Error in .nextMethod(structure(list(word = structure(integer(0), .Label = c(",",  : 
-  invalid names for slots of class “Tabulated”: positionnal
+Executing test function test_read.reetagger_contains.xml.no  ... Timing stopped at: 0.004 0 0.004 
+Error in validObject(.Object) : 
+  invalid class “Tabulated” object: invalid object for slot "structural" in class "Tabulated": got class "NULL", should be or extend class "character"
  done successfully.
 
 
 
-Executing test function test_read.reetagger_discard.xml  ... Timing stopped at: 0.003 0 0.003 
-Error in .nextMethod(structure(list(word = structure(c(14L, 20L, 16L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
- done successfully.
+Executing test function test_read.reetagger_discard.xml  ...  done successfully.
 
 
 
-Executing test function test_read.reetagger_test_header  ... Timing stopped at: 0.004 0 0.005 
-Error in .nextMethod(structure(list(word = structure(c(14L, 20L, 16L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
- done successfully.
+Executing test function test_read.reetagger_test_header  ...  done successfully.
 
 
 
@@ -293,28 +281,24 @@ Executing test function test_read.treetagger_file_doesnot_exist  ... Error in re
 
 
 
-Executing test function test_read.treetagger_file_with_xml  ... Timing stopped at: 0.007 0 0.008 
-Error in .nextMethod(structure(list(word = structure(c(31L, 94L, 71L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
+Executing test function test_read.treetagger_file_with_xml  ...  done successfully.
+
+
+
+Executing test function test_wam.frequencyList  ... Timing stopped at: 0.008 0 0.008 
+Error in func() : impossible de trouver la fonction "asFrequencyList"
  done successfully.
 
 
 
-Executing test function test_wam.frequencyList  ... Timing stopped at: 0.007 0 0.008 
-Error in .nextMethod(structure(list(word = structure(c(31L, 94L, 71L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
- done successfully.
-
-
-
-Executing test function test_wam.fullText  ... Timing stopped at: 0.003 0 0.003 
+Executing test function test_wam.fullText  ... Timing stopped at: 0.002 0.001 0.003 
 Error in UseMethod("wam") : 
   pas de méthode pour 'wam' applicable pour un objet de classe "c('FullText', 'list', 'vector')"
  done successfully.
 
 
 
-Executing test function test_wam.lexicalTable  ... Timing stopped at: 0.024 0.001 0.024 
+Executing test function test_wam.lexicalTable  ... Timing stopped at: 0.024 0.001 0.025 
 Error in UseMethod("wam") : 
   pas de méthode pour 'wam' applicable pour un objet de classe "c('LexicalTable', 'dgCMatrix', 'CsparseMatrix', 'dsparseMatrix', 'generalMatrix', 'dMatrix', 'sparseMatrix', 'compMatrix', 'Matrix')"
  done successfully.
@@ -325,9 +309,9 @@ Executing test function test_wam.numeric  ...  done successfully.
 
 
 
-Executing test function test_wam.tabulated  ... Timing stopped at: 0.008 0 0.007 
-Error in .nextMethod(structure(list(word = structure(c(31L, 94L, 71L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
+Executing test function test_wam.tabulated  ... Timing stopped at: 0.008 0 0.008 
+Error in UseMethod("wam") : 
+  pas de méthode pour 'wam' applicable pour un objet de classe "c('Tabulated', 'data.frame', 'list', 'oldClass', 'vector')"
  done successfully.
 
 
@@ -336,48 +320,31 @@ Executing test function test.specificities  ...  done successfully.
 
 ------------------- UNIT TEST SUMMARY ---------------------
 
-RUNIT TEST PROTOCOL -- Sun Dec 30 21:24:57 2012 
+RUNIT TEST PROTOCOL -- Sun Dec 30 22:02:05 2012 
 *********************************************** 
 Number of test functions: 39 
-Number of errors: 16 
+Number of errors: 8 
 Number of failures: 0 
 
  
 1 Test Suite : 
-lexicalStat unit testing - 39 test functions, 16 errors, 0 failures
-ERROR in test_frequencyList_frequencyList: Error in initialize(value, ...) : 
-  cannot use object of class “frequencyList” in new():  class “FrequencyList” does not extend that class
-ERROR in test_frequencyList_frequencyList2: Error in initialize(value, ...) : 
-  cannot use object of class “frequencyList” in new():  class “FrequencyList” does not extend that class
-ERROR in test_frequencyList_print: Error in initialize(value, ...) : 
-  cannot use object of class “frequencyList” in new():  class “FrequencyList” does not extend that class
+lexicalStat unit testing - 39 test functions, 8 errors, 0 failures
 ERROR in test_asFullText.tabulated: Error in func() : impossible de trouver la fonction "asTabulated"
-ERROR in test_tabulated_subcorpus_all.arguments: Error in .nextMethod(structure(list(word = structure(c(14L, 20L, 16L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
-ERROR in test_tabulated_subcorpus_all.arguments_positional_not_found: Error in .nextMethod(structure(list(word = structure(c(14L, 20L, 16L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
-ERROR in test_tabulated_subcorpus_structural: Error in .nextMethod(structure(list(word = structure(c(14L, 20L, 16L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
-ERROR in test_tabulated_subcorpus_structural_not_found: Error in .nextMethod(structure(list(word = structure(c(14L, 20L, 16L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
-ERROR in test_read.reetagger_contains.xml.no: Error in .nextMethod(structure(list(word = structure(integer(0), .Label = c(",",  : 
-  invalid names for slots of class “Tabulated”: positionnal
-ERROR in test_read.reetagger_discard.xml: Error in .nextMethod(structure(list(word = structure(c(14L, 20L, 16L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
-ERROR in test_read.reetagger_test_header: Error in .nextMethod(structure(list(word = structure(c(14L, 20L, 16L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
-ERROR in test_read.treetagger_file_with_xml: Error in .nextMethod(structure(list(word = structure(c(31L, 94L, 71L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
-ERROR in test_wam.frequencyList: Error in .nextMethod(structure(list(word = structure(c(31L, 94L, 71L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
+ERROR in test_tabulated_subcorpus_all.arguments: Error in subcorpus(c, "cit", "word", "taille") : 
+  structural attribute not found
+ERROR in test_tabulated_subcorpus_structural: Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "subcorpus", for signature "Tabulated", "character", "missing", "missing"
+ERROR in test_read.reetagger_contains.xml.no: Error in validObject(.Object) : 
+  invalid class “Tabulated” object: invalid object for slot "structural" in class "Tabulated": got class "NULL", should be or extend class "character"
+ERROR in test_wam.frequencyList: Error in func() : impossible de trouver la fonction "asFrequencyList"
 ERROR in test_wam.fullText: Error in UseMethod("wam") : 
   pas de méthode pour 'wam' applicable pour un objet de classe "c('FullText', 'list', 'vector')"
 ERROR in test_wam.lexicalTable: Error in UseMethod("wam") : 
   pas de méthode pour 'wam' applicable pour un objet de classe "c('LexicalTable', 'dgCMatrix', 'CsparseMatrix', 'dsparseMatrix', 'generalMatrix', 'dMatrix', 'sparseMatrix', 'compMatrix', 'Matrix')"
-ERROR in test_wam.tabulated: Error in .nextMethod(structure(list(word = structure(c(31L, 94L, 71L,  : 
-  invalid names for slots of class “Tabulated”: positionnal
+ERROR in test_wam.tabulated: Error in UseMethod("wam") : 
+  pas de méthode pour 'wam' applicable pour un objet de classe "c('Tabulated', 'data.frame', 'list', 'oldClass', 'vector')"
 Erreur : 
 
-unit testing failed (#test failures: 0, #R errors: 16)
+unit testing failed (#test failures: 0, #R errors: 8)
 
 Exécution arrêtée

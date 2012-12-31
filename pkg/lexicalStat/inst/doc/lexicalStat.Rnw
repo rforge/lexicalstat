@@ -45,19 +45,23 @@ functions like word attraction measure and keyword in context.
 % ----------------------------------------------------------------
 \label{sec:classes}
 
-There are four classes for representing a corpus. Each may be more
-suited for a given task or for a given source. Functions allow
-conversion between them.
+There are four classes for representing a corpus. Each is suited for some tasks
+or for some sources. Functions are provided for converting from one format
+toward another.
 
 \subsection{\texttt{fullText}}
 \label{subsec:classes-fullText}
+\index{fullText corpus class}
 
-The \texttt{fullText} class is the more simplistic representation of
-a corpus: it is a list whose elements are vectors containing tokens.
+The \texttt{fullText} class is the more simplistic representation of a corpus:
+it is a list where each slot contains a vectors of tokens. The list represent a
+partition\index{partition} of the corpus.
 
-It may be usefull for reading any file containing text and tokenizing it.  The
-function \texttt{lines2fullText} receive a filename in argument; each line is
-tokenized separatly and give an element of the list.
+This format is suited for representing plain text file\index{Reading text
+files}. Two functions are provided for reading text file. The function
+\texttt{lines2fullText} read one file; each line is turned into an element of
+the list; the corpus is tokenized.  The function \texttt{files2fullText} read a
+batch of files; each file is turned into an element of the list and tokenized.
 
 \texttt{summary} and \texttt{print} functions pretty print a fullText corpus.
 
@@ -71,24 +75,27 @@ summary(c);
 print(c);
 @
 
-- kwic
-
-- Fonctions pour tokenizer, lire diff\' erents fichiers ou les lignes d'un fichier.
-
 \subsection{\texttt{tabulated}}
 \label{subsec:classes-tabulated}
+\index{tabulated corpus class}
 
 A tabulated corpus is a more rich representation:
 \begin{itemize}
-\item several features can be represented for each token (such as inflected form, lemma and pos) and not only one feature as in \texttt{fullText}). 
-\item several partition of the corpus can be represented, and not only one as in \texttt{fullText} (the repartition of tokens between list slot).
+\item several features can be represented for each token (such as inflected form, lemma\index{lemma} and pos\index{pos}) and not only one feature as in \texttt{fullText}). 
+\item several partition\index{partition} of the corpus can be represented, and not only one as in \texttt{fullText} (the repartition of tokens between list slot).
 \end{itemize}
 
-This representation is inspired by the representation found in the \texttt{CWB}\index{CWB} corpus software.
+This representation is inspired by the representation found in the
+\texttt{CWB}\index{CWB} corpus software (see package
+\texttt{rcqp}\index{rcqp}).
 
-A common use of this data structure is for representing tabulated data produced
-by part-of-speech tagger. A function allows for reading treetagger output file.
-XML tag are interpreted as 
+This format is suited for representing tabulated files\index{tabulated files},
+such as files produced by part-of-speech tagger\index{tagger}. The function
+\texttt{read.treetagger} read a file produced by treetagger\index{treetagger}
+and produce a \index{tabulated} corpus. If the file analysed was an XML
+document, treetagger may conserve the XML element. In this case, they are
+turned by \texttt{read.treetagger} into supplementary columns, where tokens
+belonging to the same element share the same value.
 
 <<tabulated, echo=TRUE>>=
   fileName <- system.file(c("inst", "exempleData"), "sample.ttg", package="lexicalStat")
@@ -99,14 +106,22 @@ XML tag are interpreted as
 
 \subsection{\texttt{lexicalTable}}
 \label{subsec:classes-lexicalTable}
+\index{lexicalTable corpus class}
 
-A lexical table is a contingency table where rows are the given forms found in
-the corpus, and columns the differents parts of the corpus.
+A lexical table is a contingency table : the rows are the given forms found in
+the corpus, the columns the differents parts of the corpus; the table give
+subfrequency of each form in the different parts.
+
+Lexical table is a compact way of representing frequence information and to
+study presence of forms accross sub-corpus.
 
 LexicalTable object are reprensented using sparse matrix (from the package
-\texttt{Matrix}). They can be read from files or created thanks to data.frame,
-matrix, or other corpus representations such as \texttt{fullText} or
-\texttt{tabulated}.
+\texttt{Matrix}).
+
+They can be read from files (function
+\texttt{readLexicalTable}\index{readLexicalTable}) or created thanks to
+data.frame, matrix, or other corpus representations such as \texttt{fullText}
+or \texttt{tabulated}.
 
 <<tabulated, echo=TRUE>>=
   base <- paste(system.file(package = "lexicalStat"), "exempleData", "lemonde.lemme", sep="/")
@@ -117,6 +132,7 @@ matrix, or other corpus representations such as \texttt{fullText} or
 
 \subsection{\texttt{frequencyList}}
 \label{subsec:classes-frequencyList}
+\index{frequencyList corpus class}
 
 A frequencyList is a simple named vector of total frequency.
 
@@ -129,11 +145,28 @@ A frequencyList is a simple named vector of total frequency.
 
 (\texttt{fullText} <-> \texttt{tabulated}) -> \texttt{lexicalTable} -> \texttt{frequencyList}
 
-The first two data structures can be converted back and forth.
+The first two data structures represent the linearity of tokens and can be used
+for producing concordancer\index{concordancer} or any "readable" form of the
+corpus.
 
-The last two are \index{bag of words} : they lost the order of the tokens and
-keep only frequency. The penultimate keep the distribution of sub-frequency
-between parts of a corpus, while the last one represent only total frequency.
+The last two are "bags of words"\index{bag of words} : they do not save
+represent order of the tokens and keep only frequency. The penultimate keep the
+distribution of sub-frequency between parts of a corpus, while the last one
+represent only total frequency.
+
+The first two data structures can be converted back and forth. 
+
+\texttt{lexicalTable} can be created only thanks to a \texttt{fullText} or a
+\texttt{tabulated} corpora.  \texttt{frequencyList} can be created only thanks
+to a \texttt{lexicalTable}.
+
+Thus, the function \texttt{asFullText}\index{asFullText} can be applied on
+\texttt{tabulated} corpora; the function
+\texttt{asTabulated}\index{asTabulated} can be used with \texttt{fullText}
+corpora; the \texttt{asLexicalTable}\index{asLexicalTable} function can be
+applied on \texttt{tabulated} and \texttt{fullText} corpora; the
+\texttt{asFrequencyList}\index{asFrequencyList} function can be applied only to
+\texttt{lexicalTable} corpora.
 
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
@@ -146,6 +179,25 @@ between parts of a corpus, while the last one represent only total frequency.
 \section{Word attraction measure}
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
+
+
+"Word attraction measures" are methods for extracting the forms notably
+frequent or sparse in a subcorpus by comparison with the parent corpus.
+
+The forms notably frequent or sparse ar often very informative for describing
+the subcorpus.
+
+This is a general comparative method. Depending on how the contrast was build
+(how the subcorpus was build), it may be used for describing various objects.
+For instance:
+
+\begin{itemize}
+\item If the subcorpus represent a text, it may be used for describing its thematic.
+\item If the subcorpus gather all immediat context of a verb, it may be used for
+  describing its cooccurrents (argument, phraseology...)
+\item If the subcorpus gather all paragraph containing a word, it may be used for
+  describing the semantic/thematic associated to this word.
+\end{itemize}
 
 \printindex
 

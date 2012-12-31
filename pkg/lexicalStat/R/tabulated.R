@@ -80,19 +80,15 @@ setMethod("positional", "Tabulated", function(obj) obj@positional)
 ##
 ############################################################
 
-printTabulated <- function(x) {
+setMethod("print", signature(x="Tabulated"), function(x) {
   summary(x);
   print(head(x));
-}
+});
 
-setMethod("print", signature(x="Tabulated"), printTabulated)
-
-summaryTabulated <- function(object){
+setMethod("summary", signature(object = "Tabulated"), function(object) {
   cat(paste("A corpus with", nrow(object), "tokens\n"));
   cat(paste("Positional attributes:", paste(positional(object), collapse=" "), "\n"));
   cat(paste("Structural attributes:", paste(structural(object), collapse=" "), "\n"));
   invisible(object);
-}
-
-setMethod("summary", signature(object = "Tabulated"), summaryTabulated)
+});
 

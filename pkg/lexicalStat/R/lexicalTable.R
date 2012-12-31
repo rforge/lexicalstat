@@ -10,11 +10,11 @@ setClass("LexicalTable",
 #> x <- spMatrix(ncol=10, nrow=10, i=1:10, 1:10, x=1:10)
 #> x
 #10 x 10 sparse Matrix of class "dgTMatrix"
-
+#
 #> y <- Matrix(robespierre, sparse=TRUE)
 #> y
 #6 x 10 sparse Matrix of class "dgCMatrix"
-
+#
 #> z <- sparseMatrix(i=10, j=10, x=10)
 #> z
 #10 x 10 sparse Matrix of class "dgCMatrix"
@@ -117,10 +117,4 @@ writeLexicalTable <- function(obj, file) {
    write(rownames(x), forms.filename, sep="\n");
    write(colnames(x), parts.filename, sep="\n");
 }
-
-setGeneric("write", function(obj, file) {
-  return(standardGeneric("write"));
-})
-
-setMethod("write", "LexicalTable", writeLexicalTable);
 

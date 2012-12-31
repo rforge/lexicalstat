@@ -115,23 +115,20 @@ files2fullText <- function(files, enc="UTF-8", skipEmpty=FALSE) {
 ##
 ############################################################
 
-printFullText <- function(x) {
+setMethod("print", signature(x="FullText"), function(x) {
   summary(x);
+  cat("Sample:\n");
   for (i in 1:min(length(x), 10)) {
     part <- x[[i]]
     tokens <- part[1:min(10, length(part))];
     cat(paste(paste(tokens, collapse=" "), "...\n", sep=""));
   }
-}
+});
 
-setMethod("print", signature(x="FullText"), printFullText)
-
-summaryFullText <- function(object){
+setMethod("summary", signature(object = "FullText"), function(object){
   print(paste("A raw corpus with", length(object), "parts and ", sum(sapply(object, length)), "tokens"));
   invisible(object);
-}
-
-setMethod("summary", signature(object = "FullText"), summaryFullText)
+});
 
 ############################################################
 ##
