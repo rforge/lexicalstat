@@ -3,7 +3,7 @@
 \docType{data}
 \title{Lexical table from Robespierre's discourses}
 \description{
-  A lexical table containing the frequencies of 5 words in 9 Robespierre public
+  A lexical table containing the frequencies of 5 words in 10 Robespierre public
   discourses (between november 1793 and july 1794).
 }
 \usage{data(robespierre)}
@@ -11,7 +11,8 @@
   A matrix
 }
 \details{
-  The last column of the table give the total frequency of all the other forms in each of these discourses.
+  The last column of the table give the total frequency of all the other forms
+in each of these discourses.
 }
 \source{
 

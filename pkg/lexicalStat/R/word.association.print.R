@@ -1,7 +1,11 @@
 # TODO : dans l'impression : mettre option si "+" ou "-".
 
+setMethod("show", signature(object="WordAssociation"), function(object) {
+  print(object);
 
-setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, threshold=NULL, types=NULL, parts=NULL, file="", sort.by=NULL, append=FALSE, ...) {
+});
+
+setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, threshold=NULL, types=NULL, parts=NULL, sort.by=NULL, file="", append=FALSE, ...) {
 
   printable <- .get.printable(x, from, to, threshold, types, parts, sort.by);
 
@@ -29,8 +33,8 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
     cat(".....................................................\n", file=file, append=append);
     cat(paste("Part name:", part$part[1], "\n"), file=file, append=append);
     cat(paste("Part size:", part$n[1], "tokens.", "\n"), file=file, append=append);
-    cat(paste("Positive specificities:", sum(part[,2] > 0), "\n"), file=file, append=append);
-    cat(paste("Negative specificities:", sum(part[,2] < 0), "\n"), file=file, append=append);
+    cat(paste("Positive specificities printed:", sum(part[,7] > 0), "\n"), file=file, append=append);
+    cat(paste("Negative specificities printed:", sum(part[,7] < 0), "\n"), file=file, append=append);
     if (nrow(part) > 0) {
       for (i_word in 1:nrow(part)) {
         word_name <- part[i_word, "forms"];
@@ -73,10 +77,6 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
   df <- data.frame(types=types(x), parts=parts(x), N=N(x), n=n(x), K=K(x), k=k(x));
   df <- cbind(df, association(x));
 
-  if (!sort.by %in% colnames(df)) {
-    stop(paste("cannot sort by '", sort.by, "': no column of that names (in: ", paste(colnames(df), collapse=" "), ")", sep=""));
-  }
-
   if (!is.null(types)) {
     df <- df[ df$types %in% types, ];
   }
@@ -90,12 +90,15 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
   }
 
   if (!is.null(sort.by)) {
+    if(!sort.by %in% colnames(df)) {
+      stop(paste("cannot sort by '", sort.by, "': no column of that names (in: ", paste(colnames(df), collapse=" "), ")", sep=""));
+    }
     df <- df[order(df[, sort.by]),];
   }
 
   l <- split(df, df$parts);
 
-  l <- lapply(l, function(x) { x <- x[from:to,] });
+  l <- lapply(l, function(x) { x <- x[from:(min(to, nrow(x))),] });
 
   return(l);
 }

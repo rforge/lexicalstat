@@ -30,7 +30,7 @@
 ##
 ############################################################
 
-setGeneric("wam", function(corpus, measure, types, parts, positional, structural, subcorpus) {
+setGeneric("wam", function(corpus, measure="specificities", types=NULL, parts=NULL, positional=NULL, structural=NULL, subcorpus=NULL) {
   return(standardGeneric("wam"));
 })
 
@@ -39,9 +39,10 @@ setGeneric("wam", function(corpus, measure, types, parts, positional, structural
  # For "fullText" object
  # ------------------------------------------------------------------------
  ##
-setMethod("wam", c("FullText", "character", "character", "missing", "missing", "missing", "missing"), function(corpus, measure="specificities", types=NULL) {
+setMethod("wam", c("FullText"), function(corpus, measure, types) {
     m <- asLexicalTable(corpus);
-    return(wam.num(m, measure, types));
+    w <- wam(m, measure, types);
+    return(w);
     });
 
 ##
@@ -52,7 +53,7 @@ setMethod("wam", c("FullText", "character", "character", "missing", "missing", "
  # - structural = the column giving the partition factor for the forms.
  # ------------------------------------------------------------------------
  ##
-setMethod("wam", c("Tabulated", "character", "character", "missing", "character", "character", "missing"), function(corpus, measure="specificities", types=NULL, positional, structural) {
+setMethod("wam", "Tabulated", function(corpus, measure, types, positional, structural) {
   if (is.null(positional)) {
     stop("positional cannot be null");
   }
@@ -60,7 +61,8 @@ setMethod("wam", c("Tabulated", "character", "character", "missing", "character"
     stop("structural cannot be null");
   }
   m <- asLexicalTable(corpus, positional, structural);
-  return(wam.num(m, measure, types));
+  w <- wam(m, measure, types);
+  return(w);
 })
 
 ##
@@ -69,10 +71,16 @@ setMethod("wam", c("Tabulated", "character", "character", "missing", "character"
  # TODO : problem with the formal name "corpus": actually it is the subcorpus
  # ------------------------------------------------------------------------
  ##
-setMethod("wam", c("FrequencyList", "character", "character", "missing", "missing", "missing", "FrequencyList"), function(corpus, measure="specificities", types=NULL, subcorpus) {
+setMethod("wam", "FrequencyList", function(corpus, measure, types, subcorpus) {
+  if (is.missing(subcorpus)) {
+    stop("'subcorpus' cannot be missing");
+  }
+  if (is.null(subcorpus)) {
+    stop("'subcorpus' cannot be null");
+  }
 
   if(!is.subcorpus.of(subcorpus, corpus)) {
-    stop("Subcorpus does not appear to be a subcorpus of corpus");
+    stop("'subcorpus' does not appear to be a subcorpus of 'corpus'");
   }
 
   N <- sum(corpus);
@@ -81,11 +89,7 @@ setMethod("wam", c("FrequencyList", "character", "character", "missing", "missin
   K <- corpus[ names(k) ];
 
   measured <- wam.num(N, n, K, k);
-
-  types(measured) <- names(subcorpus);
-  parts(measured) <- names("souscorpus");
-
-  return(measured);
+  return(wordAssociation(N, n, K, k, measured, measure, names(subcorpus), "subcorpus"));
 });
 
 ##
@@ -94,10 +98,13 @@ setMethod("wam", c("FrequencyList", "character", "character", "missing", "missin
  # wam called on a "lexicalTable" corpus
  # ------------------------------------------------------------------------
  ##
-setMethod("wam", c("LexicalTable"), function(corpus, measure="specificities", types=NULL, parts=NULL) {
+# , measure="character", types="character", parts="character"
+setMethod("wam", "LexicalTable", function(corpus, measure, types, parts) {
 
   partMargin <- colSums(corpus);
+  names(partMargin) <- colnames(corpus);
   typeMargin <- rowSums(corpus);
+  names(typeMargin) <- rownames(corpus);
 
   if (any(typeMargin == 0)) {
     stop("Row without any occurrence");
@@ -151,17 +158,16 @@ setMethod("wam", c("LexicalTable"), function(corpus, measure="specificities", ty
   k <- as.vector(corpus);
 
   n <- as.vector(partMargin);
+  names(n) <- names(partMargin);
   n <- rep(n, times=nrow(corpus));
 
   K <- as.vector(typeMargin);
-  K <- rep(f, ncol(corpus));
+  names(K) <- names(typeMargin);
+  K <- rep(K, ncol(corpus));
 
   measured <- wam.num(N, n, K, k);
 
-  types(measured) <- names(K);
-  parts(measured) <- names(n);
-
-  return(measured);
+  return(wordAssociation(N, n, K, k, measured, measure, names(K), names(n)));
 });
 
 ############################################################
@@ -189,15 +195,21 @@ wam.num <- function(N, n, K, k, measure="specificities") {
   if (is.null(N) | is.null(n) | is.null(K) | is.null(k)) {
     stop("none of the four arguments N, n, K, k can be null");
   }
-  # TODO : a association name/function on top level, in order for the user to be able to extend the list.
+  if (any(is.na(N)) | any(is.na(n)) | any(is.na(K)) | any(is.na(k))) {
+    stop("none of the four arguments N, n, K, k can be NA");
+  }
+
+  # TODO : another mechanism of association name/function, in order for the user to be able to extend the list.
   if (any(!measure %in% c("fisher", "specificities", "binomial", "loglikelihood"))) {
     stop(paste("unknown measure in ", paste(measure, collapse=" "), sep=""));
   }
-  wa <- matrix(0, nrow=max(N, n, K, k), ncol=length(measure));
+
+  wa <- matrix(0, nrow=max(length(N), length(n), length(K), length(k)), ncol=length(measure));
   colnames(wa) <- measure;
   for (m in measure) {
-    wa[,m] <- do.call(m, list(N, n, K, k));
+    indicateurs <- do.call(m, list(N, n, K, k));
+    wa[,m] <- indicateurs;
   }
-  return(wordAssociation(N, n, K, k, wa, measure, NULL, NULL));
+  return(wa);
 }
 

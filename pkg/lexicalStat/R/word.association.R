@@ -105,12 +105,14 @@ setGeneric("types", function(obj) {
 
 setMethod("types", "WordAssociation", function(obj) obj@types)
 
-setGeneric("types<-", function(x, types) standardGeneric("types<-"))
-
-setReplaceMethod("types", "WordAssociation", function(x, types) {
-x@types <- types
-x
-});
+#setGeneric("types<-", function(object, value) standardGeneric("types<-"))
+#
+#setReplaceMethod("types", "WordAssociation", function(object, value) {
+#    print("fooo:");
+#    print(value[1:10]);
+#    object@types <- value;
+#    object;
+#    });
 
 ##
  #
@@ -123,9 +125,9 @@ setGeneric("parts", function(obj) {
 
 setMethod("parts", "WordAssociation", function(obj) obj@parts)
 
-setGeneric("parts<-", function(x, parts) standardGeneric("parts<-"))
-
-setReplaceMethod("parts", "WordAssociation", function(x, parts) {
-x@parts <- parts
-x
-});
+#setGeneric("parts<-", function(object, value) standardGeneric("parts<-"))
+#
+#setReplaceMethod("parts", "WordAssociation", function(object, value) {
+#    object@parts <- value;
+#    object;
+#    });

@@ -22,27 +22,27 @@ fisher <- function(N, n, K, k) {
  #
  ##
 specificities <- function(N, n, K, k) {
-  length <- max(N, n, K, k);
-  specif <- double(length=length);
 
-  whiteDrawn <- k;
-  allWhites <- K;
-  allBlacks <- N-allWhites;
-  drawn <- n;
+  # used data.frame to recycle vector length toward the same length.
+  # otherwise, phyper below may produce NA (if whites=1 => 1[FALSE, TRUE, TRUE, ...])
+  recycled <- data.frame(whiteDrawn=k, whites=K, blacks=N-K, drawn=n);
 
-  independance    <- (allWhites * drawn) / N;
-  specif_negative <- whiteDrawn <  independance;
-  specif_positive <- whiteDrawn >= independance;
+  independance    <- (recycled$whites * recycled$drawn) / N;
+  specif_positive <- recycled$whiteDrawn >= independance;
 
-  specif[specif_negative] <- phyper (
-      whiteDrawn[specif_negative], allWhites[specif_negative], allBlacks[specif_negative], drawn
-      );
+  specif <- double(length=nrow(recycled));
 
+  pos_arg <- recycled[specif_positive, ];
   specif[specif_positive] <- phyper (
-      whiteDrawn[specif_positive] - 1, allWhites[specif_positive], allBlacks[specif_positive], drawn
+      pos_arg$whiteDrawn, pos_arg$whites, pos_arg$blacks, pos_arg$drawn
       );
 
-  spelog <- double(length=length);
+  neg_arg <- recycled[!specif_positive, ];
+  specif[!specif_positive] <- phyper (
+      neg_arg$whiteDrawn, neg_arg$whites, neg_arg$blacks, neg_arg$drawn
+      );
+
+  spelog <- double(length=nrow(recycled));
   spelog[specif < 0.5] <- log10(2*specif[specif < 0.5]);
   spelog[specif > 0.5] <- abs(log10(2 - 2*specif[specif > 0.5]));
   spelog[specif == 0.5] <- 0;

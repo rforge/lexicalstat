@@ -15,6 +15,10 @@ import(XML)
 # export: including generics
 # exportMethods: for methods on generics defined in other packages, e.g., show, initialize
 
+# à classer :
+#exportMethods(types);
+export(wam.num);
+
 # functions exported from file "R/fullText.R"
 export(fullText);
 export(lines2fullText, files2fullText);
@@ -57,6 +61,7 @@ export(get.words.by.slices, remove.inner.part, flip.inner.outer.parts, get.words
 export(read.treetagger);
 
 # functions exported from file "R/word.association.R"
+# and word.association.*
 #export(wam, wam.fullText, wam.tabulated, wam.frequencyList, wam.lexicalTable, wam.numeric);
 export(wam);
 export(fisher, specificities, binomial, loglikelihood);
