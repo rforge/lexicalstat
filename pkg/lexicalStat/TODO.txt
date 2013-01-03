@@ -1,3 +1,5 @@
+Attention dans lecture de fichier treetagger : si les noms d'éléments ont des attributs, ne passe plus
+
 test list2lexical.table.sparse
 
 Corriger le calcul de la fréquence théorique dans specificites.probabilites.
@@ -14,3 +16,16 @@ select.key=c("freq", "sousfreq", "score"), limit=x, from=y, to=z, sort.key=c("fr
 
 
 is.a.subcorpus.of dans frequencyList : à rendre générique, is.subcorpus ?
+
+
+Dans la vignette :
+
+% TODO : prendre un même corpus (robespierre ?) et le représenter dans les différentes formes. 
+
+% Mettre fullText à la fin ; dans l'ordre : frequencyList, lexicalTable, tabulated, fullText
+% dans les conversions, mettre un tableau représentant graphiquement les conversions 
+% => par exemple, extraire une liste de fréquence à partir d'une table de contingence, ou d'une partie d'une liste de contingence.
+% dans les sous-corpus, mettre les différentes façons de représenter, sélectionner, tailler...
+
+ 
+

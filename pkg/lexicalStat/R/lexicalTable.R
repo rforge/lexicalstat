@@ -63,9 +63,13 @@ lexicalTable <- function(mat) {
 ##
 ############################################################
 
-setMethod("print", signature(x="LexicalTable"), function(x) {
-  cat(paste("A lexical table\n"));
-})
+#setMethod("show", signature(object="LexicalTable"), function(object) {
+#  print(object);
+#});
+#
+#setMethod("print", signature(x="LexicalTable"), function(x) {
+#  cat(paste("A lexical table\n"));
+#})
 
 setMethod("summary", signature(object = "LexicalTable"), function(object){
   cat(paste("A lexical table:\n"));

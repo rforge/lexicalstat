@@ -22,7 +22,6 @@ converting them between several representations, and applying exploratory
 functions like word attraction measure and keyword in context.
 \end{abstract}
 
-
 \vspace{5mm}
 \hrule
 \tableofcontents
@@ -40,17 +39,172 @@ functions like word attraction measure and keyword in context.
 
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
-\section{Classes for representing corpora}
+\section{Sample session}
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+\label{sec:sample}
+
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+\section{Representing corpora}
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
 \label{sec:classes}
+
+% ----------------------------------------------------------------
+\subsection{Classes for representing corpora}
+% ----------------------------------------------------------------
+\label{subsec:classes-corpora}
 
 There are four classes for representing a corpus. Each is suited for some tasks
 or for some sources. Functions are provided for converting from one format
 toward another.
 
-\subsection{\texttt{fullText}}
-\label{subsec:classes-fullText}
+% ................................................................
+\subsubsection{\texttt{frequencyList}}
+% ................................................................
+\label{subsubsec:classes-frequencyList}
+\index{frequencyList corpus class}
+
+A frequencyList is the most compact representation of a corpus: it is a simple mapping
+between types and \textbf{total frequency} :
+
+\begin{tabular}{lr}\hline
+Type & Frequency\\\hline
+peuple & 296\\
+republique & 207\\
+ennemi & 165\\
+patrie & 153\\
+\ldots & \ldots\\\hline
+\end{tabular}
+
+A frequency list can be created with any named numeric vector:
+
+<<frequencyList, echo=T>>=
+library(lexicalStat);
+x <- c(10, 2, 3, 50)
+names(x) <- c("type1", "type2", "type3", "type4");
+y <- frequencyList(x);
+y
+summary(y);
+@
+
+% ................................................................
+\subsubsection{\texttt{lexicalTable}}
+% ................................................................
+\label{subsubsec:classes-lexicalTable}
+\index{lexicalTable corpus class}
+
+In a \textbf{lexical table}\index{lexical table} the rows give the forms found in
+the corpus, the columns give differents sub-parts of the corpus. Each cell of the table gives
+subfrequency of the corresponding type in the corresponding sub-part
+(see table \ref{tab:lexicaltable-sample}). A lexical table is
+a \textbf{contingency table}.
+
+<<label=lexicalTable1,echo=FALSE,results=tex>>=
+library(xtable)
+data(robespierre);
+print(xtable(as.data.frame(robespierre), align=c("l", rep("r", 10)),
+    caption = "Robespierre discourses (frequency table)",
+    label = "tab:lexicaltable-sample",
+    digits = 0), table.placement = "h",
+    caption.placement = "top")
+@
+
+A \textbf{part} is a subset of a corpus and, thus, a \textbf{subcorpus}. But it is a
+special kind of subcorpus, belonging to a set of subcorpus that divide exhaustively the corpus,
+and that are most probably corresponding to an object of analysis -- here, different discourses.
+
+Lexical table is a compact way of representing frequence information and to
+study variation of frequency of a type accross sub-corpus.
+
+A lexical table can be created from any numerical matrix. They are represented using
+sparse matrix (from the package \texttt{Matrix}).
+
+<<label=lexicalTable2,echo=TRUE>>=
+data(robespierre);
+x <- lexicalTable(robespierre);
+x;
+summary(x);
+@
+
+% ................................................................
+\subsubsection{\texttt{tabulated}}
+% ................................................................
+\label{subsubsec:classes-tabulated}
+\index{tabulated corpus class}
+
+A tabulated corpus is a more complexe representation. It does not record only the frequency
+but also all the concrete occurrences of the different types in their actual order.
+In addition:
+
+\begin{itemize}
+\item (1) several features can be represented for each token (such as inflected form, 
+    lemma\index{lemma} and pos\index{pos}). 
+\item (2) several grouping\index{partition} of the tokens of the corpus can be represented.
+\end{itemize}
+
+(1) In the \texttt{lexicalTable} object, each token has been considered through one
+representation (lemma, pos, inflected form \ldots) in order to be counted. And
+the \texttt{lexicalTable} show distribution of this token across one partition
+(the column) of the table.
+
+A tabulated corpus is a table where each line represent a token. There is several column
+corresponding to the different representation available for each token (inflected form,
+pos, lemma, \ldots) : see table \ref{tab:tabulated-sample1}.
+
+<<label=tabulated1,echo=FALSE,results=tex>>=
+fileName <- system.file(c("inst", "exempleData"), "sample.ttg", package="lexicalStat")
+tabulated <- read.treetagger(fileName);
+x <- tabulated[1:10,1:3]
+print(xtable(as.data.frame(x), align=c("l", rep("l", 3)),
+    caption = "First tokens of a corpora in a tabulated representation",
+    label = "tab:tabulated-sample1",
+    digits = 0), table.placement = "h",
+    caption.placement = "top")
+@
+
+(2) They may be additional columns. Each such column correspond to \textbf{groups} of tokens. Each
+column is a kind of XML element name. Consecutive token sharing the same value in a column
+belong to a same group, as if they where surrounded by a tag of that XML element. For
+instance, in the following table, you see the following groups : def, cit, EntryForm, form.
+See table \ref{tab:tabulated-sample2}.
+
+<<label=tabulated1,echo=FALSE,results=tex>>=
+fileName <- system.file(c("inst", "exempleData"), "PetitLarousse1905.ttg", package="lexicalStat")
+tabulated <- read.treetagger(fileName);
+x <- tabulated[1:30,]
+data(robespierre);
+print(xtable(as.data.frame(x), align=c("l", rep("l", 7)),
+    caption = "First tokens of a corpora in a tabulated representation",
+    label = "tab:tabulated-sample2",
+    digits = 0), table.placement = "h",
+    caption.placement = "top")
+@
+
+This representation is inspired by the representation found in the
+\texttt{CWB}\index{CWB} corpus software (see package
+\texttt{rcqp}\index{rcqp}).
+
+This format is suited for representing tabulated files\index{tabulated files},
+such as files produced by part-of-speech tagger\index{tagger}. The function
+\texttt{read.treetagger} read a file produced by treetagger\index{treetagger}
+and produce a \index{tabulated} corpus. If the file analysed was an XML
+document, treetagger may conserve the XML element. In this case, they are
+turned by \texttt{read.treetagger} into supplementary columns, where tokens
+belonging to the same element share the same value.
+
+<<tabulated, echo=TRUE>>=
+  fileName <- system.file(c("inst", "exempleData"), "sample.ttg", package="lexicalStat")
+  tabulated <- read.treetagger(fileName);
+  summary(tabulated);
+  print(tabulated);
+@
+
+% ................................................................
+\subsubsection{\texttt{fullText}}
+% ................................................................
+\label{subsubsec:classes-fullText}
 \index{fullText corpus class}
 
 The \texttt{fullText} class is the more simplistic representation of a corpus:
@@ -74,67 +228,6 @@ c <- lines2fullText(fileName);
 summary(c);
 print(c);
 @
-
-\subsection{\texttt{tabulated}}
-\label{subsec:classes-tabulated}
-\index{tabulated corpus class}
-
-A tabulated corpus is a more rich representation:
-\begin{itemize}
-\item several features can be represented for each token (such as inflected form, lemma\index{lemma} and pos\index{pos}) and not only one feature as in \texttt{fullText}). 
-\item several partition\index{partition} of the corpus can be represented, and not only one as in \texttt{fullText} (the repartition of tokens between list slot).
-\end{itemize}
-
-This representation is inspired by the representation found in the
-\texttt{CWB}\index{CWB} corpus software (see package
-\texttt{rcqp}\index{rcqp}).
-
-This format is suited for representing tabulated files\index{tabulated files},
-such as files produced by part-of-speech tagger\index{tagger}. The function
-\texttt{read.treetagger} read a file produced by treetagger\index{treetagger}
-and produce a \index{tabulated} corpus. If the file analysed was an XML
-document, treetagger may conserve the XML element. In this case, they are
-turned by \texttt{read.treetagger} into supplementary columns, where tokens
-belonging to the same element share the same value.
-
-<<tabulated, echo=TRUE>>=
-  fileName <- system.file(c("inst", "exempleData"), "sample.ttg", package="lexicalStat")
-  tabulated <- read.treetagger(fileName);
-  summary(tabulated);
-  print(tabulated);
-@
-
-\subsection{\texttt{lexicalTable}}
-\label{subsec:classes-lexicalTable}
-\index{lexicalTable corpus class}
-
-A lexical table is a contingency table : the rows are the given forms found in
-the corpus, the columns the differents parts of the corpus; the table give
-subfrequency of each form in the different parts.
-
-Lexical table is a compact way of representing frequence information and to
-study presence of forms accross sub-corpus.
-
-LexicalTable object are reprensented using sparse matrix (from the package
-\texttt{Matrix}).
-
-They can be read from files (function
-\texttt{readLexicalTable}\index{readLexicalTable}) or created thanks to
-data.frame, matrix, or other corpus representations such as \texttt{fullText}
-or \texttt{tabulated}.
-
-<<tabulated, echo=TRUE>>=
-  base <- paste(system.file(package = "lexicalStat"), "exempleData", "lemonde.lemme", sep="/")
-  x <- readLexicalTable(base);
-  summary(x);
-  print(x);
-@
-
-\subsection{\texttt{frequencyList}}
-\label{subsec:classes-frequencyList}
-\index{frequencyList corpus class}
-
-A frequencyList is a simple named vector of total frequency.
 
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
@@ -169,6 +262,47 @@ applied on \texttt{tabulated} and \texttt{fullText} corpora; the
 \texttt{lexicalTable} corpora.
 
 % ----------------------------------------------------------------
+\subsection{Functions available for all classes}
+% ----------------------------------------------------------------
+\label{subsec:functions-corpora}
+
+All classes provide the following functions :
+\begin{itemize}
+\item \texttt{N}\index{N} The grand total of tokens in the corpus
+\item \texttt{V}\index{V} The number of differents types in the corpus
+\item \texttt{hapax}\index{hapax} the list of types which appears only once in the corpus
+\item \texttt{types}\index{types} the list of all types in the corpus.
+\end{itemize}
+
+<<communfunctions1, echo=T>>=
+@
+
+A positional attribute argmuent must be provided with the functions \texttt{V},
+\texttt{hapax}, \texttt{types} for a \texttt{tabulated} object.
+
+<<communfunctions2, echo=T>>=
+@
+
+% ----------------------------------------------------------------
+\subsection{Read corpora from files}
+% ----------------------------------------------------------------
+\label{subsec:read-corpora}
+
+They can be read from files (function
+\texttt{readLexicalTable}\index{readLexicalTable}) or created thanks to
+data.frame, matrix, or other corpus representations such as \texttt{fullText}
+or \texttt{tabulated}.
+
+<<tabulated, echo=TRUE>>=
+  base <- paste(system.file(package = "lexicalStat"), "exempleData", "lemonde.lemme", sep="/")
+  x <- readLexicalTable(base);
+  summary(x);
+  print(x);
+@
+
+
+
+% ----------------------------------------------------------------
 % ----------------------------------------------------------------
 \section{KWIC}
 % ----------------------------------------------------------------
@@ -180,6 +314,7 @@ applied on \texttt{tabulated} and \texttt{fullText} corpora; the
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
 
+\subsection{Introduction}
 
 "Word attraction measures" are methods for extracting the forms notably
 frequent or sparse in a subcorpus by comparison with the parent corpus.
@@ -187,17 +322,92 @@ frequent or sparse in a subcorpus by comparison with the parent corpus.
 The forms notably frequent or sparse ar often very informative for describing
 the subcorpus.
 
-This is a general comparative method. Depending on how the contrast was build
-(how the subcorpus was build), it may be used for describing various objects.
-For instance:
+This is a general comparative method. Depending on how the contrast was built
+(i.e. how the subcorpus was built), it may be used for describing various
+objects.  For instance:
 
 \begin{itemize}
 \item If the subcorpus represent a text, it may be used for describing its thematic.
-\item If the subcorpus gather all immediat context of a verb, it may be used for
+\item If the subcorpus gather all immediat contexts of a verb, it may be used for
   describing its cooccurrents (argument, phraseology...)
-\item If the subcorpus gather all paragraph containing a word, it may be used for
+\item If the subcorpus gather all paragraphs containing a word, it may be used for
   describing the semantic/thematic associated to this word.
 \end{itemize}
+
+\subsection{Building word attraction measure arguments}
+
+Word attraction measure needs a corpus and a subcorpus. Depending on the corpus
+object you are using, there is various ways of building the these arguments.
+
+\subsubsection{FrequencyList}
+
+With \texttt{frequencyList}, you need a frequencyList representing a corpus and
+frequencyList representing a subcorpus.
+
+\subsubsection{lexicalTable}
+
+With \texttt{lexicalTable}, the different parts (columns) of the table are used as
+subcorpora, and the analysis is produced for each sub subcorpora. As an
+argument, you can give the name of of the parts (columns) you're interested in.
+
+<<wam_lexicalTable, echo=TRUE>>=
+library(lexicalStat);
+data(robespierre);
+x <- lexicalTable(robespierre);
+wam(x)
+@
+
+\subsubsection{fullText}
+
+With \texttt{fullText} corpus, all the different parts (element of the list) are
+used as subcorpora. Again, the analysis is produced for each subcorpora. You
+can use function for merging parts before applying this analysis.
+
+\subsubsection{tabulated}
+
+With \texttt{tabulated} corpus, you need to specify a "positional" attribute
+(which feature of the tokens (lemma, inflected form, pos...) are used for
+counting frequency of occurrences?) and a "structural" attribute (which
+grouping of the frequency are used for creating the parts?). These two arguments
+allow for the creating of a lexical table.
+
+\subsection{Other arguments}
+
+In every case, you can specify the \texttt{types} for which you want the indicator to be calculated.
+
+<<wam_otherArguments_types, echo=TRUE>>=
+library(lexicalStat);
+data(robespierre);
+x <- lexicalTable(robespierre);
+wam(x, types=c("peuple", "patrie"))
+@
+
+When the indicator is computed for several subcorpus (parts of the corpus), you
+can specify the \texttt{parts} for which you want the indicator to be
+calculated.
+
+<<wam_otherArguments_parts, echo=TRUE>>=
+library(lexicalStat);
+data(robespierre);
+x <- lexicalTable(robespierre);
+wam(x, parts=c("D1", "D2"))
+@
+
+You can specify the indicator you want to be used : log-likelihood,
+specificities, fisher, etc. (see section "indicators" bellow for a
+presentation). By defaut, the specificities is used. You can even ask for
+several indicators:
+
+<<wam_otherArguments_parts, echo=TRUE>>=
+library(lexicalStat);
+data(robespierre);
+x <- lexicalTable(robespierre);
+wam(x, measure=c("specificities", "loglikelihood"))
+@
+
+\subsection{Printing options}
+
+\subsection{Indicators}
 
 \printindex
 

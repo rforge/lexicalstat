@@ -14,9 +14,9 @@ setMethod("asTabulated", "FullText", function(x) {
 
 setAs("FullText", "Tabulated", function(from, to) {
   x <- unlist(from);
-  m <- data.frame(word=x);
+  m <- data.frame(word=as.factor(x));
   y <- sapply(from, length);
-  m[, "part"] <- rep(0:(length(from) - 1), times=y);
+  m[, "part"] <- as.factor(rep(0:(length(from) - 1), times=y));
   t <- tabulated(m, "word", "part");
   return(t);
 });

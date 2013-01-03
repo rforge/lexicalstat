@@ -165,6 +165,10 @@ read.treetagger <- function(file, contains.xml=TRUE, discard.xml=FALSE) {
     corpus <- corpus[-which(is.markup),];
   }
 
+  for (s in structural.attributes) {
+    corpus[,s] <- as.factor(corpus[,s]);
+  }
+
   corpus <- tabulated(corpus, positional.attributes, structural.attributes);
   return(corpus);
 }

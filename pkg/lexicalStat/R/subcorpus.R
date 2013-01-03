@@ -2,32 +2,25 @@
 ##
 ## Implementation of methods for filtering a corpus
 ##
-
-# TODO : how to have nammed argument rather than x, y, z ?
-
 ############################################################
 
-setGeneric("subcorpus", function(corpus, x, y, z) {
+setGeneric("subcorpus", function(corpus, ...) {
   return(standardGeneric("subcorpus"));
 })
 
-setMethod("subcorpus", c(corpus="FrequencyList", x="numeric", y="missing", z="missing"), function(corpus, x) {
+setMethod("subcorpus", c(corpus="FrequencyList"), function(corpus, min.frequency) {
   x <- corpus[corpus >= min.frequency];
   return(frequencyList(x));
 });
 
-##
- # Keep the part with id != -1.
- # or
-# Keep the _part_ containing at least one token whose _attribute_
-# has _value_.
-#
-##
-setMethod("subcorpus", c("Tabulated", "character", "character", "character"), function(corpus, x, y=NULL, z=NULL) {
-  positional <- x;
-  structural <- y;
-  value <- z;
+# , context.size=NULL
 
+setMethod("subcorpus", c(corpus="FullText"), function(corpus, type) {
+	contains.type <- lapply(corpus, function(x) type %in% x);
+	return(corpus[contains.type]);
+});
+
+setMethod("subcorpus", c(corpus="FullText"), function(corpus, structural, positional=NULL, value=NULL) {
   if (! structural %in% attr(tabulated, "structural")) {
     stop("structural attribute not found");
   }
@@ -45,5 +38,5 @@ setMethod("subcorpus", c("Tabulated", "character", "character", "character"), fu
   } else {
     stop("both 'positional' and 'value' must be NULL, or none of them");
   }
-});
 
+});

@@ -2,10 +2,9 @@
 
 setMethod("show", signature(object="WordAssociation"), function(object) {
   print(object);
-
 });
 
-setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, threshold=NULL, types=NULL, parts=NULL, sort.by=NULL, file="", append=FALSE, ...) {
+setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, threshold=NULL, types=NULL, parts=NULL, sort.by=indicator.name(x)[1], file="", append=FALSE, ...) {
 
   printable <- .get.printable(x, from, to, threshold, types, parts, sort.by);
 
@@ -20,31 +19,36 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
   indicators <- indicator.name(x);
 
   cat(paste("Corpus size:", N(x)[1], "\n"), file=file, append=append);
-  cat(sprintf("-----------------------------------------------------\n"), file=file, append=append);
-  cat(sprintf("%-20s | %8s | %8s \n", "word", "sub freq", "tot freq"), file=file, append=append);
+  cat(paste("Sorted by:", sort.by, "\n"), file=file, append=append);
+  header <- sprintf("%-20s | %8s | %8s ", "word", "sub freq", "tot freq");
   for (i in indicators) {
-    cat(sprintf("| %8s ", i), file=file, append=append);
+    header <- paste(header, sprintf("| %15s ", i), sep="");
   }
-  cat(sprintf("\n"), file=file, append=append);
-  cat(sprintf("-----------------------------------------------------\n"), file=file, append=append);
+  l <- nchar(header);
+  header_separator_line <- paste(paste(rep("-", l), collapse=""), "\n", sep="");
 
+  cat(header_separator_line, file=file, append=append);
+  cat(paste(header, "\n", sep=""), file=file, append=append);
+  cat(header_separator_line, file=file, append=append);
+
+  part_separator_line <- paste(paste(rep(".", l), collapse=""), "\n", sep="");
   for (i_part in 1:length(printable)) {
     part <- printable[[i_part]];
-    cat(".....................................................\n", file=file, append=append);
+    cat(part_separator_line, file=file, append=append);
     cat(paste("Part name:", part$part[1], "\n"), file=file, append=append);
     cat(paste("Part size:", part$n[1], "tokens.", "\n"), file=file, append=append);
     cat(paste("Positive specificities printed:", sum(part[,7] > 0), "\n"), file=file, append=append);
     cat(paste("Negative specificities printed:", sum(part[,7] < 0), "\n"), file=file, append=append);
     if (nrow(part) > 0) {
       for (i_word in 1:nrow(part)) {
-        word_name <- part[i_word, "forms"];
+        word_name <- part[i_word, "types"];
         word_sub_freq <- part[i_word, "k"];
         word_tot_freq <- part[i_word, "K"];
-        cat(sprintf("%-20s | %8.0f | %8.0f ", word_name, word_sub_freq, word_tot_freq), file=file, append=append);
+        line <- sprintf("%-20s | %8.0f | %8.0f ", word_name, word_sub_freq, word_tot_freq)
 	for (i in indicators) {
-	  cat(sprintf("| %8.2f ", part[i_word, i]), file=file, append=append);
+          line <- paste(line, sprintf("| %15.2f ", part[i_word, i]), sep="");
 	}
-	cat(sprintf("\n"), file=file, append=append);
+	cat(paste(line, "\n", sep=""), file=file, append=append);
       }
     }
   }
@@ -93,8 +97,10 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
     if(!sort.by %in% colnames(df)) {
       stop(paste("cannot sort by '", sort.by, "': no column of that names (in: ", paste(colnames(df), collapse=" "), ")", sep=""));
     }
-    df <- df[order(df[, sort.by]),];
+    df <- df[order(df[, sort.by], decreasing=FALSE),];
   }
+
+  df <- df[order(df[, "parts"]),];
 
   l <- split(df, df$parts);
 

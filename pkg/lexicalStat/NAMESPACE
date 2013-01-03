@@ -10,7 +10,8 @@ import(XML)
 
 # S4 methods to be exported :
 #
-# is.subcorpus.of.R as.R subcorpus.R
+# is.subcorpus.of.R subcorpus.R
+#export(subcorpus);
 #
 # export: including generics
 # exportMethods: for methods on generics defined in other packages, e.g., show, initialize
@@ -32,18 +33,21 @@ export(get.parts.containing.form, get.parts.containing.all.forms, get.tokens.by.
 # functions exported from file "R/lexicalTable.R"
 export(lexicalTable);
 export(readLexicalTable, writeLexicalTable);
-#export(asLexicalTable, asLexicalTable.fullText);
 
 # functions exported from file "R/frequencyList.R"
-export(frequencyList);
-#export(asFrequencyList, asFrequencyList.tabulated, asFrequencyList.fullText);
+export(frequencyList, frequencyList.numeric, frequencyList.table, frequencyList.data.frame);
 
 # functions exported from file "R/tabulated.R"
 export(tabulated);
-export(subcorpus);
-#export(asTabulated, asTabulated.fullText);
 
 
+# functions exported from file "as.R"
+exportMethods(asTabulated);
+#export(, asTabulated.fullText);
+exportMethods(asFrequencyList);
+#export(asFrequencyList, asFrequencyList.tabulated, asFrequencyList.fullText);
+exportMethods(asLexicalTable);
+#export(asLexicalTable, asLexicalTable.fullText);
 
 # functions exported from file "R/conc.R"
 export(kwic, kwic.fullText, conc, word.conc, text.conc);

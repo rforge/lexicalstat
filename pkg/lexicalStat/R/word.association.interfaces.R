@@ -88,7 +88,7 @@ setMethod("wam", "FrequencyList", function(corpus, measure, types, subcorpus) {
   k <- subcorpus;
   K <- corpus[ names(k) ];
 
-  measured <- wam.num(N, n, K, k);
+  measured <- wam.num(N, n, K, k, measure);
   return(wordAssociation(N, n, K, k, measured, measure, names(subcorpus), "subcorpus"));
 });
 
@@ -165,7 +165,7 @@ setMethod("wam", "LexicalTable", function(corpus, measure, types, parts) {
   names(K) <- names(typeMargin);
   K <- rep(K, ncol(corpus));
 
-  measured <- wam.num(N, n, K, k);
+  measured <- wam.num(N, n, K, k, measure);
 
   return(wordAssociation(N, n, K, k, measured, measure, names(K), names(n)));
 });

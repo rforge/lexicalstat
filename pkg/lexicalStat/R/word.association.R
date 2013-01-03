@@ -21,9 +21,10 @@ wordAssociation <- function(N, n, K, k, association, indicator.name, types, part
  # N
  #
  ##
-setGeneric("N", function(obj) {
-  return(standardGeneric("N"));
-})
+ # TODO : not the same semantic as other N()
+#setGeneric("N", function(obj) {
+#  return(standardGeneric("N"));
+#})
 
 setMethod("N", "WordAssociation", function(obj) obj@N)
 
