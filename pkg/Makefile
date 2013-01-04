@@ -15,7 +15,7 @@ vignette:
 	makeindex ${IDX}; \
 	pdflatex ${TEX};
 
-inst:
+install:
 	sudo R CMD INSTALL lexicalStat 
 
 

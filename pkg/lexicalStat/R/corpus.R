@@ -67,11 +67,11 @@ setMethod("V", "FullText", function(obj) length(unique(unlist(obj))));
 
 setGeneric("types", function(obj, positional) standardGeneric("types"));
 
-setMethod("types", "FrequencyList", function(obj) obj$type);
+setMethod("types", "FrequencyList", function(obj) sort(obj$type));
 
-setMethod("types", "LexicalTable", function(obj) rownames(obj));
+setMethod("types", "LexicalTable", function(obj) sort(rownames(obj)));
 
-setMethod("types", "Tabulated", function(obj, positional) levels(obj[,positional]));
+setMethod("types", "Tabulated", function(obj, positional) sort(levels(obj[,positional])));
 
-setMethod("types", "FullText", function(obj) unique(unlist(obj)));
+setMethod("types", "FullText", function(obj) sort(unique(unlist(obj))));
 

@@ -44,6 +44,72 @@ functions like word attraction measure and keyword in context.
 % ----------------------------------------------------------------
 \label{sec:sample}
 
+These sample sessions show typical use of this package.
+
+\subsection{Cooccurrents of \emph{action} in daily newspaper  articles on economics}
+
+A file contains articles extracted from the economic section of a daily newspaper (French newspaper \emph{Le Monde}).
+
+The corpus is read, segmentend in sentences and tokenzied.
+
+Sentences containing \emph{action} are extracted.
+
+Which are the types over-frequent is this subcorpus?
+
+<<sample_session1, echo=T>>=
+library(lexicalStat);
+fileName <- system.file(c("exempleData"),
+                        "LeMondeEco.lines",
+                        package="lexicalStat")
+c <- readTexts(fileName, parts="sentences");
+sc <- subcorpus(c, "action");
+wam(asFrequencyList(c), asFrequencyList(sc));
+@
+
+\subsection{Inspect context of \emph{action} trough a concordancer (KWIC)}
+
+<<sample_session2, echo=T>>=
+library(lexicalStat);
+fileName <- system.file(c("exempleData"),
+                        "LeMondeEco.lines",
+                        package="lexicalStat")
+c <- readTexts(fileName, parts="sentences");
+conc(c);
+@
+
+\subsection{Specific words of the different novels by an author}
+
+A directory contains files, each of whom contains a novel by the novelist Emile Zola.
+Which are the word distinguishing each novels?
+(here, only the first paragraphs for only three novels are given).
+
+<<sample_session3, echo=T>>=
+dir <- system.file(c("exempleData", "zola"),
+                        package="lexicalStat")
+c <- readTexts(dir=dir, parts="files");
+wam(c);
+@
+
+\subsection{Cooccurrents of a word in a tagged corpus}
+
+An XML corpus representing a dictionary has been tagged by treetagger. The XML
+elements where \emph{def} for the definition and \emph{cit} for the example. Which
+are the specific forms used in the exemple?
+
+<<sample_session4, echo=T>>=
+fileName <- system.file(c("inst", "exempleData"), 
+              "PetitLarousse1905.ttg", package="lexicalStat")
+tabulated <- read.treetagger(fileName);
+head(tabulated)
+
+sc <- subcorpus(tabulated, "cit")
+
+scl <- asFrequencyList(sc);
+cl <- asFrequencyList(tabulated)
+
+wam(cl, scl);
+@
+
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
 \section{Representing corpora}
@@ -221,12 +287,9 @@ batch of files; each file is turned into an element of the list and tokenized.
 
 <<fullText, echo=TRUE>>=
 library(lexicalStat);
-fileName <- system.file(c("exempleData"),
-                        "LeMondeEco.small.lines",
-                        package="lexicalStat")
-c <- lines2fullText(fileName);
-summary(c);
-print(c);
+data(sentences)
+summary(sentences)
+sentences[[1]];
 @
 
 % ----------------------------------------------------------------
@@ -298,6 +361,18 @@ or \texttt{tabulated}.
   x <- readLexicalTable(base);
   summary(x);
   print(x);
+@
+
+
+
+<<fullText, echo=TRUE>>=
+library(lexicalStat);
+fileName <- system.file(c("exempleData"),
+                        "LeMondeEco.small.lines",
+                        package="lexicalStat")
+c <- lines2fullText(fileName);
+summary(c);
+print(c);
 @
 
 

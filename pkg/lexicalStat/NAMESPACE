@@ -20,9 +20,12 @@ import(XML)
 #exportMethods(types);
 export(wam.num);
 
+# functions exported from file "R/corpus.R"
+exportMethods(N, V, types)
+
 # functions exported from file "R/fullText.R"
 export(fullText);
-export(lines2fullText, files2fullText);
+export(readTexts);
 #export(asFullText, asFullText.tabulated);
 export(tokenize, tokenize.treetagger, tokenize.simple);
 export(print.tokens.by.parts, untokenize.by.parts);
@@ -50,7 +53,8 @@ exportMethods(asLexicalTable);
 #export(asLexicalTable, asLexicalTable.fullText);
 
 # functions exported from file "R/conc.R"
-export(kwic, kwic.fullText, conc, word.conc, text.conc);
+exportMethods(kwic);
+export(conc, word.conc, text.conc);
 
 # functions exported from file "R/main.R"
 export(compare.txts);
@@ -72,6 +76,9 @@ export(fisher, specificities, binomial, loglikelihood);
 #export(write.mwa, print.mwa, writeAsXML.wma);
 
 #export(extract.field.in.treetagger.struct, remove.unknown.in.treetagger.struct, repair.unknown.in.treetagger.struct, get.treetagger.struct.in.xml.element, characters2treetagger.struct, extract.word.on.pos.in.treetagger.struct);
+
+# functions exported from file "R/textUtils.R"
+export(line2paragraph);
 
 # functions exported from file "R/corpus.R"
 # export(list2lexical.table, list2lexical.table.sparse, .add.to.lexical.table);

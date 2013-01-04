@@ -108,22 +108,102 @@ The following object(s) are masked from ‘package:stats’:
 
 
 
+Executing test function test_asFrequencyList.FullText  ... Timing stopped at: 0.023 0.001 0.025 
+Error in as(x, "FrequencyList") : 
+  no method or default for coercing "FullText" to "FrequencyList"
+ done successfully.
+
+
+
+Executing test function test_asFrequencyList.LexicalTable  ... Timing stopped at: 0.004 0 0.005 
+Error in as(x, "FrequencyList") : 
+  no method or default for coercing "FullText" to "FrequencyList"
+ done successfully.
+
+
+
+Executing test function test_asFrequencyList.Tabulated  ... Timing stopped at: 0.002 0 0.002 
+Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "asFrequencyList", for signature "Tabulated", "missing"
+ done successfully.
+
+
+
+Executing test function test_asFullText.tabulated  ... Timing stopped at: 0.001 0 0.002 
+Error in func() : impossible de trouver la fonction "asFullText"
+ done successfully.
+
+
+
+Executing test function test_asLexicalTable.FullText  ... Timing stopped at: 0.027 0.001 0.028 
+Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "types", for signature "FullText"
+ done successfully.
+
+
+
+Executing test function test_asLexicalTable.Tabulated  ... Timing stopped at: 0.002 0 0.002 
+Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "asLexicalTable", for signature "Tabulated", "missing", "missing"
+ done successfully.
+
+
+
+Executing test function test_asTabulated.fullText  ... Timing stopped at: 0.014 0 0.015 
+Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "types", for signature "FullText"
+ done successfully.
+
+
+
+Executing test function test_corpus_isCorpus_frequencyList  ... Timing stopped at: 0.003 0.001 0.003 
+Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "types", for signature "FrequencyList"
+ done successfully.
+
+
+
+Executing test function test_corpus_isCorpus_FullText  ... Timing stopped at: 0.002 0 0.003 
+Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "types", for signature "FullText"
+ done successfully.
+
+
+
+Executing test function test_corpus_isCorpus_LexicalTable  ... Timing stopped at: 0.003 0 0.003 
+Error in checkEqualsNumeric(26, V(i)) : 
+  Mean relative difference: 0.07692308
+ done successfully.
+
+
+
+Executing test function test_corpus_isCorpus_Tabulated  ... Timing stopped at: 0.005 0.001 0.007 
+Error in obj[, positional] : 
+  erreur d'évaluation de l'argument 'j' lors de la sélection d'une méthode pour la fonction '[' : Erreur : l'argument "positional" est manquant, avec aucune valeur par défaut
+
+ done successfully.
+
+
+
 Executing test function test_frequencyList_frequencyList  ...  done successfully.
 
 
 
-Executing test function test_frequencyList_frequencyList_empty_names  ... Error in frequencyList(x) : empty string cannot be a type name
+Executing test function test_frequencyList_frequencyList_empty_names  ... Timing stopped at: 0.001 0 0.001 
+Error in checkException(frequencyList(x)) : 
+  Error not generated as expected
+
  done successfully.
 
 
 
-Executing test function test_frequencyList_frequencyList_nonames  ... Error in frequencyList(x) : frequencyList needs an named vector
+Executing test function test_frequencyList_frequencyList_nonames  ... Error in frequencyList.numeric(x) : frequencyList needs an named vector
  done successfully.
 
 
 
-Executing test function test_frequencyList_frequencyList_not_numeric  ... Error in frequencyList(LETTERS[1:10]) : 
-  frequencyList needs an numeric vector
+Executing test function test_frequencyList_frequencyList_not_numeric  ... Error in UseMethod("frequencyList") : 
+  pas de méthode pour 'frequencyList' applicable pour un objet de classe "character"
  done successfully.
 
 
@@ -132,61 +212,74 @@ Executing test function test_frequencyList_frequencyList2  ...  done successfull
 
 
 
-Executing test function test_frequencyList_print  ... A frequency list:
-Number of forms: 13 
-Number of tokens: 20 
-Number of hapax: 7 
-Top frequencies :O (3) I (2) J (2) L (2) M (2) Q (2) B (1) E (1) F (1) H (1)
+Executing test function test_frequencyList_print  ...    type frequency
+1     A         2
+2     B         1
+3     E         1
+4     G         2
+5     J         1
+6     K         1
+7     M         1
+8     N         1
+9     O         3
+10    P         1
+11    Q         3
+12    R         1
+13    S         2
  done successfully.
 
 
 
-Executing test function test_asFullText.tabulated  ... Timing stopped at: 0.004 0 0.004 
-Error in func() : impossible de trouver la fonction "asTabulated"
+Executing test function test_get.parts.containing.all.form  ... Timing stopped at: 0.001 0 0.001 
+Error in func() : impossible de trouver la fonction "lines2fullText"
  done successfully.
 
 
 
-Executing test function test_get.parts.containing.all.form  ...  done successfully.
-
-
-
-Executing test function test_get.parts.containing.form  ...  done successfully.
-
-
-
-Executing test function test_print.fullText  ... [1] "A raw corpus with 3 parts and  298 tokens"
-le croissance de produit int rieur brut pib devoir se...
-« Il ne y avoir aucun raison ni besoin de...
-le principal conjoncturiste am ricain interroger par le Wall Street...
+Executing test function test_get.parts.containing.form  ... Timing stopped at: 0.001 0 0.001 
+Error in func() : impossible de trouver la fonction "lines2fullText"
  done successfully.
 
 
 
-Executing test function test_readFile  ...  done successfully.
-
-
-
-Executing test function test_readFile_depth  ...  done successfully.
-
-
-
-Executing test function test_readFile_nonexistent_file  ... Error in lines2fullText(fileName) : cannot read or access file
+Executing test function test_print.fullText  ... Timing stopped at: 0 0.001 0 
+Error in func() : impossible de trouver la fonction "lines2fullText"
  done successfully.
 
 
 
-Executing test function test_readFiles  ...  done successfully.
-
-
-
-Executing test function test_readFiles_nonexistent_file  ... Error in files2fullText(c(fileName1, fileName2)) : 
-  cannot read or access some files
+Executing test function test_readFile  ... Timing stopped at: 0.001 0 0.001 
+Error in func() : impossible de trouver la fonction "lines2fullText"
  done successfully.
 
 
 
-Executing test function test_summary.fullText  ... [1] "A raw corpus with 3 parts and  298 tokens"
+Executing test function test_readFile_depth  ... Timing stopped at: 0.001 0 0.001 
+Error in func() : impossible de trouver la fonction "lines2fullText"
+ done successfully.
+
+
+
+Executing test function test_readFile_nonexistent_file  ... Error in eval(expr, envir = parent.frame()) : 
+  impossible de trouver la fonction "lines2fullText"
+ done successfully.
+
+
+
+Executing test function test_readFiles  ... Timing stopped at: 0.002 0.001 0.002 
+Error in func() : impossible de trouver la fonction "files2fullText"
+ done successfully.
+
+
+
+Executing test function test_readFiles_nonexistent_file  ... Error in eval(expr, envir = parent.frame()) : 
+  impossible de trouver la fonction "files2fullText"
+ done successfully.
+
+
+
+Executing test function test_summary.fullText  ... Timing stopped at: 0.001 0 0.001 
+Error in func() : impossible de trouver la fonction "lines2fullText"
  done successfully.
 
 
@@ -228,35 +321,32 @@ Executing test function test_lexicalTable_creation_with_sparse_matrix  ...  done
 
 
 
-Executing test function test_readLexicalTable  ... Read 845268 items
-Read 11274 items
-Read 840 items
+Executing test function test_readLexicalTable  ... Timing stopped at: 0.001 0 0.001 
+Error in readLexicalTable(base) : cannot read or access some files
  done successfully.
 
 
 
-Executing test function test_tabulated_subcorpus_all.arguments  ... Timing stopped at: 0.011 0 0.011 
-Error in subcorpus(c, "cit", "word", "taille") : 
-  structural attribute not found
+Executing test function test_tabulated_subcorpus_all.arguments  ... Timing stopped at: 0.011 0.001 0.011 
+Error in func() : impossible de trouver la fonction "subcorpus"
  done successfully.
 
 
 
-Executing test function test_tabulated_subcorpus_all.arguments_positional_not_found  ... Error in subcorpus(c, "cit", "foobar", "taille") : 
-  structural attribute not found
+Executing test function test_tabulated_subcorpus_all.arguments_positional_not_found  ... Error in eval(expr, envir = parent.frame()) : 
+  impossible de trouver la fonction "subcorpus"
  done successfully.
 
 
 
-Executing test function test_tabulated_subcorpus_structural  ... Timing stopped at: 0.005 0 0.005 
-Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "subcorpus", for signature "Tabulated", "character", "missing", "missing"
+Executing test function test_tabulated_subcorpus_structural  ... Timing stopped at: 0.006 0.001 0.007 
+Error in func() : impossible de trouver la fonction "subcorpus"
  done successfully.
 
 
 
-Executing test function test_tabulated_subcorpus_structural_not_found  ... Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "subcorpus", for signature "Tabulated", "character", "missing", "missing"
+Executing test function test_tabulated_subcorpus_structural_not_found  ... Error in eval(expr, envir = parent.frame()) : 
+  impossible de trouver la fonction "subcorpus"
  done successfully.
 
 
@@ -285,33 +375,36 @@ Executing test function test_read.treetagger_file_with_xml  ...  done successful
 
 
 
-Executing test function test_wam.frequencyList  ... Timing stopped at: 0.008 0 0.008 
-Error in func() : impossible de trouver la fonction "asFrequencyList"
+Executing test function test_specificities  ...  done successfully.
+
+
+
+Executing test function test_wam.frequencyList  ... Timing stopped at: 0.013 0 0.012 
+Error in func() : impossible de trouver la fonction "subcorpus"
  done successfully.
 
 
 
-Executing test function test_wam.fullText  ... Timing stopped at: 0.002 0.001 0.003 
-Error in UseMethod("wam") : 
-  pas de méthode pour 'wam' applicable pour un objet de classe "c('FullText', 'list', 'vector')"
+Executing test function test_wam.fullText  ... Timing stopped at: 0.001 0 0.001 
+Error in func() : impossible de trouver la fonction "lines2fullText"
  done successfully.
 
 
 
-Executing test function test_wam.lexicalTable  ... Timing stopped at: 0.024 0.001 0.025 
-Error in UseMethod("wam") : 
-  pas de méthode pour 'wam' applicable pour un objet de classe "c('LexicalTable', 'dgCMatrix', 'CsparseMatrix', 'dsparseMatrix', 'generalMatrix', 'dMatrix', 'sparseMatrix', 'compMatrix', 'Matrix')"
+Executing test function test_wam.lexicalTable  ...  done successfully.
+
+
+
+Executing test function test_wam.numeric  ... Timing stopped at: 0.001 0 0 
+Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "wam", for signature "numeric"
  done successfully.
 
 
 
-Executing test function test_wam.numeric  ...  done successfully.
-
-
-
-Executing test function test_wam.tabulated  ... Timing stopped at: 0.008 0 0.008 
-Error in UseMethod("wam") : 
-  pas de méthode pour 'wam' applicable pour un objet de classe "c('Tabulated', 'data.frame', 'list', 'oldClass', 'vector')"
+Executing test function test_wam.tabulated  ... Timing stopped at: 0.01 0.001 0.01 
+Error in .local(corpus, measure, types, positional, structural) : 
+  positional cannot be null
  done successfully.
 
 
@@ -320,31 +413,60 @@ Executing test function test.specificities  ...  done successfully.
 
 ------------------- UNIT TEST SUMMARY ---------------------
 
-RUNIT TEST PROTOCOL -- Sun Dec 30 22:02:05 2012 
+RUNIT TEST PROTOCOL -- Fri Jan  4 19:40:49 2013 
 *********************************************** 
-Number of test functions: 39 
-Number of errors: 8 
-Number of failures: 0 
+Number of test functions: 50 
+Number of errors: 25 
+Number of failures: 2 
 
  
 1 Test Suite : 
-lexicalStat unit testing - 39 test functions, 8 errors, 0 failures
-ERROR in test_asFullText.tabulated: Error in func() : impossible de trouver la fonction "asTabulated"
-ERROR in test_tabulated_subcorpus_all.arguments: Error in subcorpus(c, "cit", "word", "taille") : 
-  structural attribute not found
-ERROR in test_tabulated_subcorpus_structural: Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "subcorpus", for signature "Tabulated", "character", "missing", "missing"
+lexicalStat unit testing - 50 test functions, 25 errors, 2 failures
+ERROR in test_asFrequencyList.FullText: Error in as(x, "FrequencyList") : 
+  no method or default for coercing "FullText" to "FrequencyList"
+ERROR in test_asFrequencyList.LexicalTable: Error in as(x, "FrequencyList") : 
+  no method or default for coercing "FullText" to "FrequencyList"
+ERROR in test_asFrequencyList.Tabulated: Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "asFrequencyList", for signature "Tabulated", "missing"
+ERROR in test_asFullText.tabulated: Error in func() : impossible de trouver la fonction "asFullText"
+ERROR in test_asLexicalTable.FullText: Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "types", for signature "FullText"
+ERROR in test_asLexicalTable.Tabulated: Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "asLexicalTable", for signature "Tabulated", "missing", "missing"
+ERROR in test_asTabulated.fullText: Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "types", for signature "FullText"
+ERROR in test_corpus_isCorpus_frequencyList: Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "types", for signature "FrequencyList"
+ERROR in test_corpus_isCorpus_FullText: Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "types", for signature "FullText"
+FAILURE in test_corpus_isCorpus_LexicalTable: Error in checkEqualsNumeric(26, V(i)) : 
+  Mean relative difference: 0.07692308
+ERROR in test_corpus_isCorpus_Tabulated: Error in obj[, positional] : 
+  erreur d'évaluation de l'argument 'j' lors de la sélection d'une méthode pour la fonction '[' : Erreur : l'argument "positional" est manquant, avec aucune valeur par défaut
+
+FAILURE in test_frequencyList_frequencyList_empty_names: Error in checkException(frequencyList(x)) : 
+  Error not generated as expected
+
+ERROR in test_get.parts.containing.all.form: Error in func() : impossible de trouver la fonction "lines2fullText"
+ERROR in test_get.parts.containing.form: Error in func() : impossible de trouver la fonction "lines2fullText"
+ERROR in test_print.fullText: Error in func() : impossible de trouver la fonction "lines2fullText"
+ERROR in test_readFile: Error in func() : impossible de trouver la fonction "lines2fullText"
+ERROR in test_readFile_depth: Error in func() : impossible de trouver la fonction "lines2fullText"
+ERROR in test_readFiles: Error in func() : impossible de trouver la fonction "files2fullText"
+ERROR in test_summary.fullText: Error in func() : impossible de trouver la fonction "lines2fullText"
+ERROR in test_readLexicalTable: Error in readLexicalTable(base) : cannot read or access some files
+ERROR in test_tabulated_subcorpus_all.arguments: Error in func() : impossible de trouver la fonction "subcorpus"
+ERROR in test_tabulated_subcorpus_structural: Error in func() : impossible de trouver la fonction "subcorpus"
 ERROR in test_read.reetagger_contains.xml.no: Error in validObject(.Object) : 
   invalid class “Tabulated” object: invalid object for slot "structural" in class "Tabulated": got class "NULL", should be or extend class "character"
-ERROR in test_wam.frequencyList: Error in func() : impossible de trouver la fonction "asFrequencyList"
-ERROR in test_wam.fullText: Error in UseMethod("wam") : 
-  pas de méthode pour 'wam' applicable pour un objet de classe "c('FullText', 'list', 'vector')"
-ERROR in test_wam.lexicalTable: Error in UseMethod("wam") : 
-  pas de méthode pour 'wam' applicable pour un objet de classe "c('LexicalTable', 'dgCMatrix', 'CsparseMatrix', 'dsparseMatrix', 'generalMatrix', 'dMatrix', 'sparseMatrix', 'compMatrix', 'Matrix')"
-ERROR in test_wam.tabulated: Error in UseMethod("wam") : 
-  pas de méthode pour 'wam' applicable pour un objet de classe "c('Tabulated', 'data.frame', 'list', 'oldClass', 'vector')"
+ERROR in test_wam.frequencyList: Error in func() : impossible de trouver la fonction "subcorpus"
+ERROR in test_wam.fullText: Error in func() : impossible de trouver la fonction "lines2fullText"
+ERROR in test_wam.numeric: Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "wam", for signature "numeric"
+ERROR in test_wam.tabulated: Error in .local(corpus, measure, types, positional, structural) : 
+  positional cannot be null
 Erreur : 
 
-unit testing failed (#test failures: 0, #R errors: 8)
+unit testing failed (#test failures: 2, #R errors: 25)
 
 Exécution arrêtée

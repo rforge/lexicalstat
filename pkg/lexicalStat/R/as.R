@@ -93,7 +93,7 @@ setMethod("asLexicalTable", c("Tabulated", "character", "character"), function(x
   return(lexicalTable(m));
 });
 
-setMethod("asLexicalTable", c("FullText", "missing", "missing"), function(x) {
+setMethod("asLexicalTable", c("FullText"), function(x) {
   as(x, "LexicalTable")
 });
 
@@ -184,14 +184,16 @@ setMethod("asFrequencyList", c("LexicalTable", "missing"), function(x) {
 #   return(frequencyList(freq));
 # });
 
-setAs("FullText", "FrequencyList", function(from, to) {
-  freq <- table(unlist(from));
-  return(frequencyList(freq));
-});
 
-setAs("LexicalTable", "FrequencyList", function(from, to) {
-   fl <- rowSums(from);
-   n <- rownames(from);
-   names(fl) <- n;
-   return(frequencyList(fl));
-});
+
+# setAs("FullText", "FrequencyList", function(from, to) {
+#   freq <- table(unlist(from));
+#   return(frequencyList(freq));
+# });
+# 
+# setAs("LexicalTable", "FrequencyList", function(from, to) {
+#    fl <- rowSums(from);
+#    n <- rownames(from);
+#    names(fl) <- n;
+#    return(frequencyList(fl));
+# });

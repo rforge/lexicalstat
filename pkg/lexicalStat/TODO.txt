@@ -1,3 +1,5 @@
+renomaer conc -> kwic
+
 Attention dans lecture de fichier treetagger : si les noms d'éléments ont des attributs, ne passe plus
 
 test list2lexical.table.sparse

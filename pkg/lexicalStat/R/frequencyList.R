@@ -16,7 +16,7 @@ frequencyList.numeric <- function(x) {
   y <- data.frame(type=as.factor(names(x)), frequency=as.numeric(x));
   frequencyList(y);
 }
-  
+
 frequencyList.table <- function(x) {
     n <- names(x);
     y <- as.numeric(x);

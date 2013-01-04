@@ -4,19 +4,21 @@
  #
  ##
 
-kwic <- function(x, ...) UseMethod("kwic");
+setGeneric("kwic", function(x, pattern, left, right) {
+  return(standardGeneric("kwic"));
+})
 
-kwic.fullText <- function(x, pattern, left, right) {
+setMethod("kwic", "FullText", function(x, pattern, left, right) {
   lines.names <- names(tokens.by.part);
   lines <- lapply(tokens.by.part, function(x) paste(x, collapse=" "));
   lines <- as.character(lines);
   names(lines) <- lines.names;
   return(conc(lines, pattern, left, right));
-}
+});
 
-kwic.tabulated <- function(x, pattern, left, right) {
+setMethod("kwic", "Tabulated", function(x, pattern, left, right) {
   stop("not implemented yet");
-}
+});
 
 conc <- function(lines, pattern, left, right) {
   lines.names <- names(lines);

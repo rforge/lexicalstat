@@ -64,48 +64,62 @@ fullText <- function(l, depth=1) {
  # Each line of a text file is tokenized and used as a part of the corpus
  #
  ##
-lines2fullText <- function(file, enc="UTF-8", skipEmpty=FALSE) {
-  if (!file.exists(file)) {
-    stop("cannot read or access file");
+readTexts <- function(files, dir=NULL, pattern=NULL, parts=c("lines", "files",
+"sentences", "paragraphs"), enc="UTF-8", skipEmpty=TRUE) {
+
+  if (! parts %in% c("lines", "files", "sentences")) {
+    stop("'parts' must be one of 'lines', 'files', 'sentences'");
   }
-  lines <- readLines(file, encoding=enc);
-  index_empty_lines <- grep("^\\W*$", lines);
+
+  if (!is.null(dir)) {
+    files = list.files(dir, pattern=pattern);
+  }
+  if (length(files) == 0) {
+    stop("no files selected");
+  }
+  nonexistent <- character(0);
+  for (f in files) {
+    if (!file.exists(f)) {
+      nonexistent <- append(nonexistent, f);
+    }
+  }
+  if (length(nonexistent) > 0) {
+    stop(paste("cannot read or access file(s): ", paste(nonexistent, collapse=" "), sep=""));
+  }
+
+  parts <- vector(mode="list", length=length(files));
+  for (i in 1:length(files)) {
+    lines <- readLines(files[i], encoding=enc);
+    parts[[i]] <- lines;
+  }
+
+  if (parts == "lines") {
+    corpus <- unlist(parts);
+  } else if (parts == "files") {
+    corpus <- sapply(parts, paste, collapse= " ");
+    names(corpus) <- files;
+  } else if (parts == "sentences") {
+    corpus <- unlist(parts);
+    corpus <- line2paragraph(corpus);
+  } else if (parts == "paragraphs") {
+    corpus <- unlist(parts);
+    corpus <- lapply(corpus, function(x) {
+      strplit(x, split="[^M]\\.+")
+	});
+    corpus <- unlist(corpus);
+  }
+
+  index_empty_lines <- grep("^\\s*$", lines);
   if (length(index_empty_lines) > 0) {
     if (skipEmpty) {
-      lines <- lines[-index_empty_lines];
+      corpus <- corpus[-index_empty_lines];
     } else {
       stop("Empty lines found in the text file")
     }
   }
-  parts <- tokenize(lines);
-  names(parts) <- 1:length(parts);
-  obj <- fullText(parts);
-  return(obj);
-}
 
-#
-# Each file of a group of text files is tokenized and used as a part of the corpus
-#
-files2fullText <- function(files, enc="UTF-8", skipEmpty=FALSE) {
-  if (any(!file.exists(files))) {
-    stop("cannot read or access some files");
-  }
-  parts <- vector(mode="list", length=length(files));
-  for (i in 1:length(files)) {
-    lines <- readLines(files[i], encoding=enc);
-    index_empty_lines <- grep("^\\W*$", lines);
-    if (length(index_empty_lines) > 0) {
-      if (skipEmpty) {
-	lines <- lines[-index_empty_lines];
-      } else {
-	stop("Empty lines found in the text file")
-      }
-    }
-    part <- unlist(tokenize(lines));
-    parts[[i]] <- part;
-  }
-  names(parts) <- files;
-  obj <- fullText(parts);
+  corpus <- tokenize(corpus);
+  obj <- fullText(corpus);
   return(obj);
 }
 

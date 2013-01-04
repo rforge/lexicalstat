@@ -20,7 +20,7 @@ setMethod("subcorpus", c(corpus="FullText"), function(corpus, type) {
 	return(corpus[contains.type]);
 });
 
-setMethod("subcorpus", c(corpus="FullText"), function(corpus, structural, positional=NULL, value=NULL) {
+setMethod("subcorpus", c(corpus="Tabulated"), function(corpus, structural, positional=NULL, value=NULL) {
   if (! structural %in% attr(tabulated, "structural")) {
     stop("structural attribute not found");
   }

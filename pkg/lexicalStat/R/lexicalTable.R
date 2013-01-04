@@ -74,7 +74,7 @@ lexicalTable <- function(mat) {
 setMethod("summary", signature(object = "LexicalTable"), function(object){
   cat(paste("A lexical table:\n"));
   cat(paste("Number of parts (columns):", ncol(object), "\n"));
-  cat(paste("Number of forms (rows):", nrow(object), "\n"));
+  cat(paste("Number of types (rows):", nrow(object), "\n"));
   cat(paste("Number of tokens:", sum(object), "\n"));
   invisible(x);
 })
@@ -87,10 +87,10 @@ setMethod("summary", signature(object = "LexicalTable"), function(object){
 
 readLexicalTable <- function(basename) {
    freqs.filename <- paste(basename, "freqs", sep=".");
-   forms.filename <- paste(basename, "forms", sep=".");
+   types.filename <- paste(basename, "types", sep=".");
    parts.filename <- paste(basename, "parts", sep=".");
 
-   if (any(!file.exists(c(freqs.filename, forms.filename, parts.filename)))) {
+   if (any(!file.exists(c(freqs.filename, types.filename, parts.filename)))) {
      stop("cannot read or access some files");
    }
 
@@ -99,7 +99,7 @@ readLexicalTable <- function(basename) {
    j <- v[seq(from=2,to=length(v),by=3)]
    x <- v[seq(from=3,to=length(v),by=3)]
 
-   obsnames <- scan(forms.filename, what="character", sep="\n");
+   obsnames <- scan(types.filename, what="character", sep="\n");
    varnames <- scan(parts.filename, what="character", sep="\n");
    mat <- sparseMatrix(i=i, j=j, x=x);
    rownames(mat) <- obsnames;
@@ -111,14 +111,14 @@ readLexicalTable <- function(basename) {
 
 writeLexicalTable <- function(obj, file) {
    freqs.filename <- paste(file, "freqs", sep=".");
-   forms.filename <- paste(file, "forms", sep=".");
+   types.filename <- paste(file, "types", sep=".");
    parts.filename <- paste(file, "parts", sep=".");
 
    s <- summary(x)
    values <- data.frame(s$i, s$j, s$x)
    write.table(values, freqs.filename, row.names = FALSE, col.names = FALSE)
 
-   write(rownames(x), forms.filename, sep="\n");
+   write(rownames(x), types.filename, sep="\n");
    write(colnames(x), parts.filename, sep="\n");
 }
 
