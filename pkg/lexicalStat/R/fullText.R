@@ -64,10 +64,9 @@ fullText <- function(l, depth=1) {
  # Each line of a text file is tokenized and used as a part of the corpus
  #
  ##
-readTexts <- function(files, dir=NULL, pattern=NULL, parts=c("lines", "files",
-"sentences", "paragraphs"), enc="UTF-8", skipEmpty=TRUE) {
+readTexts <- function(files, dir=NULL, pattern=NULL, split.on="lines", enc="UTF-8", skipEmpty=TRUE) {
 
-  if (! parts %in% c("lines", "files", "sentences")) {
+  if (! split.on %in% c("lines", "files", "sentences", "paragraphs")) {
     stop("'parts' must be one of 'lines', 'files', 'sentences'");
   }
 
@@ -77,6 +76,7 @@ readTexts <- function(files, dir=NULL, pattern=NULL, parts=c("lines", "files",
   if (length(files) == 0) {
     stop("no files selected");
   }
+  files <- paste(dir, files, sep="/");
   nonexistent <- character(0);
   for (f in files) {
     if (!file.exists(f)) {
@@ -89,24 +89,29 @@ readTexts <- function(files, dir=NULL, pattern=NULL, parts=c("lines", "files",
 
   parts <- vector(mode="list", length=length(files));
   for (i in 1:length(files)) {
+    print("...")
+    print(files[i]);
     lines <- readLines(files[i], encoding=enc);
     parts[[i]] <- lines;
   }
 
-  if (parts == "lines") {
+  corpus <- list();
+  if (split.on == "lines") {
     corpus <- unlist(parts);
-  } else if (parts == "files") {
+  } else if (split.on == "files") {
     corpus <- sapply(parts, paste, collapse= " ");
     names(corpus) <- files;
-  } else if (parts == "sentences") {
-    corpus <- unlist(parts);
-    corpus <- line2paragraph(corpus);
-  } else if (parts == "paragraphs") {
+  } else if (split.on == "sentences") {
     corpus <- unlist(parts);
     corpus <- lapply(corpus, function(x) {
-      strplit(x, split="[^M]\\.+")
+      strsplit(x, split="[^M]\\.+")
 	});
     corpus <- unlist(corpus);
+  } else if (split.on == "paragraphs") {
+    corpus <- unlist(parts);
+    corpus <- line2paragraph(corpus);
+  } else {
+    stop("must never happen");
   }
 
   index_empty_lines <- grep("^\\s*$", lines);
@@ -140,8 +145,8 @@ setMethod("summary", signature(object = "FullText"), function(object){
   print(paste("A raw corpus with", length(object), "parts and ", sum(sapply(object, length)), "tokens"));
   invisible(object);
   cat("Sample:\n");
-  for (i in 1:min(length(x), 10)) {
-    part <- x[[i]]
+  for (i in 1:min(length(object), 10)) {
+    part <- object[[i]]
     tokens <- part[1:min(10, length(part))];
     cat(paste(paste(tokens, collapse=" "), "...\n", sep=""));
   }
@@ -170,6 +175,7 @@ tokenize.simple <- function(parts) {
 .tokenize <- function(parts, regexp) {
   if (!is.character(parts)) stop("parts must be a character vector");
   if (any(parts == "")) stop("parts must not contain empty string");
+
   corpus.tokenized <- strsplit(parts, regexp, perl=T);
   index <- sapply(corpus.tokenized, function(x) {length(x) > 0});
   if (!is.logical(index)) {

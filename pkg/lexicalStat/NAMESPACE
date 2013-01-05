@@ -10,18 +10,18 @@ import(XML)
 
 # S4 methods to be exported :
 #
-# is.subcorpus.of.R subcorpus.R
-#export(subcorpus);
+# is.subcorpus.of.R
+
 #
 # export: including generics
 # exportMethods: for methods on generics defined in other packages, e.g., show, initialize
 
 # à classer :
-#exportMethods(types);
 export(wam.num);
 
 # functions exported from file "R/corpus.R"
-exportMethods(N, V, types)
+exportMethods(N, V);
+exportMethods(types);
 
 # functions exported from file "R/fullText.R"
 export(fullText);
@@ -46,11 +46,17 @@ export(tabulated);
 
 # functions exported from file "as.R"
 exportMethods(asTabulated);
-#export(, asTabulated.fullText);
 exportMethods(asFrequencyList);
-#export(asFrequencyList, asFrequencyList.tabulated, asFrequencyList.fullText);
 exportMethods(asLexicalTable);
+exportMethods(asFullText);
+exportMethods(coerce);
+
+#export(, asTabulated.fullText);
+#export(asFrequencyList, asFrequencyList.tabulated, asFrequencyList.fullText);
 #export(asLexicalTable, asLexicalTable.fullText);
+
+# functions exported from file "R/subcorpus.R"
+exportMethods(subcorpus);
 
 # functions exported from file "R/conc.R"
 exportMethods(kwic);

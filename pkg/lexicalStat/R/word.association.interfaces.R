@@ -53,6 +53,7 @@ setMethod("wam", c("FullText"), function(corpus, measure, types) {
  # - structural = the column giving the partition factor for the forms.
  # ------------------------------------------------------------------------
  ##
+#TODO : would it be possible to have positional and structural in 2nd and 3rd position?
 setMethod("wam", "Tabulated", function(corpus, measure, types, positional, structural) {
   if (is.null(positional)) {
     stop("positional cannot be null");

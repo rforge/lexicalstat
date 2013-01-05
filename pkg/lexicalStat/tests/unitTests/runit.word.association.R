@@ -6,14 +6,14 @@
 
 test_wam.fullText <- function() {
   fileName <- system.file(c("inst",  "exempleData"), "LeMondeEco.small.lines", package="lexicalStat")
-  c <- lines2fullText(fileName);
+  c <- readTexts(fileName);
   wam(c);
 }
 
 test_wam.tabulated <- function() {
   fileName <- system.file(c("inst", "exempleData"), "PetitLarousse1905.ttg", package="lexicalStat")
   c <- read.treetagger(fileName);
-  wam(c, "word", "def");
+  wam(c, positional="word", structural="def");
 }
 
 test_wam.frequencyList <- function() {
@@ -38,7 +38,7 @@ test_wam.lexicalTable <- function() {
 ############################################################
 
 test_wam.numeric <- function() {
-   wam(10, 5, 3, 3);
+   wam.num(10, 5, 3, 3);
 }
 
 ############################################################

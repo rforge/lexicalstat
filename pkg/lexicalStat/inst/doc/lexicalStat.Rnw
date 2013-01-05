@@ -110,6 +110,8 @@ cl <- asFrequencyList(tabulated)
 wam(cl, scl);
 @
 
+\subsection{Robespierre}
+
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
 \section{Representing corpora}
@@ -123,8 +125,31 @@ wam(cl, scl);
 \label{subsec:classes-corpora}
 
 There are four classes for representing a corpus. Each is suited for some tasks
-or for some sources. Functions are provided for converting from one format
-toward another.
+or for some sources.
+
+All object support three functions:
+\begin{itemize}
+\item \texttt{N}\index{N} : the number of tokens
+\item \texttt{V}\index{V} : the number of different types (V stand for vocabulary)
+\item \texttt{types}\index{types} : the sorte list of the different types.
+\end{itemize}
+
+The function \texttt{summary}\index{summary} applied on this data structures provide
+short resumes of their content.
+
+For each of these four types, a tool corpus is provided as a dataset (load with \texttt{data}).
+These tool corpus represent all the two first sentences of "A Chrismas x" by Ch. Dickens. It is:
+
+\begin{itemize}
+\item \texttt{DickensFrequencyList}
+\item \texttt{DickensLexicalTable}
+\item \texttt{DickensTabulated}
+\item \texttt{DickensFullText}
+\end{itemize}
+
+Functions are provided for converting from one format toward another.
+
+Functions are provided for reading from files these data.
 
 % ................................................................
 \subsubsection{\texttt{frequencyList}}
@@ -144,7 +169,17 @@ patrie & 153\\
 \ldots & \ldots\\\hline
 \end{tabular}
 
-A frequency list can be created with any named numeric vector:
+Output of the \texttt{N}, \texttt{V}, \texttt{types}, \texttt{print} and \texttt{summary} functions:
+
+<<frequencyList, echo=T>>=
+data(DickensFrequencyList);
+N(DickensFrequencyList)
+V(DickensFrequencyList)
+DickensFrequencyList
+summary(DickensFrequencyList);
+@
+
+A frequency list can be created with a named numeric vector:
 
 <<frequencyList, echo=T>>=
 library(lexicalStat);
@@ -154,6 +189,8 @@ y <- frequencyList(x);
 y
 summary(y);
 @
+
+It can also be created with a two-columns data.frame or a table object.
 
 % ................................................................
 \subsubsection{\texttt{lexicalTable}}

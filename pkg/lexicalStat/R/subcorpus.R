@@ -21,20 +21,20 @@ setMethod("subcorpus", c(corpus="FullText"), function(corpus, type) {
 });
 
 setMethod("subcorpus", c(corpus="Tabulated"), function(corpus, structural, positional=NULL, value=NULL) {
-  if (! structural %in% attr(tabulated, "structural")) {
+  if (! structural %in% lstructural(corpus)) {
     stop("structural attribute not found");
   }
   if (is.null(positional) & is.null(value)) {
-    p <- tabulated[,structural];
-    return(tabulated[ p != -1 , ]);
+    p <- corpus[,structural];
+    return(corpus[ p != -1 , ]);
   } else if (!is.null(positional) & !is.null(value)) {
-    if (! positional %in% attr(tabulated, "positional")) {
+    if (! positional %in% lpositional(corpus)) {
       stop("positional attribute not found");
     }
-    p <- tabulated[,structural];
-    a <- tabulated[,positional];
+    p <- corpus[,structural];
+    a <- corpus[,positional];
     ids <- unique(p[ a == value ]);
-    return(tabulated[ p == ids , ]);
+    return(corpus[ p == ids , ]);
   } else {
     stop("both 'positional' and 'value' must be NULL, or none of them");
   }

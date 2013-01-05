@@ -100,9 +100,10 @@ setMethod("indicator.name", "WordAssociation", function(obj) obj@indicator.name)
  # types
  #
  ##
-setGeneric("types", function(obj) {
-  return(standardGeneric("types"));
-})
+# TODO : attention même nom mais pas même sémantique que la fonction "typ" 
+# setGeneric("types", function(obj) {
+#   return(standardGeneric("types"));
+# })
 
 setMethod("types", "WordAssociation", function(obj) obj@types)
 

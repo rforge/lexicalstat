@@ -22,7 +22,13 @@ test_read.reetagger_discard.xml <- function() {
 
 test_read.reetagger_contains.xml.no <- function() {
   fileName <- system.file(c("inst", "exempleData"), "sample_noxml.ttg", package="lexicalStat")
-  c <- read.treetagger(fileName, contains.xml=TRUE);
+  c <- read.treetagger(fileName, contains.xml=FALSE);
   checkEquals(c("word", "pos", "lemma"), colnames(c));
+}
+
+# contains.xml=TRUE but the file does not contain XML.
+test_read.reetagger_contains.error.no.xml.found <- function() {
+  fileName <- system.file(c("inst", "exempleData"), "sample_noxml.ttg", package="lexicalStat")
+  checkException(read.treetagger(fileName, contains.xml=TRUE));
 }
 

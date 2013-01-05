@@ -108,80 +108,53 @@ The following object(s) are masked from ‘package:stats’:
 
 
 
-Executing test function test_asFrequencyList.FullText  ... Timing stopped at: 0.023 0.001 0.025 
-Error in as(x, "FrequencyList") : 
-  no method or default for coercing "FullText" to "FrequencyList"
+Executing test function test_asFrequencyList.FullText  ...  done successfully.
+
+
+
+Executing test function test_asFrequencyList.LexicalTable  ...  done successfully.
+
+
+
+Executing test function test_asFrequencyList.Tabulated  ...  done successfully.
+
+
+
+Executing test function test_asFullText.tabulated  ...  done successfully.
+
+
+
+Executing test function test_asLexicalTable.FullText  ... Timing stopped at: 0.016 0 0.017 
+Error in `dimnames<-`(`*tmp*`, value = dn) : 
+  invalid dimnames given for 'dgCMatrix' object
  done successfully.
 
 
 
-Executing test function test_asFrequencyList.LexicalTable  ... Timing stopped at: 0.004 0 0.005 
-Error in as(x, "FrequencyList") : 
-  no method or default for coercing "FullText" to "FrequencyList"
- done successfully.
+Executing test function test_asLexicalTable.Tabulated  ...  done successfully.
 
 
 
-Executing test function test_asFrequencyList.Tabulated  ... Timing stopped at: 0.002 0 0.002 
-Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "asFrequencyList", for signature "Tabulated", "missing"
- done successfully.
+Executing test function test_asTabulated.fullText  ...  done successfully.
 
 
 
-Executing test function test_asFullText.tabulated  ... Timing stopped at: 0.001 0 0.002 
-Error in func() : impossible de trouver la fonction "asFullText"
- done successfully.
+Executing test function test_corpus_isCorpus_frequencyList  ...  done successfully.
 
 
 
-Executing test function test_asLexicalTable.FullText  ... Timing stopped at: 0.027 0.001 0.028 
-Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "types", for signature "FullText"
- done successfully.
+Executing test function test_corpus_isCorpus_FullText  ...  done successfully.
 
 
 
-Executing test function test_asLexicalTable.Tabulated  ... Timing stopped at: 0.002 0 0.002 
-Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "asLexicalTable", for signature "Tabulated", "missing", "missing"
- done successfully.
-
-
-
-Executing test function test_asTabulated.fullText  ... Timing stopped at: 0.014 0 0.015 
-Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "types", for signature "FullText"
- done successfully.
-
-
-
-Executing test function test_corpus_isCorpus_frequencyList  ... Timing stopped at: 0.003 0.001 0.003 
-Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "types", for signature "FrequencyList"
- done successfully.
-
-
-
-Executing test function test_corpus_isCorpus_FullText  ... Timing stopped at: 0.002 0 0.003 
-Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "types", for signature "FullText"
- done successfully.
-
-
-
-Executing test function test_corpus_isCorpus_LexicalTable  ... Timing stopped at: 0.003 0 0.003 
+Executing test function test_corpus_isCorpus_LexicalTable  ... Timing stopped at: 0.003 0.001 0.005 
 Error in checkEqualsNumeric(26, V(i)) : 
   Mean relative difference: 0.07692308
  done successfully.
 
 
 
-Executing test function test_corpus_isCorpus_Tabulated  ... Timing stopped at: 0.005 0.001 0.007 
-Error in obj[, positional] : 
-  erreur d'évaluation de l'argument 'j' lors de la sélection d'une méthode pour la fonction '[' : Erreur : l'argument "positional" est manquant, avec aucune valeur par défaut
-
- done successfully.
+Executing test function test_corpus_isCorpus_Tabulated  ...  done successfully.
 
 
 
@@ -189,7 +162,7 @@ Executing test function test_frequencyList_frequencyList  ...  done successfully
 
 
 
-Executing test function test_frequencyList_frequencyList_empty_names  ... Timing stopped at: 0.001 0 0.001 
+Executing test function test_frequencyList_frequencyList_empty_names  ... Timing stopped at: 0.002 0 0.001 
 Error in checkException(frequencyList(x)) : 
   Error not generated as expected
 
@@ -230,56 +203,173 @@ Executing test function test_frequencyList_print  ...    type frequency
 
 
 
-Executing test function test_get.parts.containing.all.form  ... Timing stopped at: 0.001 0 0.001 
-Error in func() : impossible de trouver la fonction "lines2fullText"
+Executing test function test_get.parts.containing.all.form  ... [1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/sample.lines"
  done successfully.
 
 
 
-Executing test function test_get.parts.containing.form  ... Timing stopped at: 0.001 0 0.001 
-Error in func() : impossible de trouver la fonction "lines2fullText"
+Executing test function test_get.parts.containing.form  ... [1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/sample.lines"
  done successfully.
 
 
 
-Executing test function test_print.fullText  ... Timing stopped at: 0 0.001 0 
-Error in func() : impossible de trouver la fonction "lines2fullText"
+Executing test function test_print.fullText  ... [1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
+An object of class "FullText"
+[[1]]
+ [1] "le"           "croissance"   "de"           "produit"      "int"         
+ [6] "rieur"        "brut"         "pib"          "devoir"       "se"          
+[11] "situer"       "environs"     "de"           "pourcent"     "en"          
+[16] "apr"          "s"            "pourcent"     "en"           "avoir"       
+[21] "indiquer"     "mardi"        "p"            "kin"          "un"          
+[26] "haut"         "responsable"  "conomique"    "chinois"      "le"          
+[31] "gouvernement" "chinois"      "se"           "attendre"     "maintenir"   
+[36] "le"           "croissance"   "«"            "m"            "me"          
+[41] "niveau"       "que"          "le"           "an"           "dernier"     
+[46] "»"            "le"           "objectif"     "fixer"        "par"         
+[51] "le"           "autorit"      "chinois"      "pour"         "ce"          
+[56] "ann"          "e"            "tre"          "toutefois"    "inf"         
+[61] "rieur"        "celui"        "avancer"      "il"           "y"           
+[66] "avoir"        "un"           "quinzaine"    "de"           "jour"        
+[71] "par"          "le"           "centre"       "de"           "information" 
+[76] "national"     "de"           "m"            "me"           "minist"      
+[81] "re"           "qui"          "estimer"      "que"          "le"          
+[86] "pib"          "chinois"      "pouvoir"      "augmenter"    "de"          
+[91] "pourcent"     "ce"           "ann"          "e"           
+
+[[2]]
+  [1] "«"             "Il"            "ne"            "y"            
+  [5] "avoir"         "aucun"         "raison"        "ni"           
+  [9] "besoin"        "de"            "modifier"      "le"           
+ [13] "valeur"        "de"            "yuan"          "dans"         
+ [17] "un"            "avenir"        "proche"        "»"            
+ [21] "avoir"         "d"             "clarer"        "Zeng"         
+ [25] "Peiyan"        "le"            "ministre"      "de"           
+ [29] "le"            "commission"    "national"      "le"           
+ [33] "planification" "de"            "d"             "veloppement"  
+ [37] "en"            "r"             "ponse"         "un"           
+ [41] "question"      "sur"           "le"            "risque"       
+ [45] "de"            "d"             "valuation"     "ce"           
+ [49] "ann"           "e"             "«"             "Depuis"       
+ [53] "le"            "d"             "but"           "de"           
+ [57] "le"            "r"             "forme"         "de"           
+ [61] "taux"          "de"            "change"        "en"           
+ [65] "le"            "valeur"        "de"            "yuan"         
+ [69] "tre"           "rester"        "tr"            "s"            
+ [73] "stable"        "»"             "avoir"         "il"           
+ [77] "faire"         "valoir"        "au"            "cours"        
+ [81] "de"            "un"            "conf"          "rence"        
+ [85] "de"            "presse"        "«"             "L"            
+ [89] "an"            "dernier"       "le"            "situation"    
+ [93] "de"            "exportation"   "avoir"         "tre"          
+ [97] "tr"            "s"             "bon"           "le"           
+[101] "commerce"      "d"             "gager"         "un"           
+[105] "exc"           "dent"          "de"            "milliard"     
+[109] "de"            "dollar"        "»"             "avoir"        
+[113] "ajouter"       "le"            "ministre"     
+
+[[3]]
+ [1] "le"             "principal"      "conjoncturiste" "am"            
+ [5] "ricain"         "interroger"     "par"            "le"            
+ [9] "Wall"           "Street"         "journal"        "se"            
+[13] "tre"            "montrer"        "pour"           "la"            
+[17] "plupart"        "euphorique"     "dans"           "leur"          
+[21] "projection"     "conomique"      "pour"           "publier"       
+[25] "lundi"          "par"            "le"             "quotidien"     
+[29] "de"             "affaire"        "quasiment"      "tout"          
+[33] "le"             "conomiste"      "consulter"      "dans"          
+[37] "le"             "cadre"          "de"             "le"            
+[41] "enqu"           "te"             "Semi"           "annuel"        
+[45] "de"             "Wsj"            "penser"         "que"           
+[49] "le"             "persistance"    "de"             "d"             
+[53] "pense"          "de"             "consommation"   "vigoureux"     
+[57] "le"             "gain"           "de"             "productivit"   
+[61] "de"             "entreprise"     "et"             "le"            
+[65] "mod"            "ration"         "de"             "le"            
+[69] "inflation"      "aller"          "permettre"      "de"            
+[73] "maintenir"      "un"             "expansion"      "soutenir"      
+[77] "en"             "et"             "de"             "en"            
+[81] "faire"          "le"             "plus"           "longue"        
+[85] "de"             "le"             "histoire"       "de"            
+[89] "pays"          
+
+Slot "depth":
+[1] 1
+
  done successfully.
 
 
 
-Executing test function test_readFile  ... Timing stopped at: 0.001 0 0.001 
-Error in func() : impossible de trouver la fonction "lines2fullText"
+Executing test function test_readFile  ... [1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
  done successfully.
 
 
 
-Executing test function test_readFile_depth  ... Timing stopped at: 0.001 0 0.001 
-Error in func() : impossible de trouver la fonction "lines2fullText"
+Executing test function test_readFile_depth  ... [1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
  done successfully.
 
 
 
-Executing test function test_readFile_nonexistent_file  ... Error in eval(expr, envir = parent.frame()) : 
-  impossible de trouver la fonction "lines2fullText"
+Executing test function test_readFile_lines  ... [1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
  done successfully.
 
 
 
-Executing test function test_readFiles  ... Timing stopped at: 0.002 0.001 0.002 
-Error in func() : impossible de trouver la fonction "files2fullText"
+Executing test function test_readFile_nonexistent_file  ... Error in readTexts(fileName) : cannot read or access file(s): /foobar
  done successfully.
 
 
 
-Executing test function test_readFiles_nonexistent_file  ... Error in eval(expr, envir = parent.frame()) : 
-  impossible de trouver la fonction "files2fullText"
+Executing test function test_readFile_paragraphs  ... [1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/small.paragraphs"
  done successfully.
 
 
 
-Executing test function test_summary.fullText  ... Timing stopped at: 0.001 0 0.001 
-Error in func() : impossible de trouver la fonction "lines2fullText"
+Executing test function test_readFile_sentences  ... [1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
+ done successfully.
+
+
+
+Executing test function test_readFiles_files  ... [1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
+[1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small2.lines"
+[1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small3.lines"
+ done successfully.
+
+
+
+Executing test function test_readMultipleFiles  ... [1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
+[1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small2.lines"
+[1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small3.lines"
+ done successfully.
+
+
+
+Executing test function test_readMultipleFiles_nonexistent_file  ... Error in readTexts(c(fileName1, fileName2)) : 
+  cannot read or access file(s): /foobar
+ done successfully.
+
+
+
+Executing test function test_summary.fullText  ... [1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
+[1] "A raw corpus with 3 parts and  298 tokens"
+Sample:
+le croissance de produit int rieur brut pib devoir se...
+« Il ne y avoir aucun raison ni besoin de...
+le principal conjoncturiste am ricain interroger par le Wall Street...
  done successfully.
 
 
@@ -321,40 +411,44 @@ Executing test function test_lexicalTable_creation_with_sparse_matrix  ...  done
 
 
 
-Executing test function test_readLexicalTable  ... Timing stopped at: 0.001 0 0.001 
-Error in readLexicalTable(base) : cannot read or access some files
+Executing test function test_readLexicalTable  ... Read 845268 items
+Read 11274 items
+Read 840 items
  done successfully.
 
 
 
-Executing test function test_tabulated_subcorpus_all.arguments  ... Timing stopped at: 0.011 0.001 0.011 
-Error in func() : impossible de trouver la fonction "subcorpus"
+Executing test function test_tabulated_subcorpus_all.arguments  ...  done successfully.
+
+
+
+Executing test function test_tabulated_subcorpus_all.arguments_positional_not_found  ... Error in .local(corpus, ...) : positional attribute not found
  done successfully.
 
 
 
-Executing test function test_tabulated_subcorpus_all.arguments_positional_not_found  ... Error in eval(expr, envir = parent.frame()) : 
-  impossible de trouver la fonction "subcorpus"
+Executing test function test_tabulated_subcorpus_structural  ...  done successfully.
+
+
+
+Executing test function test_tabulated_subcorpus_structural_not_found  ... Error in .local(corpus, ...) : structural attribute not found
  done successfully.
 
 
 
-Executing test function test_tabulated_subcorpus_structural  ... Timing stopped at: 0.006 0.001 0.007 
-Error in func() : impossible de trouver la fonction "subcorpus"
+Executing test function test_lines2paragraphs  ... [1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/small.paragraphs"
  done successfully.
 
 
 
-Executing test function test_tabulated_subcorpus_structural_not_found  ... Error in eval(expr, envir = parent.frame()) : 
-  impossible de trouver la fonction "subcorpus"
+Executing test function test_read.reetagger_contains.error.no.xml.found  ... Error in read.treetagger(fileName, contains.xml = TRUE) : 
+  'contains.xml=TRUE' but no XML found in the file
  done successfully.
 
 
 
-Executing test function test_read.reetagger_contains.xml.no  ... Timing stopped at: 0.004 0 0.004 
-Error in validObject(.Object) : 
-  invalid class “Tabulated” object: invalid object for slot "structural" in class "Tabulated": got class "NULL", should be or extend class "character"
- done successfully.
+Executing test function test_read.reetagger_contains.xml.no  ...  done successfully.
 
 
 
@@ -379,14 +473,18 @@ Executing test function test_specificities  ...  done successfully.
 
 
 
-Executing test function test_wam.frequencyList  ... Timing stopped at: 0.013 0 0.012 
-Error in func() : impossible de trouver la fonction "subcorpus"
+Executing test function test_wam.frequencyList  ... Timing stopped at: 0.013 0.001 0.014 
+Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "asFrequencyList", for signature "data.frame", "character"
  done successfully.
 
 
 
-Executing test function test_wam.fullText  ... Timing stopped at: 0.001 0 0.001 
-Error in func() : impossible de trouver la fonction "lines2fullText"
+Executing test function test_wam.fullText  ... [1] "..."
+[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
+Timing stopped at: 0.007 0 0.007 
+Error in `dimnames<-`(`*tmp*`, value = dn) : 
+  invalid dimnames given for 'dgCMatrix' object
  done successfully.
 
 
@@ -395,16 +493,13 @@ Executing test function test_wam.lexicalTable  ...  done successfully.
 
 
 
-Executing test function test_wam.numeric  ... Timing stopped at: 0.001 0 0 
-Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "wam", for signature "numeric"
- done successfully.
+Executing test function test_wam.numeric  ...  done successfully.
 
 
 
-Executing test function test_wam.tabulated  ... Timing stopped at: 0.01 0.001 0.01 
-Error in .local(corpus, measure, types, positional, structural) : 
-  positional cannot be null
+Executing test function test_wam.tabulated  ... Timing stopped at: 0.017 0 0.018 
+Error in .local(corpus, measure, types, parts) : 
+  Row without any occurrence
  done successfully.
 
 
@@ -413,60 +508,30 @@ Executing test function test.specificities  ...  done successfully.
 
 ------------------- UNIT TEST SUMMARY ---------------------
 
-RUNIT TEST PROTOCOL -- Fri Jan  4 19:40:49 2013 
+RUNIT TEST PROTOCOL -- Sat Jan  5 19:31:28 2013 
 *********************************************** 
-Number of test functions: 50 
-Number of errors: 25 
+Number of test functions: 56 
+Number of errors: 4 
 Number of failures: 2 
 
  
 1 Test Suite : 
-lexicalStat unit testing - 50 test functions, 25 errors, 2 failures
-ERROR in test_asFrequencyList.FullText: Error in as(x, "FrequencyList") : 
-  no method or default for coercing "FullText" to "FrequencyList"
-ERROR in test_asFrequencyList.LexicalTable: Error in as(x, "FrequencyList") : 
-  no method or default for coercing "FullText" to "FrequencyList"
-ERROR in test_asFrequencyList.Tabulated: Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "asFrequencyList", for signature "Tabulated", "missing"
-ERROR in test_asFullText.tabulated: Error in func() : impossible de trouver la fonction "asFullText"
-ERROR in test_asLexicalTable.FullText: Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "types", for signature "FullText"
-ERROR in test_asLexicalTable.Tabulated: Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "asLexicalTable", for signature "Tabulated", "missing", "missing"
-ERROR in test_asTabulated.fullText: Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "types", for signature "FullText"
-ERROR in test_corpus_isCorpus_frequencyList: Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "types", for signature "FrequencyList"
-ERROR in test_corpus_isCorpus_FullText: Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "types", for signature "FullText"
+lexicalStat unit testing - 56 test functions, 4 errors, 2 failures
+ERROR in test_asLexicalTable.FullText: Error in `dimnames<-`(`*tmp*`, value = dn) : 
+  invalid dimnames given for 'dgCMatrix' object
 FAILURE in test_corpus_isCorpus_LexicalTable: Error in checkEqualsNumeric(26, V(i)) : 
   Mean relative difference: 0.07692308
-ERROR in test_corpus_isCorpus_Tabulated: Error in obj[, positional] : 
-  erreur d'évaluation de l'argument 'j' lors de la sélection d'une méthode pour la fonction '[' : Erreur : l'argument "positional" est manquant, avec aucune valeur par défaut
-
 FAILURE in test_frequencyList_frequencyList_empty_names: Error in checkException(frequencyList(x)) : 
   Error not generated as expected
 
-ERROR in test_get.parts.containing.all.form: Error in func() : impossible de trouver la fonction "lines2fullText"
-ERROR in test_get.parts.containing.form: Error in func() : impossible de trouver la fonction "lines2fullText"
-ERROR in test_print.fullText: Error in func() : impossible de trouver la fonction "lines2fullText"
-ERROR in test_readFile: Error in func() : impossible de trouver la fonction "lines2fullText"
-ERROR in test_readFile_depth: Error in func() : impossible de trouver la fonction "lines2fullText"
-ERROR in test_readFiles: Error in func() : impossible de trouver la fonction "files2fullText"
-ERROR in test_summary.fullText: Error in func() : impossible de trouver la fonction "lines2fullText"
-ERROR in test_readLexicalTable: Error in readLexicalTable(base) : cannot read or access some files
-ERROR in test_tabulated_subcorpus_all.arguments: Error in func() : impossible de trouver la fonction "subcorpus"
-ERROR in test_tabulated_subcorpus_structural: Error in func() : impossible de trouver la fonction "subcorpus"
-ERROR in test_read.reetagger_contains.xml.no: Error in validObject(.Object) : 
-  invalid class “Tabulated” object: invalid object for slot "structural" in class "Tabulated": got class "NULL", should be or extend class "character"
-ERROR in test_wam.frequencyList: Error in func() : impossible de trouver la fonction "subcorpus"
-ERROR in test_wam.fullText: Error in func() : impossible de trouver la fonction "lines2fullText"
-ERROR in test_wam.numeric: Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "wam", for signature "numeric"
-ERROR in test_wam.tabulated: Error in .local(corpus, measure, types, positional, structural) : 
-  positional cannot be null
+ERROR in test_wam.frequencyList: Error in function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function "asFrequencyList", for signature "data.frame", "character"
+ERROR in test_wam.fullText: Error in `dimnames<-`(`*tmp*`, value = dn) : 
+  invalid dimnames given for 'dgCMatrix' object
+ERROR in test_wam.tabulated: Error in .local(corpus, measure, types, parts) : 
+  Row without any occurrence
 Erreur : 
 
-unit testing failed (#test failures: 2, #R errors: 25)
+unit testing failed (#test failures: 2, #R errors: 4)
 
 Exécution arrêtée

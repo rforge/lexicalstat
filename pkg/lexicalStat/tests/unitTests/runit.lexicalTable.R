@@ -50,7 +50,7 @@ test_lexicalTable_creation_with_data.frame <- function() {
 ############################################################
 
 test_readLexicalTable <- function() {
-  base <- paste(system.file(package = "lexicalStat"), "exempleData", "lemonde.lemme", sep="/")
+  base <- paste(system.file(package = "lexicalStat"), "exempleData", "lemonde", sep="/")
   x <- readLexicalTable(base);
 }
 

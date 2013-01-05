@@ -1,49 +1,86 @@
+############################################################
+##
+## Utils
+##
+############################################################
+
+test_print.fullText <- function() {
+  fileName <- system.file(c("inst",  "exempleData"), "LeMondeEco.small.lines", package="lexicalStat")
+  c <- readTexts(fileName);
+  print(c);
+}
+
+test_summary.fullText <- function() {
+  fileName <- system.file(c("exempleData"), "LeMondeEco.small.lines", package="lexicalStat")
+  c <- readTexts(fileName);
+  summary(c);
+}
+
+############################################################
+##
+## Read
+##
+############################################################
 
 test_readFile <- function() {
   fileName <- system.file(c("inst",  "exempleData"), "LeMondeEco.small.lines", package="lexicalStat")
-  c <- lines2fullText(fileName);
+  c <- readTexts(fileName);
   len <- length(c);
   checkEqualsNumeric(3, len);
 }
 
 test_readFile_depth <- function() {
   fileName <- system.file(c("inst",  "exempleData"), "LeMondeEco.small.lines", package="lexicalStat")
-  c <- lines2fullText(fileName);
+  c <- readTexts(fileName);
   d <- attr(c, "depth");
   checkEqualsNumeric(1, d);
 }
 
 test_readFile_nonexistent_file <- function() {
   fileName <- "foobar";
-  checkException(lines2fullText(fileName));
+  checkException(readTexts(fileName));
 }
 
-test_readFiles <- function() {
+test_readMultipleFiles <- function() {
   fileName1 <- system.file(c("inst",  "exempleData"), "LeMondeEco.small.lines", package="lexicalStat");
   fileName2 <- system.file(c("inst",  "exempleData"), "LeMondeEco.small2.lines", package="lexicalStat");
   fileName3 <- system.file(c("inst",  "exempleData"), "LeMondeEco.small3.lines", package="lexicalStat");
-  c <- files2fullText(c(fileName1, fileName2, fileName3));
+  c <- readTexts(c(fileName1, fileName2, fileName3));
 }
 
-test_readFiles_nonexistent_file <- function() {
+test_readMultipleFiles_nonexistent_file <- function() {
   fileName1 <- system.file(c("inst",  "exempleData"), "LeMondeEco.small.lines", package="lexicalStat");
   fileName2 <- "foobar";
-  checkException(files2fullText(c(fileName1, fileName2)));
+  checkException(readTexts(c(fileName1, fileName2)));
 }
 
-test_print.fullText <- function() {
+test_readFile_lines <- function() {
   fileName <- system.file(c("inst",  "exempleData"), "LeMondeEco.small.lines", package="lexicalStat")
-  c <- lines2fullText(fileName);
-  print(c);
+  c <- readTexts(fileName, split.on="lines");
 }
 
-test_summary.fullText <- function() {
-  fileName <- system.file(c("exempleData"), "LeMondeEco.small.lines", package="lexicalStat")
-  c <- lines2fullText(fileName);
-  summary(c);
+test_readFile_paragraphs <- function() {
+  fileName <- system.file(c("inst",  "exempleData"), "small.paragraphs", package="lexicalStat")
+  c <- readTexts(fileName, split.on="paragraphs");
+  checkEqualsNumeric(3, length(c));
 }
 
-# TODO
+test_readFile_sentences <- function() {
+  fileName <- system.file(c("inst",  "exempleData"), "LeMondeEco.small.lines", package="lexicalStat")
+  c <- readTexts(fileName, split.on="sentences");
+}
+
+test_readFiles_files <- function() {
+  fileName1 <- system.file(c("inst",  "exempleData"), "LeMondeEco.small.lines", package="lexicalStat");
+  fileName2 <- system.file(c("inst",  "exempleData"), "LeMondeEco.small2.lines", package="lexicalStat");
+  fileName3 <- system.file(c("inst",  "exempleData"), "LeMondeEco.small3.lines", package="lexicalStat");
+  c <- readTexts(c(fileName1, fileName2, fileName3), split.on="files");
+}
+
+#test_readFiles_dir <- function() {
+#  dir <- system.file(c("inst",  "exempleData"), package="lexicalStat");
+#  c <- readTexts(dir=dir, pattern="*.lines", split.on="files");
+#}
 
 ############################################################
 ##
@@ -85,7 +122,7 @@ test_tokenize_with_empty_string <- function() {
 #  Third line and last line 
 test_get.parts.containing.form <- function() {
   fileName <- system.file(c("inst",  "exempleData"), "sample.lines", package="lexicalStat")
-  c <- lines2fullText(fileName);
+  c <- readTexts(fileName);
   d <- get.parts.containing.form(c, "tokens");
   checkEqualsNumeric(2, length(d));
 }
@@ -93,7 +130,7 @@ test_get.parts.containing.form <- function() {
 
 test_get.parts.containing.all.form <- function() {
   fileName <- system.file(c("inst",  "exempleData"), "sample.lines", package="lexicalStat")
-  c <- lines2fullText(fileName);
+  c <- readTexts(fileName);
   d <- get.parts.containing.all.forms(c, c("tokens", "Second"));
   checkEqualsNumeric(1, length(d));
 }

@@ -62,17 +62,17 @@ tabulated <- function(m, positional.attributes, structural.attributes) {
 ##
 ############################################################
 
-setGeneric("structural", function(obj) {
-  return(standardGeneric("structural"));
+setGeneric("lstructural", function(obj) {
+  return(standardGeneric("lstructural"));
 })
 
-setMethod("structural", "Tabulated", function(obj) obj@structural)
+setMethod("lstructural", "Tabulated", function(obj) obj@structural)
 
-setGeneric("positional", function(obj) {
-  return(standardGeneric("positional"));
+setGeneric("lpositional", function(obj) {
+  return(standardGeneric("lpositional"));
 })
 
-setMethod("positional", "Tabulated", function(obj) obj@positional)
+setMethod("lpositional", "Tabulated", function(obj) obj@positional)
 
 ############################################################
 ##
@@ -91,8 +91,8 @@ setMethod("positional", "Tabulated", function(obj) obj@positional)
 
 setMethod("summary", signature(object = "Tabulated"), function(object) {
   cat(paste("A corpus with", nrow(object), "tokens\n"));
-  cat(paste("Positional attributes:", paste(positional(object), collapse=" "), "\n"));
-  cat(paste("Structural attributes:", paste(structural(object), collapse=" "), "\n"));
+  cat(paste("Positional attributes:", paste(lpositional(object), collapse=" "), "\n"));
+  cat(paste("Structural attributes:", paste(lstructural(object), collapse=" "), "\n"));
   invisible(object);
 });
 

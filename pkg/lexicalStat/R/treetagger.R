@@ -125,6 +125,10 @@ read.treetagger <- function(file, contains.xml=TRUE, discard.xml=FALSE) {
     }
     if (debug) print("Is markup ?");
     is.markup <- grepl("^<", x);
+
+    if (sum(is.markup) == 0) {
+      stop("'contains.xml=TRUE' but no XML found in the file");
+    }
   } else {
     is.markup <- FALSE;
   }

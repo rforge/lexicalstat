@@ -53,7 +53,7 @@ setMethod("V", "FrequencyList", function(obj) nrow(obj));
 
 setMethod("V", "LexicalTable", function(obj) nrow(obj));
 
-setMethod("V", "Tabulated", function(obj, positional) nlevels(obj[,positional]));
+setMethod("V", c("Tabulated", "character"), function(obj, positional) nlevels(obj[,positional]));
 
 setMethod("V", "FullText", function(obj) length(unique(unlist(obj))));
 
@@ -71,7 +71,7 @@ setMethod("types", "FrequencyList", function(obj) sort(obj$type));
 
 setMethod("types", "LexicalTable", function(obj) sort(rownames(obj)));
 
-setMethod("types", "Tabulated", function(obj, positional) sort(levels(obj[,positional])));
+setMethod("types", c("Tabulated", "character"), function(obj, positional) sort(levels(obj[,positional])));
 
 setMethod("types", "FullText", function(obj) sort(unique(unlist(obj))));
 
