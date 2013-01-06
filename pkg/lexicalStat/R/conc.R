@@ -16,11 +16,11 @@ setMethod("kwic", "FullText", function(x, pattern, left, right) {
   return(conc(lines, pattern, left, right));
 });
 
-setMethod("kwic", "Tabulated", function(x, pattern, left, right) {
+setMethod("kwic", "Tabulated", function(x, pattern, left=5, right=5) {
   stop("not implemented yet");
 });
 
-conc <- function(lines, pattern, left, right) {
+conc <- function(lines, pattern, left=20, right=20) {
   lines.names <- names(lines);
   if (is.null(lines.names)) {
     lines.names <- paste("line", 1:length(lines));
@@ -30,7 +30,7 @@ conc <- function(lines, pattern, left, right) {
   after <- paste(rep(" ", right+1), collapse="");
   lines <- paste(before, lines, after, sep="");
 
-  pos.by.lines <- gregexpr(pattern, lines);
+  pos.by.lines <- gregexpr(pattern=pattern, text=lines);
   is.found.in.lines <- sapply(pos.by.lines, function(pos.in.line) { pos.in.line[1] != -1 });
   index.lines <- which(is.found.in.lines);
 
@@ -73,7 +73,7 @@ word.conc <- function(tokens.by.part, pattern, left, right) {
      line <- tokens.by.part[[i]];
      line.name <- lines.names[i];
 
-     where.found <- gregexpr(pattern, line);
+     where.found <- gregexpr(pattern=pattern, text=line);
 
      is.in.line <- sapply(where.found, function(x) { x[1] != -1 })
      index.line <- which(is.in.line);
@@ -121,7 +121,7 @@ text.conc <- function(lines, pattern, left, right) {
     line <- lines[[i]];
     line.name <- lines.names[i];
 
-    where.found <- gregexpr(pattern, line);
+    where.found <- gregexpr(pattern=pattern, text=line);
     where.found <- where.found[[1]];
     if (where.found[1] != -1) {
       nfound <- length(where.found);

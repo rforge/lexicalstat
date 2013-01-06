@@ -69,8 +69,9 @@ fullText <- function(l, depth=1) {
  ##
 readTexts <- function(files, dir=NULL, pattern=NULL, split.on="lines", enc="UTF-8", skipEmpty=TRUE) {
 
+# TODO : source d'erreur dans le fait d'énumérer les options ici (+ dans le message d'erreur) et encore ci-dessous dans le 'if-else'.
   if (! split.on %in% c("lines", "files", "sentences", "paragraphs")) {
-    stop("'parts' must be one of 'lines', 'files', 'sentences'");
+    stop("'parts' must be one of 'lines', 'files', 'sentences', 'paragraph'");
   }
 
   if (!is.null(dir)) {
@@ -81,19 +82,14 @@ readTexts <- function(files, dir=NULL, pattern=NULL, split.on="lines", enc="UTF-
   }
   files <- paste(dir, files, sep="/");
   nonexistent <- character(0);
-  for (f in files) {
-    if (!file.exists(f)) {
-      nonexistent <- append(nonexistent, f);
-    }
-  }
-  if (length(nonexistent) > 0) {
-    stop(paste("cannot read or access file(s): ", paste(nonexistent, collapse=" "), sep=""));
+  
+  nonexistent <- !file.exists(files);
+  if (sum(nonexistent) > 0) {
+    stop(paste("cannot read or access file(s): ", paste(files[nonexistent], collapse=" "), sep=""));
   }
 
   parts <- vector(mode="list", length=length(files));
   for (i in 1:length(files)) {
-    print("...")
-    print(files[i]);
     lines <- readLines(files[i], encoding=enc);
     parts[[i]] <- lines;
   }
@@ -114,10 +110,10 @@ readTexts <- function(files, dir=NULL, pattern=NULL, split.on="lines", enc="UTF-
     corpus <- unlist(parts);
     corpus <- line2paragraph(corpus);
   } else {
-    stop("must never happen");
+    stop("Unkwown option");
   }
 
-  index_empty_lines <- grep("^\\s*$", lines);
+  index_empty_lines <- grep("^\\s*$", corpus, perl=TRUE);
   if (length(index_empty_lines) > 0) {
     if (skipEmpty) {
       corpus <- corpus[-index_empty_lines];

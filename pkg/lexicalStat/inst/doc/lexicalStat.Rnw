@@ -63,7 +63,7 @@ fileName <- system.file(c("exempleData"),
                         package="lexicalStat")
 c <- readTexts(fileName, split.on="sentences");
 sc <- subcorpus(c, "action");
-wam(asFrequencyList(c), asFrequencyList(sc));
+wam(asFrequencyList(c), subcorpus=asFrequencyList(sc));
 @
 
 \subsection{Inspect context of \emph{action} trough a concordancer (KWIC)}
@@ -73,8 +73,9 @@ library(lexicalStat);
 fileName <- system.file(c("exempleData"),
                         "LeMondeEco.lines",
                         package="lexicalStat")
-c <- readTexts(fileName, split.on="sentences");
-conc(c);
+t <- readTexts(fileName, split.on="sentences");
+c <- conc(t, "action");
+c[1:10,]
 @
 
 \subsection{Specific words of the different novels by an author}
@@ -84,10 +85,10 @@ Which are the word distinguishing each novels?
 (here, only the first paragraphs for only three novels are given).
 
 <<sample_session3, echo=T>>=
-dir <- system.file(c("exempleData", "zola"),
-                        package="lexicalStat")
-c <- readTexts(dir=dir, split.on="files");
-wam(c);
+#dir <- system.file(c("exempleData", "zola"),
+#                        package="lexicalStat")
+#c <- readTexts(dir=dir, split.on="files");
+#wam(c);
 @
 
 \subsection{Cooccurrents of a word in a tagged corpus}
@@ -104,10 +105,10 @@ head(tabulated)
 
 sc <- subcorpus(tabulated, "cit")
 
-scl <- asFrequencyList(sc);
-cl <- asFrequencyList(tabulated)
+scl <- asFrequencyList(sc, "word");
+cl <- asFrequencyList(tabulated, "word")
 
-wam(cl, scl);
+wam(cl, subcorpus=scl);
 @
 
 \subsection{Robespierre}
@@ -142,16 +143,16 @@ For each of these four types, a ready-to-use tool corpus is provided as a datase
 first sentences of "A Chrismas x" by Ch. Dickens. They are:
 
 \begin{itemize}
-\item \texttt{DickensFrequencyList}
-\item \texttt{DickensLexicalTable}
-\item \texttt{DickensTabulated}
-\item \texttt{DickensFullText}
+\item \texttt{dickensFrequencyList}
+\item \texttt{dickensLexicalTable}
+\item \texttt{dickensTabulated}
+\item \texttt{dickensFullText}
 \end{itemize}
 
 We will see in the next two subsections the functions
 for creating this data structures with files containing
-actual corpora (\refpage{subsec:read-corpora}) and for converting from one format
-toward another (\refpage{sec:classes}).
+actual corpora (\pageref{subsec:read-corpora}) and for converting from one format
+toward another (\pageref{sec:classes}).
 
 % ................................................................
 \subsubsection{\texttt{frequencyList}}
@@ -174,11 +175,11 @@ patrie & 153\\
 Output of the \texttt{N}, \texttt{V}, \texttt{types}, \texttt{print} and \texttt{summary} functions:
 
 <<frequencyList, echo=T>>=
-data(DickensFrequencyList);
-N(DickensFrequencyList)
-V(DickensFrequencyList)
-DickensFrequencyList
-summary(DickensFrequencyList);
+data(dickensFrequencyList);
+N(dickensFrequencyList)
+V(dickensFrequencyList)
+dickensFrequencyList
+summary(dickensFrequencyList);
 @
 
 A frequency list can be created with a named numeric vector:
@@ -211,7 +212,8 @@ a \textbf{contingency table}.
 <<label=lexicalTable1,echo=FALSE,results=tex>>=
 library(xtable)
 data(robespierre);
-print(xtable(as.data.frame(robespierre), align=c("l", rep("r", 10)),
+x <- as.matrix(robespierre)[1:20,];
+print(xtable(as.data.frame(x), align=c("l", rep("r", 10)),
     caption = "Robespierre discourses (frequency table)",
     label = "tab:lexicaltable-sample",
     digits = 0), table.placement = "h",
@@ -223,7 +225,7 @@ special kind of subcorpus, belonging to a set of subcorpus that divide exhaustiv
 and that are most probably corresponding to an object of analysis -- here, different discourses.
 
 Lexical table is a compact way of representing frequence information and to
-study variation of frequency of a type accross sub-corpus.
+study variation of frequency of a type accross parts.
 
 A lexical table can be created from any numerical matrix. They are represented using
 sparse matrix (from the package \texttt{Matrix}).
@@ -304,7 +306,7 @@ turned by \texttt{read.treetagger} into supplementary columns, where tokens
 belonging to the same element share the same value.
 
 <<tabulated, echo=TRUE>>=
-  fileName <- system.file(c("inst", "exempleData"), "sample.ttg", package="lexicalStat")
+  fileName <- system.file(c("exempleData"), "sample.ttg", package="lexicalStat")
   tabulated <- read.treetagger(fileName);
   summary(tabulated);
   print(tabulated);
@@ -378,10 +380,10 @@ data.frame, matrix, or other corpus representations such as \texttt{fullText}
 or \texttt{tabulated}.
 
 <<tabulated, echo=TRUE>>=
-  base <- paste(system.file(package = "lexicalStat"), "exempleData", "lemonde.lemme", sep="/")
+  base <- paste(system.file(package = "lexicalStat"), "exempleData", "lemonde", sep="/")
   x <- readLexicalTable(base);
   summary(x);
-  print(x);
+  print(x[1:10, 1:5]);
 @
 
 
@@ -391,7 +393,7 @@ library(lexicalStat);
 fileName <- system.file(c("exempleData"),
                         "LeMondeEco.small.lines",
                         package="lexicalStat")
-c <- lines2fullText(fileName);
+c <- readTexts(fileName);
 summary(c);
 print(c);
 @
@@ -475,7 +477,7 @@ In every case, you can specify the \texttt{types} for which you want the indicat
 library(lexicalStat);
 data(robespierre);
 x <- lexicalTable(robespierre);
-wam(x, types=c("peuple", "patrie"))
+wam(x, types=c("PEUPLE", "PATRIE"))
 @
 
 When the indicator is computed for several subcorpus (parts of the corpus), you

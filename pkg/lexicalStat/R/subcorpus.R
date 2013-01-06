@@ -16,7 +16,7 @@ setMethod("subcorpus", c(corpus="FrequencyList"), function(corpus, min.frequency
 # , context.size=NULL
 
 setMethod("subcorpus", c(corpus="FullText"), function(corpus, type) {
-	contains.type <- lapply(corpus, function(x) type %in% x);
+	contains.type <- sapply(corpus, function(x) type %in% x);
 	return(fullText(corpus[contains.type]));
 });
 
