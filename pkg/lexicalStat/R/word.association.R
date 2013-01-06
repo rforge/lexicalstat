@@ -12,8 +12,9 @@ setClass(
       ),
     );
 
+# TODO : as.character(types) : trancher si les listes de formes sont plutôt des vecteurs caractères ou des facteurs.
 wordAssociation <- function(N, n, K, k, association, indicator.name, types, parts) {
-  return(new("WordAssociation", N=N, n=n, K=K, k=k, association=association, indicator.name=indicator.name, types=types, parts=parts));
+  return(new("WordAssociation", N=N, n=n, K=K, k=k, association=association, indicator.name=indicator.name, types=as.character(types), parts=parts));
 }
 
 ##

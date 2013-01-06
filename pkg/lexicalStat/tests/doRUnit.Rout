@@ -124,10 +124,7 @@ Executing test function test_asFullText.tabulated  ...  done successfully.
 
 
 
-Executing test function test_asLexicalTable.FullText  ... Timing stopped at: 0.016 0 0.017 
-Error in `dimnames<-`(`*tmp*`, value = dn) : 
-  invalid dimnames given for 'dgCMatrix' object
- done successfully.
+Executing test function test_asLexicalTable.FullText  ...  done successfully.
 
 
 
@@ -147,10 +144,7 @@ Executing test function test_corpus_isCorpus_FullText  ...  done successfully.
 
 
 
-Executing test function test_corpus_isCorpus_LexicalTable  ... Timing stopped at: 0.003 0.001 0.005 
-Error in checkEqualsNumeric(26, V(i)) : 
-  Mean relative difference: 0.07692308
- done successfully.
+Executing test function test_corpus_isCorpus_LexicalTable  ...  done successfully.
 
 
 
@@ -162,10 +156,7 @@ Executing test function test_frequencyList_frequencyList  ...  done successfully
 
 
 
-Executing test function test_frequencyList_frequencyList_empty_names  ... Timing stopped at: 0.002 0 0.001 
-Error in checkException(frequencyList(x)) : 
-  Error not generated as expected
-
+Executing test function test_frequencyList_frequencyList_empty_names  ... Error in frequencyList.data.frame(y) : a types cannot be an empty string
  done successfully.
 
 
@@ -389,6 +380,30 @@ De plus : Messages d'avis :
 
 
 
+Executing test function tests_is.subcorpus_FALSE_freq  ...  done successfully.
+
+
+
+Executing test function tests_is.subcorpus_FALSE_types  ...  done successfully.
+
+
+
+Executing test function tests_is.subcorpus_TRUE_equals  ...  done successfully.
+
+
+
+Executing test function tests_is.subcorpus_TRUE_reordered  ...  done successfully.
+
+
+
+Executing test function tests_is.subcorpus_TRUE_subfreq  ...  done successfully.
+
+
+
+Executing test function tests_is.subcorpus_TRUE_type.missing  ...  done successfully.
+
+
+
 Executing test function test_lexicalTable_creation_with_data.frame  ...  done successfully.
 
 
@@ -473,18 +488,12 @@ Executing test function test_specificities  ...  done successfully.
 
 
 
-Executing test function test_wam.frequencyList  ... Timing stopped at: 0.013 0.001 0.014 
-Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "asFrequencyList", for signature "data.frame", "character"
- done successfully.
+Executing test function test_wam.frequencyList  ...  done successfully.
 
 
 
 Executing test function test_wam.fullText  ... [1] "..."
 [1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
-Timing stopped at: 0.007 0 0.007 
-Error in `dimnames<-`(`*tmp*`, value = dn) : 
-  invalid dimnames given for 'dgCMatrix' object
  done successfully.
 
 
@@ -497,41 +506,21 @@ Executing test function test_wam.numeric  ...  done successfully.
 
 
 
-Executing test function test_wam.tabulated  ... Timing stopped at: 0.017 0 0.018 
-Error in .local(corpus, measure, types, parts) : 
-  Row without any occurrence
- done successfully.
-
-
-
 Executing test function test.specificities  ...  done successfully.
 
 ------------------- UNIT TEST SUMMARY ---------------------
 
-RUNIT TEST PROTOCOL -- Sat Jan  5 19:31:28 2013 
+RUNIT TEST PROTOCOL -- Sun Jan  6 19:40:27 2013 
 *********************************************** 
-Number of test functions: 56 
-Number of errors: 4 
-Number of failures: 2 
+Number of test functions: 61 
+Number of errors: 0 
+Number of failures: 0 
 
  
 1 Test Suite : 
-lexicalStat unit testing - 56 test functions, 4 errors, 2 failures
-ERROR in test_asLexicalTable.FullText: Error in `dimnames<-`(`*tmp*`, value = dn) : 
-  invalid dimnames given for 'dgCMatrix' object
-FAILURE in test_corpus_isCorpus_LexicalTable: Error in checkEqualsNumeric(26, V(i)) : 
-  Mean relative difference: 0.07692308
-FAILURE in test_frequencyList_frequencyList_empty_names: Error in checkException(frequencyList(x)) : 
-  Error not generated as expected
-
-ERROR in test_wam.frequencyList: Error in function (classes, fdef, mtable)  : 
-  unable to find an inherited method for function "asFrequencyList", for signature "data.frame", "character"
-ERROR in test_wam.fullText: Error in `dimnames<-`(`*tmp*`, value = dn) : 
-  invalid dimnames given for 'dgCMatrix' object
-ERROR in test_wam.tabulated: Error in .local(corpus, measure, types, parts) : 
-  Row without any occurrence
-Erreur : 
-
-unit testing failed (#test failures: 2, #R errors: 4)
-
-Exécution arrêtée
+lexicalStat unit testing - 61 test functions, 0 errors, 0 failures
+> 
+> 
+> proc.time()
+utilisateur     système      écoulé 
+     10.301       0.189      10.489 

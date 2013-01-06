@@ -9,9 +9,9 @@ setGeneric("is.subcorpus.of", function(subcorpus, corpus) {
 })
 
 setMethod("is.subcorpus.of", c("FrequencyList", "FrequencyList"), function(subcorpus, corpus) {
-  if (!class(subcorpus) == "frequencyList") stop("subcorpus must be a frequencyList");
-  if (!class(corpus) == "frequencyList") stop("corpus must be a frequencyList");
-  if (! all(names(subcorpus) %in% names(corpus))) {
+#  if (!class(subcorpus) == "frequencyList") stop("subcorpus must be a frequencyList");
+#  if (!class(corpus) == "frequencyList") stop("corpus must be a frequencyList");
+  if (! all(types(subcorpus) %in% types(corpus))) {
 #    i <- names(subcorpus) %in% names(corpus);
 #     stop(
 #         paste(
@@ -22,7 +22,7 @@ setMethod("is.subcorpus.of", c("FrequencyList", "FrequencyList"), function(subco
 #         );
     return(FALSE);
   }
-  if (any(subcorpus > corpus[names(subcorpus)])) {
+  if (any(subcorpus[,2] > corpus[match(as.character(subcorpus[,1]), as.character(corpus[,1])),2])) {
     #stop("type cannot be more frequent in the subcorpus than in the corpus");
     return(FALSE);
   }

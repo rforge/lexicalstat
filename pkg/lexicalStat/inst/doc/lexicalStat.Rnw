@@ -61,7 +61,7 @@ library(lexicalStat);
 fileName <- system.file(c("exempleData"),
                         "LeMondeEco.lines",
                         package="lexicalStat")
-c <- readTexts(fileName, parts="sentences");
+c <- readTexts(fileName, split.on="sentences");
 sc <- subcorpus(c, "action");
 wam(asFrequencyList(c), asFrequencyList(sc));
 @
@@ -73,7 +73,7 @@ library(lexicalStat);
 fileName <- system.file(c("exempleData"),
                         "LeMondeEco.lines",
                         package="lexicalStat")
-c <- readTexts(fileName, parts="sentences");
+c <- readTexts(fileName, split.on="sentences");
 conc(c);
 @
 
@@ -86,7 +86,7 @@ Which are the word distinguishing each novels?
 <<sample_session3, echo=T>>=
 dir <- system.file(c("exempleData", "zola"),
                         package="lexicalStat")
-c <- readTexts(dir=dir, parts="files");
+c <- readTexts(dir=dir, split.on="files");
 wam(c);
 @
 
@@ -127,18 +127,19 @@ wam(cl, scl);
 There are four classes for representing a corpus. Each is suited for some tasks
 or for some sources.
 
-All object support three functions:
+All classes have the three following functions:
 \begin{itemize}
-\item \texttt{N}\index{N} : the number of tokens
+\item \texttt{N}\index{N} : the number of tokens in the corpus
 \item \texttt{V}\index{V} : the number of different types (V stand for vocabulary)
-\item \texttt{types}\index{types} : the sorte list of the different types.
+\item \texttt{types}\index{types} : the sorted list of the different types.
 \end{itemize}
 
 The function \texttt{summary}\index{summary} applied on this data structures provide
 short resumes of their content.
 
-For each of these four types, a tool corpus is provided as a dataset (load with \texttt{data}).
-These tool corpus represent all the two first sentences of "A Chrismas x" by Ch. Dickens. It is:
+For each of these four types, a ready-to-use tool corpus is provided as a dataset
+(load with \texttt{data}). These tool corpora represent all the two
+first sentences of "A Chrismas x" by Ch. Dickens. They are:
 
 \begin{itemize}
 \item \texttt{DickensFrequencyList}
@@ -147,9 +148,10 @@ These tool corpus represent all the two first sentences of "A Chrismas x" by Ch.
 \item \texttt{DickensFullText}
 \end{itemize}
 
-Functions are provided for converting from one format toward another.
-
-Functions are provided for reading from files these data.
+We will see in the next two subsections the functions
+for creating this data structures with files containing
+actual corpora (\refpage{subsec:read-corpora}) and for converting from one format
+toward another (\refpage{sec:classes}).
 
 % ................................................................
 \subsubsection{\texttt{frequencyList}}
@@ -191,6 +193,8 @@ summary(y);
 @
 
 It can also be created with a two-columns data.frame or a table object.
+
+% \item \texttt{hapax}\index{hapax} the list of types which appears only once in the corpus
 
 % ................................................................
 \subsubsection{\texttt{lexicalTable}}
@@ -236,6 +240,8 @@ summary(x);
 % ................................................................
 \label{subsubsec:classes-tabulated}
 \index{tabulated corpus class}
+
++ TODO : mettre un exemple de xml correspondant
 
 A tabulated corpus is a more complexe representation. It does not record only the frequency
 but also all the concrete occurrences of the different types in their actual order.
@@ -331,7 +337,7 @@ sentences[[1]];
 
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
-\section{Conversion between classes}
+\subsection{Conversion between classes}
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
 \label{sec:classes}
@@ -360,28 +366,6 @@ corpora; the \texttt{asLexicalTable}\index{asLexicalTable} function can be
 applied on \texttt{tabulated} and \texttt{fullText} corpora; the
 \texttt{asFrequencyList}\index{asFrequencyList} function can be applied only to
 \texttt{lexicalTable} corpora.
-
-% ----------------------------------------------------------------
-\subsection{Functions available for all classes}
-% ----------------------------------------------------------------
-\label{subsec:functions-corpora}
-
-All classes provide the following functions :
-\begin{itemize}
-\item \texttt{N}\index{N} The grand total of tokens in the corpus
-\item \texttt{V}\index{V} The number of differents types in the corpus
-\item \texttt{hapax}\index{hapax} the list of types which appears only once in the corpus
-\item \texttt{types}\index{types} the list of all types in the corpus.
-\end{itemize}
-
-<<communfunctions1, echo=T>>=
-@
-
-A positional attribute argmuent must be provided with the functions \texttt{V},
-\texttt{hapax}, \texttt{types} for a \texttt{tabulated} object.
-
-<<communfunctions2, echo=T>>=
-@
 
 % ----------------------------------------------------------------
 \subsection{Read corpora from files}

@@ -28,6 +28,7 @@ frequencyList.data.frame <- function(x) {
   msg <- "a frequency list can be built with a data.frame of two columns named 'type' and 'frequency'";
   if (ncol(x) != 2) stop("x must have two columns ('type' and 'frequency')");
   if (!is.factor(x[,1])) stop("x$type must be a factor");
+  if (any(as.character(x[,1]) == "")) stop("a types cannot be an empty string");
   if (!is.numeric(x[,2])) stop("x$frequency must be numeric");
   if (!all(names(x) == c("type", "frequency"))) stop(msg);
   obj <- new("FrequencyList", x);

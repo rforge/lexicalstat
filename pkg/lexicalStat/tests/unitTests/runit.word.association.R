@@ -10,11 +10,12 @@ test_wam.fullText <- function() {
   wam(c);
 }
 
-test_wam.tabulated <- function() {
-  fileName <- system.file(c("inst", "exempleData"), "PetitLarousse1905.ttg", package="lexicalStat")
-  c <- read.treetagger(fileName);
-  wam(c, positional="word", structural="def");
-}
+# not a good idea
+#test_wam.tabulated <- function() {
+#  fileName <- system.file(c("inst", "exempleData"), "PetitLarousse1905.ttg", package="lexicalStat")
+#  c <- read.treetagger(fileName);
+#  wam(c, positional="word", structural="def");
+#}
 
 test_wam.frequencyList <- function() {
   fileName <- system.file(c("inst", "exempleData"), "PetitLarousse1905.ttg", package="lexicalStat")
@@ -22,7 +23,7 @@ test_wam.frequencyList <- function() {
   fl <- asFrequencyList(c, "word");
   subc <- subcorpus(c, "def");
   subfl <- asFrequencyList(subc, "word");
-  wam(subfl, fl);
+  wam(corpus=fl, subcorpus=subfl);
 }
 
 test_wam.lexicalTable <- function() {

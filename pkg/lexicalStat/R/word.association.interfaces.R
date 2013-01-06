@@ -73,9 +73,9 @@ setMethod("wam", "Tabulated", function(corpus, measure, types, positional, struc
  # ------------------------------------------------------------------------
  ##
 setMethod("wam", "FrequencyList", function(corpus, measure, types, subcorpus) {
-  if (is.missing(subcorpus)) {
-    stop("'subcorpus' cannot be missing");
-  }
+#  if (is.missing(subcorpus)) {
+#    stop("'subcorpus' cannot be missing");
+#  }
   if (is.null(subcorpus)) {
     stop("'subcorpus' cannot be null");
   }
@@ -84,13 +84,13 @@ setMethod("wam", "FrequencyList", function(corpus, measure, types, subcorpus) {
     stop("'subcorpus' does not appear to be a subcorpus of 'corpus'");
   }
 
-  N <- sum(corpus);
-  n <- sum(subcorpus);
-  k <- subcorpus;
-  K <- corpus[ names(k) ];
+  N <- N(corpus);
+  n <- N(subcorpus);
+  k <- subcorpus[,2];
+  K <- corpus[ match(subcorpus[,1], corpus[,1]), 2 ];
 
   measured <- wam.num(N, n, K, k, measure);
-  return(wordAssociation(N, n, K, k, measured, measure, names(subcorpus), "subcorpus"));
+  return(wordAssociation(N, n, K, k, measured, measure, subcorpus[,1], "subcorpus"));
 });
 
 ##

@@ -10,14 +10,11 @@ import(XML)
 
 # S4 methods to be exported :
 #
-# is.subcorpus.of.R
 
 #
 # export: including generics
 # exportMethods: for methods on generics defined in other packages, e.g., show, initialize
 
-# à classer :
-export(wam.num);
 
 # functions exported from file "R/corpus.R"
 exportMethods(N, V);
@@ -58,6 +55,9 @@ exportMethods(coerce);
 # functions exported from file "R/subcorpus.R"
 exportMethods(subcorpus);
 
+# functions exported from file "R/is.subcorpus.of.R"
+exportMethods(is.subcorpus.of);
+
 # functions exported from file "R/conc.R"
 exportMethods(kwic);
 export(conc, word.conc, text.conc);
@@ -74,12 +74,13 @@ export(get.words.by.slices, remove.inner.part, flip.inner.outer.parts, get.words
 # functions exported from file "R/treetagger.R"
 export(read.treetagger);
 
-# functions exported from file "R/word.association.R"
-# and word.association.*
-#export(wam, wam.fullText, wam.tabulated, wam.frequencyList, wam.lexicalTable, wam.numeric);
-export(wam);
+# functions exported from file "R/word.association.*.R"
+export(wordAssociation)
+exportMethods(wam);
+export(wam.num);
 export(fisher, specificities, binomial, loglikelihood);
 #export(write.mwa, print.mwa, writeAsXML.wma);
+#export(wam, wam.fullText, wam.tabulated, wam.frequencyList, wam.lexicalTable, wam.numeric);
 
 #export(extract.field.in.treetagger.struct, remove.unknown.in.treetagger.struct, repair.unknown.in.treetagger.struct, get.treetagger.struct.in.xml.element, characters2treetagger.struct, extract.word.on.pos.in.treetagger.struct);
 

@@ -67,7 +67,7 @@ setMethod("V", "FullText", function(obj) length(unique(unlist(obj))));
 
 setGeneric("types", function(obj, positional) standardGeneric("types"));
 
-setMethod("types", "FrequencyList", function(obj) sort(obj$type));
+setMethod("types", "FrequencyList", function(obj) sort(as.character(obj$type)));
 
 setMethod("types", "LexicalTable", function(obj) sort(rownames(obj)));
 

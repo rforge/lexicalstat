@@ -49,6 +49,9 @@ setClass("FullText",
 ############################################################
 
 fullText <- function(l, depth=1) {
+  if(is.null(names(l))) {
+    names(l) <- 1:length(l);
+  }
   obj <- new("FullText", l, depth=depth);
   return(obj);
 }

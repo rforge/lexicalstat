@@ -76,10 +76,10 @@ setAs("FullText", "LexicalTable", function(from, to) {
   if (debug) print("[list2lexical.table.sparse] checking argument...");
   all.character <- sapply(from, is.character);
   if (!all(all.character)) stop("all element of the list must be character vector of token");
-  if (debug) print("[list2lexical.table.sparse] ...forms and tokens...");
+  if (debug) print("[list2lexical.table.sparse] ...types and tokens...");
 
   tokens <- unlist(from);
-  forms <- unique(tokens);
+  types <- unique(tokens);
 
   if (debug) print("[list2lexical.table.sparse] ...tables and tables length...");
   #part.lengths <- sapply(from, length);
@@ -87,18 +87,17 @@ setAs("FullText", "LexicalTable", function(from, to) {
   part.table.lengths <- sapply(part.tables, length);
 
   if (debug) print("[list2lexical.table.sparse] ...i...");
-  i <- unlist(sapply(part.tables, function(t) which(forms %in% names(t))));
+  i <- unlist(sapply(part.tables, function(t) which(types %in% names(t))));
   if (debug) print("[list2lexical.table.sparse] ...j...");
   j <- rep(1:length(from), part.table.lengths);
   if (debug) print("[list2lexical.table.sparse] ...v...");
   v <- unlist(sapply(part.tables, as.numeric));
 
   if (debug) print("[list2lexical.table.sparse] ...creating matrix...");
-  #m <- spMatrix(nrow=length(from), ncol=length(forms), i=i, j=j, x=v);
+  #m <- spMatrix(nrow=length(from), ncol=length(types), i=i, j=j, x=v);
   m <- sparseMatrix(i=i, j=j, x=v);
-  rownames(m) <- forms;
-  n <- ifelse(is.null(names(from)), paste("part", 1:length(from), sep="_"), names(from))
-  colnames(m) <- n;
+  rownames(m) <- types;
+  colnames(m) <- names(from);
   return(lexicalTable(m));
 });
 
@@ -108,7 +107,7 @@ setAs("FullText", "LexicalTable", function(from, to) {
 #   }
 #   positional.factor <- as.factor(from[, positional]);
 #   structural.factor <- as.factor(from[, structural]);
-#   forms <- levels(positional.factor);
+#   types <- levels(positional.factor);
 #   parts <- levels(structural.factor);
 # 
 #   f <- count(data.frame(as.numeric(positional.factor), as.numeric(structural.factor)));
@@ -116,7 +115,7 @@ setAs("FullText", "LexicalTable", function(from, to) {
 #   j <- f[,2];
 # 
 #   m <- sparseMatrix(i=i, j=j, x=f[,3]);
-#   rownames(m) <- forms;
+#   rownames(m) <- types;
 #   colnames(m) <- parts;
 # 
 #   return(lexicalTable(m));
