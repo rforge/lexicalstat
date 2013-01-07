@@ -26,5 +26,7 @@ test:
 
 clean:
 	find . -name "*.Rout" -exec rm {} \;
-	rm lexicalStat/inst/doc/lexicalStat.aux lexicalStat/inst/doc/lexicalStat.idx lexicalStat/inst/doc/lexicalStat.ilg lexicalStat/inst/doc/lexicalStat.ind lexicalStat/inst/doc/lexicalStat.log lexicalStat/inst/doc/lexicalStat.out lexicalStat/inst/doc/lexicalStat.pdf lexicalStat/inst/doc/lexicalStat.tex lexicalStat/inst/doc/lexicalStat.toc
+	rm lexicalStat/inst/doc/lexicalStat.aux lexicalStat/inst/doc/lexicalStat.idx lexicalStat/inst/doc/lexicalStat.ilg lexicalStat/inst/doc/lexicalStat.ind lexicalStat/inst/doc/lexicalStat.log lexicalStat/inst/doc/lexicalStat.out lexicalStat/inst/doc/texput.log lexicalStat/inst/doc/lexicalStat.tex lexicalStat/inst/doc/lexicalStat.toc
+	rm -drf lexicalStat.Rcheck
+	rm lexicalStat/tests/unitTests/report.html lexicalStat/tests/unitTests/report.txt lexicalStat/tests/unitTests/reportSummary.txt
 
