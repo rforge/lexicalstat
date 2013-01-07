@@ -10,20 +10,6 @@ setIs("Tabulated", "Corpus");
 ############################################################
 ##
 ##
-## hapax
-##
-##
-############################################################
-
-setGeneric("hapax", function(obj) {
-  return(standardGeneric("hapax"));
-})
-
-setMethod("hapax", "FrequencyList", function(obj) names(obj)[obj == 1] )
-
-############################################################
-##
-##
 ## N
 ##
 ##

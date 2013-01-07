@@ -87,6 +87,7 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
 
   if (!is.null(parts)) {
     df <- df[ df$parts %in% parts, ];
+    df$parts <- droplevels(df$parts);
   }
   
   if (!is.null(threshold)) {
@@ -97,14 +98,14 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
     if(!sort.by %in% colnames(df)) {
       stop(paste("cannot sort by '", sort.by, "': no column of that names (in: ", paste(colnames(df), collapse=" "), ")", sep=""));
     }
-    df <- df[order(df[, sort.by], decreasing=FALSE),];
+    df <- df[order(df[, sort.by], decreasing=TRUE),];
   }
 
   df <- df[order(df[, "parts"]),];
 
   l <- split(df, df$parts);
 
-  l <- lapply(l, function(x) { x <- x[from:(min(to, nrow(x))),] });
+  l <- lapply(l, function(x) { x <- x[min(from, nrow(x)):(min(to, nrow(x))),] });
 
   return(l);
 }

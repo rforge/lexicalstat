@@ -152,6 +152,14 @@ Executing test function test_corpus_isCorpus_Tabulated  ...  done successfully.
 
 
 
+Executing test function test_frequencyList_frequencies  ...  done successfully.
+
+
+
+Executing test function test_frequencyList_frequencies_withNA  ...  done successfully.
+
+
+
 Executing test function test_frequencyList_frequencyList  ...  done successfully.
 
 
@@ -176,39 +184,38 @@ Executing test function test_frequencyList_frequencyList2  ...  done successfull
 
 
 
+Executing test function test_frequencyList_has.types  ...  done successfully.
+
+
+
 Executing test function test_frequencyList_print  ...    type frequency
-1     A         2
-2     B         1
-3     E         1
-4     G         2
-5     J         1
-6     K         1
-7     M         1
-8     N         1
-9     O         3
-10    P         1
-11    Q         3
-12    R         1
-13    S         2
+1     A         1
+2     B         2
+3     C         1
+4     D         1
+5     E         1
+6     F         1
+7     G         1
+8     I         2
+9     J         2
+10    K         2
+11    L         2
+12    N         1
+13    Q         2
+14    R         1
  done successfully.
 
 
 
-Executing test function test_get.parts.containing.all.form  ... [1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/sample.lines"
- done successfully.
+Executing test function test_get.parts.containing.all.form  ...  done successfully.
 
 
 
-Executing test function test_get.parts.containing.form  ... [1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/sample.lines"
- done successfully.
+Executing test function test_get.parts.containing.form  ...  done successfully.
 
 
 
-Executing test function test_print.fullText  ... [1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
-An object of class "FullText"
+Executing test function test_print.fullText  ... An object of class "FullText"
 [[1]]
  [1] "le"           "croissance"   "de"           "produit"      "int"         
  [6] "rieur"        "brut"         "pib"          "devoir"       "se"          
@@ -293,21 +300,15 @@ Slot "depth":
 
 
 
-Executing test function test_readFile  ... [1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
- done successfully.
+Executing test function test_readFile  ...  done successfully.
 
 
 
-Executing test function test_readFile_depth  ... [1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
- done successfully.
+Executing test function test_readFile_depth  ...  done successfully.
 
 
 
-Executing test function test_readFile_lines  ... [1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
- done successfully.
+Executing test function test_readFile_lines  ...  done successfully.
 
 
 
@@ -316,35 +317,19 @@ Executing test function test_readFile_nonexistent_file  ... Error in readTexts(f
 
 
 
-Executing test function test_readFile_paragraphs  ... [1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/small.paragraphs"
- done successfully.
+Executing test function test_readFile_paragraphs  ...  done successfully.
 
 
 
-Executing test function test_readFile_sentences  ... [1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
- done successfully.
+Executing test function test_readFile_sentences  ...  done successfully.
 
 
 
-Executing test function test_readFiles_files  ... [1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
-[1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small2.lines"
-[1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small3.lines"
- done successfully.
+Executing test function test_readFiles_files  ...  done successfully.
 
 
 
-Executing test function test_readMultipleFiles  ... [1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
-[1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small2.lines"
-[1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small3.lines"
- done successfully.
+Executing test function test_readMultipleFiles  ...  done successfully.
 
 
 
@@ -354,9 +339,7 @@ Executing test function test_readMultipleFiles_nonexistent_file  ... Error in re
 
 
 
-Executing test function test_summary.fullText  ... [1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
-[1] "A raw corpus with 3 parts and  298 tokens"
+Executing test function test_summary.fullText  ... [1] "A raw corpus with 3 parts and  298 tokens"
 Sample:
 le croissance de produit int rieur brut pib devoir se...
 « Il ne y avoir aucun raison ni besoin de...
@@ -451,9 +434,7 @@ Executing test function test_tabulated_subcorpus_structural_not_found  ... Error
 
 
 
-Executing test function test_lines2paragraphs  ... [1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/small.paragraphs"
- done successfully.
+Executing test function test_lines2paragraphs  ...  done successfully.
 
 
 
@@ -492,9 +473,7 @@ Executing test function test_wam.frequencyList  ...  done successfully.
 
 
 
-Executing test function test_wam.fullText  ... [1] "..."
-[1] "//Library/Frameworks/R.framework/Versions/2.15/Resources/library/lexicalStat/exempleData/LeMondeEco.small.lines"
- done successfully.
+Executing test function test_wam.fullText  ...  done successfully.
 
 
 
@@ -510,17 +489,17 @@ Executing test function test.specificities  ...  done successfully.
 
 ------------------- UNIT TEST SUMMARY ---------------------
 
-RUNIT TEST PROTOCOL -- Sun Jan  6 19:40:27 2013 
+RUNIT TEST PROTOCOL -- Mon Jan  7 23:17:22 2013 
 *********************************************** 
-Number of test functions: 61 
+Number of test functions: 64 
 Number of errors: 0 
 Number of failures: 0 
 
  
 1 Test Suite : 
-lexicalStat unit testing - 61 test functions, 0 errors, 0 failures
+lexicalStat unit testing - 64 test functions, 0 errors, 0 failures
 > 
 > 
 > proc.time()
 utilisateur     système      écoulé 
-     10.301       0.189      10.489 
+     11.098       0.223      11.352 

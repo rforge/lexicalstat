@@ -13,7 +13,7 @@ frequencyList.numeric <- function(x) {
   if (is.null(names(x))) {
     stop("frequencyList needs an named vector");
   }
-  y <- data.frame(type=as.factor(names(x)), frequency=as.numeric(x));
+  y <- data.frame(type=names(x), frequency=as.numeric(x), stringsAsFactors=FALSE);
   frequencyList(y);
 }
 
@@ -25,15 +25,42 @@ frequencyList.table <- function(x) {
 }
 
 frequencyList.data.frame <- function(x) {
-  msg <- "a frequency list can be built with a data.frame of two columns named 'type' and 'frequency'";
   if (ncol(x) != 2) stop("x must have two columns ('type' and 'frequency')");
-  if (!is.factor(x[,1])) stop("x$type must be a factor");
-  if (any(as.character(x[,1]) == "")) stop("a types cannot be an empty string");
+  if (!is.character(x[,1])) stop("x$type must be a character vector");
+  if (any(x[,1] == "")) stop("a types cannot be an empty string");
   if (!is.numeric(x[,2])) stop("x$frequency must be numeric");
-  if (!all(names(x) == c("type", "frequency"))) stop(msg);
+  if (!all(names(x) == c("type", "frequency"))) stop("the data.frame must have column names c('type', 'frequency')");
   obj <- new("FrequencyList", x);
   return(obj);
 }
+
+############################################################
+##
+## Functions specific to this class (see also corpus.R for accessors common to other Corpus classes)
+##
+############################################################
+
+setGeneric("frequencies", function(obj, types) standardGeneric("frequencies"));
+
+setMethod("frequencies", c("FrequencyList", "character"), function(obj, types) {
+  f <- obj[
+      match(types, obj[,1]),
+      2
+    ]
+  return(f);
+});
+
+setGeneric("has.types", function(obj, types) standardGeneric("has.types"));
+
+setMethod("has.types", c("FrequencyList", "character"), function(obj, types) {
+  types %in% obj[,1]
+});
+
+setGeneric("hapax", function(obj) {
+  return(standardGeneric("hapax"));
+})
+
+setMethod("hapax", "FrequencyList", function(obj) names(obj)[obj == 1] )
 
 ############################################################
 ##

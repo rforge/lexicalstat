@@ -73,9 +73,6 @@ setMethod("wam", "Tabulated", function(corpus, measure, types, positional, struc
  # ------------------------------------------------------------------------
  ##
 setMethod("wam", "FrequencyList", function(corpus, measure, types, subcorpus) {
-#  if (is.missing(subcorpus)) {
-#    stop("'subcorpus' cannot be missing");
-#  }
   if (is.null(subcorpus)) {
     stop("'subcorpus' cannot be null");
   }
@@ -90,7 +87,7 @@ setMethod("wam", "FrequencyList", function(corpus, measure, types, subcorpus) {
   K <- corpus[ match(subcorpus[,1], corpus[,1]), 2 ];
 
   measured <- wam.num(N, n, K, k, measure);
-  return(wordAssociation(N, n, K, k, measured, measure, subcorpus[,1], "subcorpus"));
+  return(wordAssociation(N, n, K, k, measured, measure, types(subcorpus), "subcorpus"));
 });
 
 ##
@@ -156,11 +153,15 @@ setMethod("wam", "LexicalTable", function(corpus, measure, types, parts) {
     stop("The lexical table must contains at least one row and one column.");
   }
 
+# vectorisation : creation of the four vectors N, n, K, k of same length
+
   k <- as.vector(corpus);
+
+  N <- rep(N, length(k));
 
   n <- as.vector(partMargin);
   names(n) <- names(partMargin);
-  n <- rep(n, times=nrow(corpus));
+  n <- rep(n, times=rep(nrow(corpus), length(n)));
 
   K <- as.vector(typeMargin);
   names(K) <- names(typeMargin);
@@ -172,8 +173,6 @@ setMethod("wam", "LexicalTable", function(corpus, measure, types, parts) {
 });
 
 ############################################################
-##
-## 2/
 ##
 ##
 ## The generic method

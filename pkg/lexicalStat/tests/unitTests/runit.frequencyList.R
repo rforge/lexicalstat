@@ -25,6 +25,42 @@ test_frequencyList_frequencyList2 <- function() {
 	fl <- frequencyList(f);
 }
 
+############################################################
+##
+## Accessors specific to this class (see also corpus.R for accessors common to other Corpus classes)
+##
+############################################################
+
+test_frequencyList_frequencies <- function() {
+  data(dickensFrequencyList)
+  types <- c("doubt", ".", "the");
+  expected <- c(1, 3, 4)
+  found <- frequencies(dickensFrequencyList, types);
+  checkEquals(expected, found);
+}
+
+test_frequencyList_frequencies_withNA <- function() {
+  data(dickensFrequencyList)
+  types <- c("doubt", ".", "the", "blablabla");
+  expected <- c(1, 3, 4, NA)
+  found <- frequencies(dickensFrequencyList, types);
+  checkEquals(expected, found);
+}
+
+test_frequencyList_has.types <- function() {
+  data(dickensFrequencyList)
+  types <- c("doubt", ".", "the", "blablabla");
+  expected <- c(TRUE, TRUE, TRUE, FALSE);
+  found <- has.types(dickensFrequencyList, types);
+  checkEquals(expected, found);
+}
+
+############################################################
+##
+## Utility functions
+##
+############################################################
+
 test_frequencyList_print <- function() {
 	c <- LETTERS[sample(1:20, 20, replace=T)];
 	f <- table(c)

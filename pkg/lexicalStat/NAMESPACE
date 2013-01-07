@@ -8,13 +8,9 @@ import(Matrix)
 
 import(XML)
 
-# S4 methods to be exported :
-#
-
-#
-# export: including generics
-# exportMethods: for methods on generics defined in other packages, e.g., show, initialize
-
+##
+## Corpus
+##
 
 # functions exported from file "R/corpus.R"
 exportMethods(N, V);
@@ -23,7 +19,6 @@ exportMethods(types);
 # functions exported from file "R/fullText.R"
 export(fullText);
 export(readTexts);
-#export(asFullText, asFullText.tabulated);
 export(tokenize, tokenize.treetagger, tokenize.simple);
 export(print.tokens.by.parts, untokenize.by.parts);
 export(flip.inner.outer.parts, remove.inner.part);
@@ -36,10 +31,11 @@ export(readLexicalTable, writeLexicalTable);
 
 # functions exported from file "R/frequencyList.R"
 export(frequencyList, frequencyList.numeric, frequencyList.table, frequencyList.data.frame);
+exportMethods(frequencies, has.types, hapax);
 
 # functions exported from file "R/tabulated.R"
 export(tabulated);
-
+exportMethods(lpositional, lstructural);
 
 # functions exported from file "as.R"
 exportMethods(asTabulated);
@@ -48,9 +44,9 @@ exportMethods(asLexicalTable);
 exportMethods(asFullText);
 exportMethods(coerce);
 
-#export(, asTabulated.fullText);
-#export(asFrequencyList, asFrequencyList.tabulated, asFrequencyList.fullText);
-#export(asLexicalTable, asLexicalTable.fullText);
+##
+## Subcorpus
+##
 
 # functions exported from file "R/subcorpus.R"
 exportMethods(subcorpus);
@@ -58,7 +54,11 @@ exportMethods(subcorpus);
 # functions exported from file "R/is.subcorpus.of.R"
 exportMethods(is.subcorpus.of);
 
-# functions exported from file "R/conc.R"
+##
+## Functions
+##
+
+# functions exported from file "R/kwic.R"
 exportMethods(kwic);
 export(conc, word.conc, text.conc);
 
@@ -79,8 +79,6 @@ export(wordAssociation)
 exportMethods(wam);
 export(wam.num);
 export(fisher, specificities, binomial, loglikelihood);
-#export(write.mwa, print.mwa, writeAsXML.wma);
-#export(wam, wam.fullText, wam.tabulated, wam.frequencyList, wam.lexicalTable, wam.numeric);
 
 #export(extract.field.in.treetagger.struct, remove.unknown.in.treetagger.struct, repair.unknown.in.treetagger.struct, get.treetagger.struct.in.xml.element, characters2treetagger.struct, extract.word.on.pos.in.treetagger.struct);
 
