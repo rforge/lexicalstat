@@ -24,3 +24,7 @@ test:
 	cd ${TOP}/tests;\
 	RCMDCHECK=FALSE ${R} --no-environ CMD BATCH ${SUITE}
 
+clean:
+	find . -name "*.Rout" -exec rm {} \;
+	rm lexicalStat/inst/doc/lexicalStat.aux lexicalStat/inst/doc/lexicalStat.idx lexicalStat/inst/doc/lexicalStat.ilg lexicalStat/inst/doc/lexicalStat.ind lexicalStat/inst/doc/lexicalStat.log lexicalStat/inst/doc/lexicalStat.out lexicalStat/inst/doc/lexicalStat.pdf lexicalStat/inst/doc/lexicalStat.tex lexicalStat/inst/doc/lexicalStat.toc
+
