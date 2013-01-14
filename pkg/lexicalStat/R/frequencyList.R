@@ -40,9 +40,9 @@ frequencyList.data.frame <- function(x) {
 ##
 ############################################################
 
-setGeneric("frequencies", function(obj, types) standardGeneric("frequencies"));
+setGeneric("freq", function(obj, types) standardGeneric("freq"));
 
-setMethod("frequencies", c("FrequencyList", "character"), function(obj, types) {
+setMethod("freq", c("FrequencyList", "character"), function(obj, types) {
   f <- obj[
       match(types, obj[,1]),
       2
@@ -78,7 +78,7 @@ setMethod("hapax", "FrequencyList", function(obj) names(obj)[obj == 1] )
 
 setMethod("summary", signature(object = "FrequencyList"), function(object){
   cat(paste("A frequency list:\n"));
-  cat(paste("Number of types:", V(object), "\n"));
+  cat(paste("Number of types:", ntype(object), "\n"));
   cat(paste("Number of tokens:", N(object), "\n"));
   cat(paste("Number of hapax:", length(hapax(object)), "\n"));
   n.top.frequency <- min(10, length(object));

@@ -12,7 +12,15 @@
  #
  #
  ##
-fisher <- function(N, n, K, k) {
+wam.MI <- function(N, n, K, k) {
+  stop("not implemented yet");
+}
+
+##
+ #
+ #
+ ##
+wam.fisher <- function(N, n, K, k) {
   stop("not implemented yet");
 }
 
@@ -21,10 +29,22 @@ fisher <- function(N, n, K, k) {
  # Specificities
  #
  ##
-specificities <- function(N, n, K, k) {
+wam.specificities <- function(N, n, K, k) {
+    .wam.with.pdf(N, n, K, k, phyper);
+}
 
+##
+ #
+ # Loi binomiale
+ #
+ ##
+wam.binomial <- function(N, n, K, k) {
+    .wam.with.pdf(N, n, K, k, pbinom);
+}
+
+.wam.with.pdf <- function(N, n, K, k, pdf) {
   # used data.frame to recycle vector length toward the same length.
-  # otherwise, phyper below may produce NA (if whites=1 => 1[FALSE, TRUE, TRUE, ...])
+  # otherwise, pdf below may produce NA (if whites=1 => 1[FALSE, TRUE, TRUE, ...])
   recycled <- data.frame(whiteDrawn=k, whites=K, blacks=N-K, drawn=n);
 
   independance    <- (recycled$whites * recycled$drawn) / N;
@@ -33,12 +53,12 @@ specificities <- function(N, n, K, k) {
   specif <- double(length=nrow(recycled));
 
   pos_arg <- recycled[specif_positive, ];
-  specif[specif_positive] <- phyper (
+  specif[specif_positive] <- pdf (
       pos_arg$whiteDrawn, pos_arg$whites, pos_arg$blacks, pos_arg$drawn
       );
 
   neg_arg <- recycled[!specif_positive, ];
-  specif[!specif_positive] <- phyper (
+  specif[!specif_positive] <- pdf (
       neg_arg$whiteDrawn, neg_arg$whites, neg_arg$blacks, neg_arg$drawn
       );
 
@@ -48,10 +68,6 @@ specificities <- function(N, n, K, k) {
   spelog[specif == 0.5] <- 0;
   spelog <- round(spelog, digits=4);
   return(spelog);
-}
-
-binomial <- function(N, n, K, k) {
-  stop("not implemented yet");
 }
 
 ##
@@ -86,7 +102,7 @@ binomial <- function(N, n, K, k) {
  #        E21 =     "    "      (proportion of other words that would belong in window if collocate were spread evenly)
  #        E22 =     "    "      (proportion of other words that would belong outside window if collocate were spread evenly)
  ##
-loglikelihood <- function(N, n, K, k) {
+wam.loglikelihood <- function(N, n, K, k) {
   N <- N;
   C1 <- K;
   C2 <- N-K;

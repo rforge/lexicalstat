@@ -1,4 +1,14 @@
 
+############################################################
+##
+##
+## Convert a vector of lines into a vector of paragraphs
+## (a paragraph is delimited by an empty line).
+## Consecutive lines are concatenated (an " " is added)
+##
+##
+############################################################
+
 line2paragraph <- function(lines) {
   if(!is.character(lines)) {
     stop("lines must be a character vector");

@@ -28,20 +28,20 @@ setMethod("N", "FullText", function(obj) sum(sapply(obj, length)));
 ############################################################
 ##
 ##
-## V
+## ntype
 ##
 ##
 ############################################################
 
-setGeneric("V", function(obj, positional) standardGeneric("V"));
+setGeneric("ntype", function(obj, positional) standardGeneric("ntype"));
 
-setMethod("V", "FrequencyList", function(obj) nrow(obj));
+setMethod("ntype", "FrequencyList", function(obj) nrow(obj));
 
-setMethod("V", "LexicalTable", function(obj) nrow(obj));
+setMethod("ntype", "LexicalTable", function(obj) nrow(obj));
 
-setMethod("V", c("Tabulated", "character"), function(obj, positional) nlevels(obj[,positional]));
+setMethod("ntype", c("Tabulated", "character"), function(obj, positional) nlevels(obj[,positional]));
 
-setMethod("V", "FullText", function(obj) length(unique(unlist(obj))));
+setMethod("ntype", "FullText", function(obj) length(unique(unlist(obj))));
 
 ############################################################
 ##

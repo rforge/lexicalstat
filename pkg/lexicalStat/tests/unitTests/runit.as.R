@@ -4,10 +4,10 @@
 ##
 ############################################################
 
-test_asTabulated.fullText <- function() {
+test_as.Tabulated.fullText <- function() {
   data(dickensFullText);
   i <- dickensFullText;
-  d <- asTabulated(i);
+  d <- as.Tabulated(i);
   equals_corpus_tabulated(d, i); # watch order for "word" argument to be thrown in equals_corpus_tabulated
 }
 
@@ -17,10 +17,10 @@ test_asTabulated.fullText <- function() {
 ##
 ############################################################
 
-test_asFullText.tabulated <- function() {
+test_as.FullText.tabulated <- function() {
   data(dickensTabulated);
   i <- dickensTabulated;
-  d <- asFullText(i, "word", "sentence");
+  d <- as.FullText(i, "word", "sentence");
   equals_corpus_tabulated(i, d);
 }
 
@@ -31,17 +31,17 @@ test_asFullText.tabulated <- function() {
 ############################################################
 
 # TODO : tester si d'autres paramètres que "word" sont pris en compte
-test_asLexicalTable.Tabulated <- function() {
+test_as.LexicalTable.Tabulated <- function() {
   data(dickensTabulated);
   i <- dickensTabulated;
-  d <- asLexicalTable(i, "word", "sentence");
+  d <- as.LexicalTable(i, "word", "sentence");
   equals_corpus_tabulated(i, d);
 }
 
-test_asLexicalTable.FullText <- function() {
+test_as.LexicalTable.FullText <- function() {
   data(dickensFullText);
   i <- dickensFullText;
-  d <- asLexicalTable(i);
+  d <- as.LexicalTable(i);
   equals_corpus(i, d);
 }
 
@@ -52,37 +52,37 @@ test_asLexicalTable.FullText <- function() {
 ############################################################
 
 # TODO : tester si d'autres paramètres que "word" sont pris en compte
-test_asFrequencyList.Tabulated <- function() {
+test_as.FrequencyList.Tabulated <- function() {
   data(dickensTabulated);
   i <- dickensTabulated;
-  d <- asFrequencyList(i, "word");
+  d <- as.FrequencyList(i, "word");
   equals_corpus_tabulated(i, d);
 }
 
-test_asFrequencyList.FullText <- function() {
+test_as.FrequencyList.FullText <- function() {
   data(dickensFullText);
   i <- dickensFullText;
-  d <- asFrequencyList(i);
+  d <- as.FrequencyList(i);
   equals_corpus(i, d);
 }
 
-test_asFrequencyList.LexicalTable <- function() {
+test_as.FrequencyList.LexicalTable <- function() {
   data(dickensLexicalTable);
   i <- dickensLexicalTable;
-  d <- asFrequencyList(i);
+  d <- as.FrequencyList(i);
   equals_corpus(i, d);
 }
 
 equals_corpus <- function(c1, c2) {
   checkEqualsNumeric(N(c1), N(c2));
-  checkEqualsNumeric(V(c1), V(c2));
+  checkEqualsNumeric(ntype(c1), ntype(c2));
   checkEqualsNumeric(types(c1), types(c2));  
 }
 
 # may do exactly the same thing as uprise, if "word" was added as default argument
-# in V and types method signatures
+# in ntype and types method signatures
 equals_corpus_tabulated <- function(c1, c2) {
   checkEqualsNumeric(N(c1), N(c2));
-  checkEqualsNumeric(V(c1, "word"), V(c2));
+  checkEqualsNumeric(ntype(c1, "word"), ntype(c2));
   checkEqualsNumeric(types(c1, "word"), types(c2));  
 }

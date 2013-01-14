@@ -31,19 +31,19 @@ test_frequencyList_frequencyList2 <- function() {
 ##
 ############################################################
 
-test_frequencyList_frequencies <- function() {
+test_frequencyList_freq <- function() {
   data(dickensFrequencyList)
   types <- c("doubt", ".", "the");
   expected <- c(1, 3, 4)
-  found <- frequencies(dickensFrequencyList, types);
+  found <- freq(dickensFrequencyList, types);
   checkEquals(expected, found);
 }
 
-test_frequencyList_frequencies_withNA <- function() {
+test_frequencyList_freq_withNA <- function() {
   data(dickensFrequencyList)
   types <- c("doubt", ".", "the", "blablabla");
   expected <- c(1, 3, 4, NA)
-  found <- frequencies(dickensFrequencyList, types);
+  found <- freq(dickensFrequencyList, types);
   checkEquals(expected, found);
 }
 

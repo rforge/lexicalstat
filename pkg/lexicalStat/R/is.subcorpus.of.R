@@ -14,7 +14,7 @@ setMethod("is.subcorpus.of", c("FrequencyList", "FrequencyList"), function(subco
     return(FALSE);
   }
 
-  if (any(frequencies(subcorpus, t) > frequencies(corpus, t))) {
+  if (any(freq(subcorpus, t) > freq(corpus, t))) {
     return(FALSE);
   }
   return(TRUE);

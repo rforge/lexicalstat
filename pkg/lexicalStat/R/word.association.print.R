@@ -1,4 +1,5 @@
 # TODO : dans l'impression : mettre option si "+" ou "-".
+# sort.by
 
 setMethod("show", signature(object="WordAssociation"), function(object) {
   print(object);
@@ -89,23 +90,38 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
     df <- df[ df$parts %in% parts, ];
     df$parts <- droplevels(df$parts);
   }
-  
-  if (!is.null(threshold)) {
-    df <- df[ abs(df$association) > threshold, ];
-  }
 
   if (!is.null(sort.by)) {
-    if(!sort.by %in% colnames(df)) {
-      stop(paste("cannot sort by '", sort.by, "': no column of that names (in: ", paste(colnames(df), collapse=" "), ")", sep=""));
-    }
-    df <- df[order(df[, sort.by], decreasing=TRUE),];
+      stop(paste("sort.by cannot be null"));
+  }
+  if(!length(sort.by) == 1) {
+    stop(paste("cannot sort with more than one key"));
+  }
+  if(!sort.by %in% colnames(df)) {
+    stop(paste("cannot sort by '", sort.by, "': no column of that names (in: ", paste(colnames(df), collapse=" "), ")", sep=""));
+  }
+  
+  if (!is.null(threshold)) {
+    df <- df[ abs(df[, sort.by]) > threshold, ];
   }
 
-  df <- df[order(df[, "parts"]),];
+  df <- df[order(df[, sort.by], decreasing=TRUE),];
 
   l <- split(df, df$parts);
 
-  l <- lapply(l, function(x) { x <- x[min(from, nrow(x)):(min(to, nrow(x))),] });
+  # extract lines 'from' to 'to' in both positive and negative values
+  if (!is.null(from)) {
+    l <- lapply(l, function(x) { 
+       n.positive <- sum(x[, sort.by] > 0);
+       n.negative <- sum(x[, sort.by] < 0);
+       l <- now(x);
+       x <- x[
+        c(
+          min(from, n.positive):(min(to, n.positive)),
+          min(l-to-1, n.negative):(min(l-from-1, l))          
+        )
+      ,]});
+  }
 
   return(l);
 }

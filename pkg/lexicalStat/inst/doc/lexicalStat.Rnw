@@ -11,7 +11,8 @@
 
 \title{Introduction to the lexicalStat package}
 
-\author{Bernard Desgraupes and Sylvain Loiseau\\<bernard.desgraupes@u-paris10.fr>, <sylvain.loiseau@univ-paris13.fr>}
+\author{Bernard Desgraupes and Sylvain Loiseau\\
+<bernard.desgraupes@u-paris10.fr>, <sylvain.loiseau@univ-paris13.fr>}
 
 \date{\today}
 
@@ -147,16 +148,16 @@ print(w, from=1, to=20, parts=c("D1", "D10"));
 There are four classes for representing a corpus. Each is suited for some tasks
 or for some sources.
 
-All classes have the three following functions:
+All classes have the three following basic functions:
 \begin{itemize}
 \item \texttt{N}\index{N} : the number of tokens in the corpus
 \item \texttt{V}\index{V} : the number of different types (V stand for vocabulary)
 \item \texttt{types}\index{types} : the sorted list of the different types.
 \end{itemize}
+Each of them has also specific functions. The function \texttt{summary}\index{summary}
+applied on this data structures provide short resumes of their content.
 
-The function \texttt{summary}\index{summary} applied on this data structures provide
-short resumes of their content.
-
+% TODO : classes not types
 For each of these four types, a ready-to-use tool corpus is provided as a
 dataset (dataset are objects that can be easily loaded into the R environnement with the
 function \texttt{data}). All of these tool-corpora represent the two first sentences
@@ -202,9 +203,9 @@ patrie & 153\\
 \vskip 1em
 
 A frequency list is simply a data frame with two columns, \texttt{type} and
-\texttt{frequency}. It can be used as any other data frame. Some other functions are
-provided : \texttt{N}\index{N}, \texttt{V}\index{V}, \texttt{summary}\index{summary}
-and \texttt{types}\index{types}.
+\texttt{frequency}. It can be used as any other data frame, but suited functions
+are also provided. They are, first, the very general functions: \texttt{N}\index{N},
+\texttt{V}\index{V}, \texttt{summary}\index{summary} and \texttt{types}\index{types}.
 
 <<frequencyList_common_functions, echo=T>>=
 data(dickensFrequencyList);
@@ -215,13 +216,13 @@ summary(dickensFrequencyList);
 types(dickensFrequencyList);
 @
 
-You can also ask for the frequency of a given type with
-\texttt{frequencies}\index{frequencies}
-or ask if a given type is available in this frequency list with
-\texttt{has.type}\index{have.type}
+There are also functions for fetching the frequency of given types
+(\texttt{freq}\index{freq})
+or for asking if a given type is available in this frequency list
+(\texttt{has.type}\index{have.type}).
 
 <<frequencyList_other_functions, echo=T>>=
-frequencies(dickensFrequencyList, c("the", "."))
+freq(dickensFrequencyList, c("the", "."))
 has.types(dickensFrequencyList, c("the", "blabla"))
 @
 
@@ -396,7 +397,7 @@ and \texttt{types}\index{types} functions are available. Besides these extra fun
 \label{subsubsec:classes-fullText}
 \index{fullText corpus class}
 
-The \texttt{fullText} class is the more simplistic representation of a corpus:
+The \texttt{fullText} class is the most simplistic representation of a corpus:
 it is a list where each slot contains a vectors of tokens. The list represent a
 partition\index{partition} of the corpus.
 
@@ -535,7 +536,9 @@ TODO
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
 
+% ----------------------------------------------------------------
 \subsection{Introduction}
+% ----------------------------------------------------------------
 
 "Word attraction measures" are methods for extracting the forms notably
 frequent or sparse in a subcorpus by comparison with its parent corpus. These forms
@@ -554,17 +557,23 @@ used for describing its thematic or specific content.
   describing the semantic/thematic associated to this word.
 \end{itemize}
 
+% ----------------------------------------------------------------
 \subsection{Using word attraction measure with the different corpus classes}
+% ----------------------------------------------------------------
 
 Word attraction measure needs a corpus and a subcorpus. Depending on the corpus
 object you are using, there is various ways of building these arguments.
 
-\subsubsection{FrequencyList}
+% ................................................................
+\subsubsection{\texttt{frequencyList}}
+% ................................................................
 
 With \texttt{frequencyList}, you need a frequencyList representing a corpus and
 frequencyList representing a subcorpus.
 
-\subsubsection{lexicalTable}
+% ................................................................
+\subsubsection{\texttt{lexicalTable}}
+% ................................................................
 
 With \texttt{lexicalTable}, the different parts (columns) of the table are used as
 subcorpora, and the analysis is produced for each sub subcorpora. As an
@@ -578,13 +587,9 @@ w <- wam(x)
 print(w, from=1, to=5)
 @
 
-\subsubsection{fullText}
-
-With \texttt{fullText} corpus, all the different parts (element of the list) are
-used as subcorpora. Again, the analysis is produced for each subcorpora. You
-can use function for merging parts before applying this analysis.
-
-\subsubsection{tabulated}
+% ................................................................
+\subsubsection{\texttt{tabulated}}
+% ................................................................
 
 With \texttt{tabulated} corpus, you need to specify a "positional" attribute
 (which feature of the tokens (lemma, inflected form, pos...) are used for
@@ -592,7 +597,21 @@ counting frequency of occurrences?) and a "structural" attribute (which
 grouping of the frequency are used for creating the parts?). These two arguments
 allow for the creating of a lexical table.
 
+% ................................................................
+\subsubsection{\texttt{fullText}}
+% ................................................................
+
+With \texttt{fullText} corpus, all the different parts (element of the list) are
+used as subcorpora. Again, the analysis is produced for each subcorpora. You
+can use function for merging parts before applying this analysis.
+
+% ----------------------------------------------------------------
 \subsection{Other arguments}
+% ----------------------------------------------------------------
+
+% ................................................................
+\subsubsection{Computing the indicator for some types}
+% ................................................................
 
 In every case, you can specify the \texttt{types} for which you want the indicator to be calculated.
 
@@ -602,6 +621,10 @@ data(robespierre);
 x <- lexicalTable(robespierre);
 w <- wam(x, types=c("peuple", "patrie"))
 @
+
+% ................................................................
+\subsubsection{Computing the indicator for some parts}
+% ................................................................
 
 When the indicator is computed for several subcorpus (parts of the corpus), you
 can specify the \texttt{parts} for which you want the indicator to be
@@ -614,6 +637,10 @@ x <- lexicalTable(robespierre);
 w <- wam(x, parts=c("D1", "D2"))
 print(w, from=1, to=5)
 @
+
+% ................................................................
+\subsubsection{Selecting which indicator to use}
+% ................................................................
 
 You can specify the indicator you want to be used : log-likelihood,
 specificities, fisher, etc. (see section "indicators" bellow for a
@@ -628,9 +655,13 @@ w <- wam(x, measure=c("specificities", "loglikelihood"))
 print(w, from=1, to=5)
 @
 
+% ----------------------------------------------------------------
 \subsection{Printing options}
+% ----------------------------------------------------------------
 
+% ----------------------------------------------------------------
 \subsection{Available indicators}
+% ----------------------------------------------------------------
 
 \printindex
 

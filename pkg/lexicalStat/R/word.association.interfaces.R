@@ -3,20 +3,13 @@
 ##
 ## wam = Word association measure
 ##
-## 1/ "wam.*" functions for each corpus data structure (fullText,
+## Functions for each corpus data structure (fullText,
 ## lexicalTable, frequencyList, corpus).
 ##
-## 2/ All these functions call wam.numeric() with four arguments.
-##
-## 3/ wam.numeric(), in turn, calls all one (or several) of the functions
-## computing association measure (loglikelihood, binomial, specificities, etc).
-## (see word.association.indicators.R)
-##
-## 4/ All this function return an object "WordAssociation" (see word
+## All these functions return an object "WordAssociation" (see word
 ## word.association.R).
 ##
-## 5/ This object can be printed with several options (see
-## word.association.print.R).
+## This object can be printed with several options (see word.association.print.R).
 
 ############################################################
 ##
@@ -30,7 +23,7 @@
 ##
 ############################################################
 
-setGeneric("wam", function(corpus, measure="specificities", types=NULL, parts=NULL, positional=NULL, structural=NULL, subcorpus=NULL) {
+setGeneric("wam", function(corpus, measure="wam.specificities", types=NULL, parts=NULL, positional=NULL, structural=NULL, subcorpus=NULL) {
   return(standardGeneric("wam"));
 })
 
@@ -40,7 +33,7 @@ setGeneric("wam", function(corpus, measure="specificities", types=NULL, parts=NU
  # ------------------------------------------------------------------------
  ##
 setMethod("wam", c("FullText"), function(corpus, measure, types) {
-    m <- asLexicalTable(corpus);
+    m <- as.LexicalTable(corpus);
     w <- wam(m, measure, types);
     return(w);
     });
@@ -61,7 +54,7 @@ setMethod("wam", "Tabulated", function(corpus, measure, types, positional, struc
   if (is.null(structural)) {
     stop("structural cannot be null");
   }
-  m <- asLexicalTable(corpus, positional, structural);
+  m <- as.LexicalTable(corpus, positional, structural);
   w <- wam(m, measure, types);
   return(w);
 })
@@ -84,15 +77,15 @@ setMethod("wam", "FrequencyList", function(corpus, measure, types, subcorpus) {
   N <- N(corpus);
   n <- N(subcorpus);
   k <- subcorpus[,2];
+# TODO utiliser freq(corpus, types(subcorpus)) mais ne respecterait pas l'ordre
   K <- corpus[ match(subcorpus[,1], corpus[,1]), 2 ];
 
-  measured <- wam.num(N, n, K, k, measure);
-  return(wordAssociation(N, n, K, k, measured, measure, types(subcorpus), "subcorpus"));
+  return(wordAssociation(N, n, K, k, measure, types(subcorpus), "subcorpus"));
 });
 
 ##
  # ------------------------------------------------------------------------
- # for "lexicalTable" object
+ # For "lexicalTable" object
  # wam called on a "lexicalTable" corpus
  # ------------------------------------------------------------------------
  ##
@@ -167,49 +160,14 @@ setMethod("wam", "LexicalTable", function(corpus, measure, types, parts) {
   names(K) <- names(typeMargin);
   K <- rep(K, ncol(corpus));
 
-  measured <- wam.num(N, n, K, k, measure);
-
-  return(wordAssociation(N, n, K, k, measured, measure, names(K), names(n)));
+  return(wordAssociation(N, n, K, k, measure, names(K), names(n)));
 });
 
 ############################################################
 ##
 ##
-## The generic method
+## The common method
 ##
 ##
 ############################################################
-
-##
- #
- # Four vector of same length ; may be recycled.
- # Each element of these vector correspond to a form.
- #
- # N : size (number of tokens) of the corpus
- # n : size (number of tokens) of the sub-corpus
- # K : Number of occurrences of a form in the corpus
- # k : Number of occurrences of a form in the subcorpus
- #
- ##
-wam.num <- function(N, n, K, k, measure="specificities") {
-  if (is.null(N) | is.null(n) | is.null(K) | is.null(k)) {
-    stop("none of the four arguments N, n, K, k can be null");
-  }
-  if (any(is.na(N)) | any(is.na(n)) | any(is.na(K)) | any(is.na(k))) {
-    stop("none of the four arguments N, n, K, k can be NA");
-  }
-
-  # TODO : another mechanism of association name/function, in order for the user to be able to extend the list.
-  if (any(!measure %in% c("fisher", "specificities", "binomial", "loglikelihood"))) {
-    stop(paste("unknown measure in ", paste(measure, collapse=" "), sep=""));
-  }
-
-  wa <- matrix(0, nrow=max(length(N), length(n), length(K), length(k)), ncol=length(measure));
-  colnames(wa) <- measure;
-  for (m in measure) {
-    indicateurs <- do.call(m, list(N, n, K, k));
-    wa[,m] <- indicateurs;
-  }
-  return(wa);
-}
 

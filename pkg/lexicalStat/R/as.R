@@ -15,11 +15,11 @@ setAs("FullText", "Tabulated", function(from, to) {
 
 # helpers
 
-setGeneric("asTabulated", function(x) {
-  return(standardGeneric("asTabulated"));
+setGeneric("as.Tabulated", function(x) {
+  return(standardGeneric("as.Tabulated"));
 })
 
-setMethod("asTabulated", "FullText", function(x) {
+setMethod("as.Tabulated", "FullText", function(x) {
   as(x, "Tabulated");
 });
 
@@ -45,11 +45,11 @@ setMethod("asTabulated", "FullText", function(x) {
 
 # helpers
 
-setGeneric("asFullText", function(x, positional, structural) {
-  return(standardGeneric("asFullText"));
+setGeneric("as.FullText", function(x, positional, structural) {
+  return(standardGeneric("as.FullText"));
 })
 
-setMethod("asFullText", c("Tabulated", "character", "character"), function(x, positional, structural) {
+setMethod("as.FullText", c("Tabulated", "character", "character"), function(x, positional, structural) {
 #      as(x, "FullText", positional, structural);
   from <- x;
   if (is.null(positional)) {
@@ -123,11 +123,11 @@ setAs("FullText", "LexicalTable", function(from, to) {
 
 # helpers
 
-setGeneric("asLexicalTable", function(x, positional, structural) {
-  return(standardGeneric("asLexicalTable"));
+setGeneric("as.LexicalTable", function(x, positional, structural) {
+  return(standardGeneric("as.LexicalTable"));
 })
 
-setMethod("asLexicalTable", c("Tabulated"), function(x, positional, structural) {
+setMethod("as.LexicalTable", c("Tabulated"), function(x, positional, structural) {
 #      as(x, "LexicalTable", positional, structural);
   from <- x;
   if (! structural %in% attr(from, "structural")) {
@@ -149,7 +149,7 @@ setMethod("asLexicalTable", c("Tabulated"), function(x, positional, structural) 
   return(lexicalTable(m));
 });
 
-setMethod("asLexicalTable", c("FullText"), function(x) {
+setMethod("as.LexicalTable", c("FullText"), function(x) {
   as(x, "LexicalTable")
 });
 
@@ -181,11 +181,11 @@ setAs("LexicalTable", "FrequencyList", function(from, to) {
 
 # helpers
 
-setGeneric("asFrequencyList", function(x, positional) {
-  return(standardGeneric("asFrequencyList"));
+setGeneric("as.FrequencyList", function(x, positional) {
+  return(standardGeneric("as.FrequencyList"));
 })
 
-setMethod("asFrequencyList", c("Tabulated", "character"), function(x, positional) {
+setMethod("as.FrequencyList", c("Tabulated", "character"), function(x, positional) {
 #      as(x, "FrequencyList", positional);
   from <- x;
   if (! positional %in% lpositional(from)) {
@@ -195,11 +195,11 @@ setMethod("asFrequencyList", c("Tabulated", "character"), function(x, positional
   return(frequencyList(freq));
 });
 
-setMethod("asFrequencyList", c("FullText"), function(x) {
+setMethod("as.FrequencyList", c("FullText"), function(x) {
       as(x, "FrequencyList");
 });
 
-setMethod("asFrequencyList", c("LexicalTable"), function(x) {
+setMethod("as.FrequencyList", c("LexicalTable"), function(x) {
       as(x, "FrequencyList");
 });
 

@@ -14,7 +14,7 @@ test_specificities <- function() {
    # P. 130 (first line)
    # P. 149 (first line)
 
-   x <- specificities(61449,6903,296,14);
+   x <- wam.specificities(61449,6903,296,14);
 
    checkEqualsNumeric(x, -3.8733);
 }

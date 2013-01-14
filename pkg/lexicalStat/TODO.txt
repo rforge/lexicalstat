@@ -1,31 +1,27 @@
+Segments répétés
+Motifs
+Ngram
+
+Ordre lexicographique dans le classement des noms de parties (et non seulement ordre alphabétique) : D10 après D9.
+
 
 Attention dans lecture de fichier treetagger : si les noms d'éléments ont des attributs, ne passe plus
 
-Corriger le calcul de la fréquence théorique dans specificites.probabilites.
-utiliser la fonction quantile ?
-
-Ajouter MI, log-Likelihood, Fisher comme alternative à hypergeo
-Ajouter option dans spécificité pour spécificier la méthode.
-
-
-Dans print.specificites : pouvoir trier par freq ou sous-freq (Sélectionner sur
-ce critère, ou seulement trier sur ce critère et pouvoir toujours sélectionner
-sur l'autre ?)
-
-À la rigueur il faut les deux :
-select.key=c("freq", "sousfreq", "score"), limit=x, from=y, to=z, sort.key=c("freq", "sousfreq", "score").
-
-
-frequencies pose un problème : trop proche de frequency
-V -> ntypes
-subcorpus
-wam
 
 Dans la vignette :
-
 % dans les conversions, mettre un tableau représentant graphiquement les conversions 
 % => par exemple, extraire une liste de fréquence à partir d'une table de contingence, ou d'une partie d'une liste de contingence.
 % dans les sous-corpus, mettre les différentes façons de représenter, sélectionner, tailler...
 
- 
 
+
+#setGeneric("wam", function(corpus, subcorpus) {
+#  return(standardGeneric("wam"));
+#})
+#
+#setMethod("wam", c(corpus="LexicalTable", subcorpus="FrequencyList"), function(corpus, measure, types) {
+#setMethod("wam", c(corpus="LexicalTable", subcorpus="numeric"), function(corpus, measure, types) {
+
+mettre un data.frame dans le constructeur de l'objet WordAssociation
+
+harmoniser avec les noms de rcqp

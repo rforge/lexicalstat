@@ -13,7 +13,7 @@ import(XML)
 ##
 
 # functions exported from file "R/corpus.R"
-exportMethods(N, V);
+exportMethods(N, ntype);
 exportMethods(types);
 
 # functions exported from file "R/fullText.R"
@@ -31,17 +31,17 @@ export(readLexicalTable, writeLexicalTable);
 
 # functions exported from file "R/frequencyList.R"
 export(frequencyList, frequencyList.numeric, frequencyList.table, frequencyList.data.frame);
-exportMethods(frequencies, has.types, hapax);
+exportMethods(freq, has.types, hapax);
 
 # functions exported from file "R/tabulated.R"
 export(tabulated);
 exportMethods(lpositional, lstructural);
 
 # functions exported from file "as.R"
-exportMethods(asTabulated);
-exportMethods(asFrequencyList);
-exportMethods(asLexicalTable);
-exportMethods(asFullText);
+exportMethods(as.Tabulated);
+exportMethods(as.FrequencyList);
+exportMethods(as.LexicalTable);
+exportMethods(as.FullText);
 exportMethods(coerce);
 
 ##
@@ -77,8 +77,7 @@ export(read.treetagger);
 # functions exported from file "R/word.association.*.R"
 export(wordAssociation)
 exportMethods(wam);
-export(wam.num);
-export(fisher, specificities, binomial, loglikelihood);
+export(wam.fisher, wam.specificities, wam.binomial, wam.loglikelihood, wam.MI);
 
 #export(extract.field.in.treetagger.struct, remove.unknown.in.treetagger.struct, repair.unknown.in.treetagger.struct, get.treetagger.struct.in.xml.element, characters2treetagger.struct, extract.word.on.pos.in.treetagger.struct);
 

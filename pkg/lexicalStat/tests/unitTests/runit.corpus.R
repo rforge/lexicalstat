@@ -25,13 +25,13 @@ test_corpus_isCorpus_Tabulated <- function () {
 corpus_common <- function(i) {
   checkTrue(is(i, "Corpus"));
   checkEqualsNumeric(34, N(i));
-  checkEqualsNumeric(26, V(i));
+  checkEqualsNumeric(26, ntype(i));
   checkEqualsNumeric(26, length(types(i)));
 }
 
 corpus_common_tabulated <- function(i) {
   checkTrue(is(i, "Corpus"));
   checkEqualsNumeric(34, N(i));
-  checkEqualsNumeric(26, V(i, "word"));
+  checkEqualsNumeric(26, ntype(i, "word"));
   checkEqualsNumeric(26, length(types(i, "word")));
 }
