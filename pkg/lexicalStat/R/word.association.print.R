@@ -91,7 +91,7 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
     df$parts <- droplevels(df$parts);
   }
 
-  if (!is.null(sort.by)) {
+  if (is.null(sort.by)) {
       stop(paste("sort.by cannot be null"));
   }
   if(!length(sort.by) == 1) {
@@ -100,7 +100,7 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
   if(!sort.by %in% colnames(df)) {
     stop(paste("cannot sort by '", sort.by, "': no column of that names (in: ", paste(colnames(df), collapse=" "), ")", sep=""));
   }
-  
+  key <- 
   if (!is.null(threshold)) {
     df <- df[ abs(df[, sort.by]) > threshold, ];
   }
@@ -114,7 +114,7 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
     l <- lapply(l, function(x) { 
        n.positive <- sum(x[, sort.by] > 0);
        n.negative <- sum(x[, sort.by] < 0);
-       l <- now(x);
+       l <- row(x);
        x <- x[
         c(
           min(from, n.positive):(min(to, n.positive)),

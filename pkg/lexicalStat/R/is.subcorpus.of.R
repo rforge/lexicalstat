@@ -10,7 +10,7 @@ setGeneric("is.subcorpus.of", function(subcorpus, corpus) {
 
 setMethod("is.subcorpus.of", c("FrequencyList", "FrequencyList"), function(subcorpus, corpus) {
   t <- types(subcorpus);
-  if (! all(has.types(corpus, t))) {
+  if (! all(contains.types(corpus, t))) {
     return(FALSE);
   }
 

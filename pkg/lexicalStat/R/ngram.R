@@ -1,41 +1,45 @@
+############################################################
+##
+##
+## Creating ngram with a FullText corpus
+##
+##
+############################################################
 
 ##
-## n-gram as a string, where grams are concatenated with "."
-##
+ #
+ # ngram
+ #
+ ##
+setGeneric("ngram", function(corpus, n=3, sep=" ") {
+  return(standardGeneric("ngram"));
+})
 
-# the part too short are deleted
-ngram.parts <- function(token.by.part, n=3, sep=".") {
-  print("vérif");
-  parts.ok <- sapply(token.by.part, function(x) length(x) > n);
-  print("extrait les parties correctes");
-  parts <- token.by.part[parts.ok];
-  print("traite les parties");
-  lapply(parts, ngram, n, sep);
+# TODO : test for the fastest implementation.
+
+setMethod("ngram", "FullText", function(corpus, n, sep) {
+  x <- do.ngram.implementation2(corpus, n, sep);
+  y <- fullText(x);
+  return(y);
+});
+
+##
+ #
+ # ngram : implementation 1
+ #
+ ##
+do.ngram.implementation1 <- function(tokens, n, sep) {
+  parts.ok <- sapply(corpus, function(x) length(x) > n);
+  parts <- corpus[parts.ok];
+  lapply(parts, .create.ngram, n, sep);
 }
 
-ngram <- function(tokens, n=3, sep=".") {
+.create.ngram <- function(tokens, n=3, sep=".") {
  idx <- .nseq(length(tokens), n);
  ngram <- tokens[idx];
  ngram <- split(ngram, rep(1:length(tokens), each=n));
  ngram <- sapply(ngram, paste, collapse=sep);
  return(ngram);
-}
-
-##
-## n-gram as a matrix, with n-columns
-##
-
-ngram.matrix.parts <- function(token.by.part, n=3) {
-  print("vérif");
-  parts.ok <- sapply(token.by.part, function(x) length(x) > n);
-  print("extrait les parties correctes");
-  parts <- token.by.part[parts.ok];
-  print("traite les parties");
-  lapply(parts, ngram.matrix, n);
-}
-
-ngram.matrix <- function(tokens, n=3) {
- return(.get.mat(tokens, n));
 }
 
 .nseq <- function(l, n) {
@@ -45,24 +49,23 @@ ngram.matrix <- function(tokens, n=3) {
   x <- rep(1:l, each = n);
   for (i in 2:n) {
     is <- seq(i,l*n,n);
-    #print("--");
-    #print(i);
-    #print(is);
     x[is] <- x [is] + (i-1);
   }
   return(x);
 }
 
-.old.ngram <- function(tokens, n=3, sep=".") {
- if (n >= length(tokens)) {
-   stop("ngram length must be smaller than the number of tokens");
- }
- if (!is.character(tokens)) {
-   stop("tokens must be a character vector");
- }
- m <- .get.mat(tokens, n); 
- gram <- apply(m, 1, paste, collapse=sep);
- return(gram);
+##
+ #
+ # ngram : implementation 1
+ # n-gram as a matrix
+ #
+ ##
+do.ngram.implementation2 <- function(token.by.part, n=3, sep=" ") {
+  parts.ok <- sapply(token.by.part, function(x) length(x) > n);
+  parts <- token.by.part[parts.ok];
+  x <- lapply(parts, .get.mat, n);
+  y <- lapply(x, apply, 1, paste, collapse=sep);
+  return(y);
 }
 
 .get.mat <- function(tokens, n) {
@@ -70,4 +73,3 @@ ngram.matrix <- function(tokens, n=3) {
   m <- m[1:(nrow(m)-n),];
   return(m);
 }
-

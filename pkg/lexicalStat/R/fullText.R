@@ -1,46 +1,11 @@
 
 ## Corpus as raw character vectors into a list.
 
-# TODO :
-
-# regrouper des fonctions subcorpus (cf. section ci-dessous, ainsi que dans tabulate) dans un subcorpus.R
-
-# des fonctions pour regrouper différemment les parties... par exemple en fonction de la présence d'une forme. cf. specificities
-
-# Reprendre des choses qui sont dans le package dico :
-# library(dico)
-# data(tlf_exe_lemma)
-# bois <- lapply(tlf_exe_lemma, function(x) if ("femme" %in% x) return(x) else return(NULL))
-# bois <- bois[!sapply(bois, is.null)]
-# bois.lf <- table(unlist(bois))
-# x <- frequencies_lemma["tlf_exe",,drop=FALSE]
-# x <- rbind(x,x)
-# rownames(x) <- c("tlf_exe", "bois")
-# x[2,] <- 0
-# x[2, names(bois.lf)] <- bois.lf
-# x[1,] <- x[1,] - x[2,]
-# x <- x[,colSums(x) > 0] 
-# x <- t(x)
-# specificites(x)
-
-# Pouvoir calculer les spécificités facilement. Par exemple :
-# specificites.fullText <- function(fullText, searched) {
-# 	is.found <- lapply(fullText, function(x) if (lemme %in% x) return(TRUE) else return(FALSE));
-# 	sous.corpus <- fullText[is.found];
-# 	complement <- fullText[!is.found];
-# 	sous.corpus.fl <- table(unlist(sous.corpus));
-# 	complementaire.fl <- table(unlist(complementaire));
-# 	forms <- unique(c(names(sous.corpus.fl), names(complementaire.fl)));
-# 	m <- matrix(0, ncol=2, nrow=length(forms));
-# 	colnames(m) <- c("sous-corpus", "complément");
-# 	rownames(m) <- forms;
-# 	m[names(sous.corpus.fl),] <- sous.corpus.fl;
-# 	m[names(complementaire.fl),] <- complementaire.fl;
-# }
-
 setClass("FullText",
          representation(depth = "numeric"),
          contains = "list");
+
+setIs("FullText", "Corpus");
 
 ############################################################
 ##
@@ -58,6 +23,18 @@ fullText <- function(l, depth=1) {
 
 ############################################################
 ##
+## Implementation of Corpus
+##
+############################################################
+
+setMethod("N", "FullText", function(obj) sum(sapply(obj, length)));
+
+setMethod("ntype", "FullText", function(obj) length(unique(unlist(obj))));
+
+setMethod("types", "FullText", function(obj) sort(unique(unlist(obj))));
+
+############################################################
+##
 ## Reader
 ##
 ############################################################
@@ -67,62 +44,76 @@ fullText <- function(l, depth=1) {
  # Each line of a text file is tokenized and used as a part of the corpus
  #
  ##
-readTexts <- function(files, dir=NULL, pattern=NULL, split.on="lines", enc="UTF-8", skipEmpty=TRUE) {
+readTexts <- function(filenames, is.dir=FALSE, pattern=NULL, split.on="lines", enc="UTF-8", skipEmpty=TRUE) {
+  
+  filenames <- .filename(filenames, is.dir, pattern);
 
 # TODO : source d'erreur dans le fait d'énumérer les options ici (+ dans le message d'erreur) et encore ci-dessous dans le 'if-else'.
+  if (!is.character(split.on)) {
+    stop("'split.on' must be a character vector");
+  }
+  if (length(split.on) != 1) {
+    stop("'split.on' must have a length of 1");
+  }
   if (! split.on %in% c("lines", "files", "sentences", "paragraphs")) {
     stop("'parts' must be one of 'lines', 'files', 'sentences', 'paragraph'");
   }
 
-  if (!is.null(dir)) {
-    files = list.files(dir, pattern=pattern);
-  }
-  if (length(files) == 0) {
-    stop("no files selected");
-  }
-  files <- paste(dir, files, sep="/");
-  nonexistent <- character(0);
-  
-  nonexistent <- !file.exists(files);
-  if (sum(nonexistent) > 0) {
-    stop(paste("cannot read or access file(s): ", paste(files[nonexistent], collapse=" "), sep=""));
+  files <- vector(mode="list", length=length(filenames));
+  for (i in 1:length(filenames)) {
+    lines <- readLines(filenames[i], encoding=enc);
+    files[[i]] <- lines;
   }
 
-  parts <- vector(mode="list", length=length(files));
-  for (i in 1:length(files)) {
-    lines <- readLines(files[i], encoding=enc);
-    parts[[i]] <- lines;
+  files <- lapply(files, function(lines) {
+      is.empty <- lines == ""; ifelse(any(is.empty), lines[-which(is.empty)], lines);
+      });
+
+  l <- sapply(files, length);
+  is.empty <- l == 0;
+  if (any(is.empty)) {
+    files <- files[-which(is.empty)];
   }
+
+  
+#  index_empty_lines <- grep("^\\s*$", corpus, perl=TRUE);
+#  if (length(index_empty_lines) > 0) {
+#    if (skipEmpty) {
+#      corpus <- corpus[-index_empty_lines];
+#    } else {
+#      stop("Empty lines found in the text file")
+#    }
+#  }
 
   corpus <- list();
-  if (split.on == "lines") {
-    corpus <- unlist(parts);
-  } else if (split.on == "files") {
-    corpus <- sapply(parts, paste, collapse= " ");
-    names(corpus) <- files;
-  } else if (split.on == "sentences") {
-    corpus <- unlist(parts);
-    corpus <- lapply(corpus, function(x) {
-      strsplit(x, split="[^M]\\.+")
-	});
-    corpus <- unlist(corpus);
-  } else if (split.on == "paragraphs") {
-    corpus <- unlist(parts);
-    corpus <- line2paragraph(corpus);
-  } else {
-    stop("Unkwown option");
-  }
-
-  index_empty_lines <- grep("^\\s*$", corpus, perl=TRUE);
-  if (length(index_empty_lines) > 0) {
-    if (skipEmpty) {
-      corpus <- corpus[-index_empty_lines];
-    } else {
-      stop("Empty lines found in the text file")
+# tokenize first
+  if (split.on == "lines" || split.on == "files") {
+    for (i in 1:length(filenames)) {
+      files[[i]] <- tokenize(files[[i]]);
     }
+    if (split.on == "lines") {
+      corpus <- unlist(files, recursive=FALSE);
+    } else if (split.on == "files") {
+      corpus <- lapply(files, unlist);
+      names(corpus) <- filenames;
+    }
+  } else {
+# tokenize after reshaping.
+    if (split.on == "sentences") {
+      corpus <- unlist(files);
+      corpus <- lapply(corpus, function(x) {
+	  strsplit(x, split="[^M]\\.+")
+	  });
+      corpus <- unlist(corpus);
+    } else if (split.on == "paragraphs") {
+      corpus <- unlist(files);
+      corpus <- line2paragraph(corpus);
+    } else {
+      stop("Unkwown option");
+    }
+    corpus <- tokenize(corpus);
   }
 
-  corpus <- tokenize(corpus);
   obj <- fullText(corpus);
   return(obj);
 }
@@ -199,136 +190,32 @@ untokenize.by.parts <- function(tokens.by.parts) {
 
 ############################################################
 ##
-## Dealing with variation in partition depth.
+## Private
 ##
 ############################################################
 
-# Inverse the part/subpart ordering. Suppose that each inner part have the same number of part.  make:
-# input (e.g. the output of get.words.by.subparts.by.parts()) : 
-# tokens.by.subparts.by.parts  == list(
-#   partA1=list(
-#     partB1=c(word1, word2),
-#     partB2=c(word1, word2)
-#     ),
-#   partA2=list(
-#     partB1=c(word1, word2),
-#     partB2=c(word1, word2)
-#     ),
-#   partA3=list(
-#     partB3=c(word1, word2),
-#     partB4=c(word1, word2)
-#     )
-# );
-#
-# output :
-# words.by.parts.by.subparts == list(
-#   list(
-#     partA1=c(word1, word2),
-#     partA2=c(word1, word2),
-#     partA3=c(word1, word2)
-#   ),
-#   list(
-#     partA1=c(word1, word2),
-#     partA2=c(word1, word2),
-#     partA3=c(word1, word2)
-#   )
-# );
-flip.inner.outer.parts <- function(tokens.by.subparts.by.parts, nsubpart=10) {
-  check.subpart.length <- sapply(tokens.by.subparts.by.parts, function(part) {
-      length(part) == nsubpart;
-  });
-  if (!all(check.subpart.length)) {
-    stop(paste("all part must contains", nsubpart, "subpart"));
+# TODO : allow for recursive ?
+
+.filename <- function(filenames, is.dir, pattern) {
+  if (!is.dir && !is.null(pattern)) {
+    stop("'pattern' can be used only if 'is.dir' is set to TRUE");
   }
 
-  words.by.parts.by.subparts <- lapply(
-      1:subpart,
-      function(subpart.idx, part) # subpart.idx: index of a subpart
-      { 
-      lapply(
-        part,
-        function(part, subpart.idx) {
-        if (length(part) < subpart.idx) stop(paste("subpart index too hight", subpart.idx));
-        return(part[[subpart.idx]])
-        },
-        subpart.idx)
-      },
-      tokens.by.subparts.by.parts
-      );
-  return(words.by.parts.by.subparts);
-}
-
-# keep only the division in subpart:
-# corpus == list(
-#   subpart1=c(word1, word2, word1, word2),
-#   subpart2=c(word1, word2, word1, word2)
-# );
-remove.inner.part <- function(tokens.by.parts.by.subparts) {
-  tokens.by.subparts <- lapply(tokens.by.parts.by.subparts, function(x) {unlist(x)});
-  return(tokens.by.subparts);
-}
-
-############################################################
-##
-## Filter, subcorpus
-##
-############################################################
-
-
-# TO BE DELETED
-#get.parts.with.token.fl <- function(tokens.by.part, token) {
-#  subcorpus <- get.parts.with.token(tokens.by.part, token);
-#  subcorpus.fl <- table(unlist(subcorpus));
-#  return(subcorpus.fl);
-#}
-
-get.parts.containing.form <- function(tokens.by.part, form) {
-  if (length(form) != 1) stop("form must have one element");
-  if (!is.character(form)) stop("form must be a character vector");
-  if (attr(tokens.by.part, "depth") != 1) stop("depth must be 1");
-  contain.form <- sapply(tokens.by.part, function(part) form %in% part);
-  if (all(!contain.form)) {
-    stop("No occurrence found");
+  if (is.dir) {
+    filenames <- list.files(filenames, pattern=pattern, full.names=TRUE);
   }
-  subcorpus <- tokens.by.part[contain.form];
-  return(subcorpus);
-}
-
-get.parts.containing.all.forms <- function(tokens.by.part, forms) {
-  if (!is.character(forms)) stop("token must be a character vector");
-  if (attr(tokens.by.part, "depth") != 1) stop("depth must be 1");
-  contain.form <- sapply(tokens.by.part, function(part) all(forms %in% part));
-  if (all(!contain.form)) {
-    stop("No occurrence found");
+  
+  are.dir <- file.info(filenames)[, "isdir"];
+  if (any(are.dir)) {
+    filenames <- filenames[!are.dir];
   }
-  subcorpus <- tokens.by.part[contain.form];
-  return(subcorpus);
-}
 
-##
- #
- # Get each occurrence found of a form with a given number of cooccurrent
- #
- ##
-get.tokens.by.context.by.part <- function(tokens.by.part, form, span.size) {
-  if (!is.list(tokens.by.part)) stop("tokens.by.part must be a list");
-  subcorpus.by.context.by.part <- lapply(tokens.by.part, function(tokens) {
-      idx <- which(form == tokens);
-      if (length(idx) > 0) {
-        contexts <- vector(mode="list", length=length(idx));
-        for(i in 1:length(idx)) {
-          j <- idx[i];
-          id <- (j-span.size):(j+span.size);
-          id <- id[id > 0 & id <= length(tokens)];
-          contexts[[i]] <- tokens[id];
-        }
-        return(contexts);
-      } else {
-        return(NULL);
-      }
-  });
-  subcorpus.by.context.by.part <- subcorpus.by.context.by.part[
-    ! sapply(subcorpus.by.context.by.part, is.null)
-    ];
-  return(subcorpus.by.context.by.part);
+  if (length(filenames) == 0) {
+    stop("no files selected");
+  }
+  
+  nonexistent <- !file.exists(filenames);
+  if (any(nonexistent)) {
+    stop(paste("cannot read or access file(s): ", paste(filenames[nonexistent], collapse=" "), sep=""));
+  }
 }
