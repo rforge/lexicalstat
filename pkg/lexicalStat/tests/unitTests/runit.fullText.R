@@ -77,10 +77,10 @@ test_readFiles_files <- function() {
   c <- readTexts(c(fileName1, fileName2, fileName3), split.on="files");
 }
 
-#test_readFiles_dir <- function() {
-#  dir <- system.file(c("inst",  "exempleData"), package="lexicalStat");
-#  c <- readTexts(dir=dir, pattern="*.lines", split.on="files");
-#}
+test_readFiles_dir <- function() {
+  dir <- system.file(c("inst",  "exempleData/zola"), package="lexicalStat");
+  c <- readTexts(dir, is.dir=TRUE, pattern="*.txt", split.on="files");
+}
 
 ############################################################
 ##
@@ -120,19 +120,57 @@ test_tokenize_with_empty_string <- function() {
 #  First line with five tokens 
 #  Second line is one tokens more
 #  Third line and last line 
-test_get.parts.containing.form <- function() {
-  fileName <- system.file(c("inst",  "exempleData"), "sample.lines", package="lexicalStat")
-  c <- readTexts(fileName);
-  d <- get.parts.containing.form(c, "tokens");
-  checkEqualsNumeric(2, length(d));
-}
+
+# Function removed as for now.
+
+# test_get.parts.containing.form <- function() {
+#  fileName <- system.file(c("inst",  "exempleData"), "sample.lines", package="lexicalStat")
+#  c <- readTexts(fileName);
+#  d <- get.parts.containing.form(c, "tokens");
+#  checkEqualsNumeric(2, length(d));
+# }
 
 
-test_get.parts.containing.all.form <- function() {
-  fileName <- system.file(c("inst",  "exempleData"), "sample.lines", package="lexicalStat")
-  c <- readTexts(fileName);
-  d <- get.parts.containing.all.forms(c, c("tokens", "Second"));
-  checkEqualsNumeric(1, length(d));
-}
+# Function removed as for now.
+# test_get.parts.containing.all.form <- function() {
+#  fileName <- system.file(c("inst",  "exempleData"), "sample.lines", package="lexicalStat")
+#  c <- readTexts(fileName);
+#  d <- get.parts.containing.all.forms(c, c("tokens", "Second"));
+#  checkEqualsNumeric(1, length(d));
+# }
 
 # TODO
+
+############################################################
+##
+## Private
+##
+############################################################
+
+test_filename_dir1 <- function() {
+   filename <- lexicalStat:::.filename(".", is.dir=TRUE, pattern="*.R$")
+   checkEquals(filename, "doRUnit.R");
+}
+
+test_filename_dir2 <- function() {
+   filename <- lexicalStat:::.filename(".", is.dir=TRUE, pattern=NULL)
+   checkEquals(length(filename), 2);
+}
+
+test_filename_filename1 <- function() {
+   filename <- lexicalStat:::.filename("doRUnit.R", FALSE, NULL)
+   checkEquals(length(filename), 1);
+}
+
+test_filename_filename_exception_nonexistentfile <- function() {
+   checkException(lexicalStat:::.filename("non_existent_file", FALSE, NULL));
+}
+
+test_filename_filename_exception_pattern_with_file <- function() {
+   checkException(lexicalStat:::.filename("doRUnit.R", FALSE, pattern="*.R"));
+}
+
+test_filename_exception_no_file_found <- function() {
+   checkException(lexicalStat:::.filename(".", is.dir=TRUE, pattern=".null"));
+}
+

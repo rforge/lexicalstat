@@ -47,11 +47,11 @@ test_frequencyList_freq_withNA <- function() {
   checkEquals(expected, found);
 }
 
-test_frequencyList_has.types <- function() {
+test_frequencyList_contains.types <- function() {
   data(dickensFrequencyList)
   types <- c("doubt", ".", "the", "blablabla");
   expected <- c(TRUE, TRUE, TRUE, FALSE);
-  found <- has.types(dickensFrequencyList, types);
+  found <- contains.types(dickensFrequencyList, types);
   checkEquals(expected, found);
 }
 

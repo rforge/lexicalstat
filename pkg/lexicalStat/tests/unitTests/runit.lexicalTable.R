@@ -35,6 +35,17 @@ test_lexicalTable_creation_with_data.frame <- function() {
   checkEqualsNumeric(10, nrow(x));
 }
 
+test_lexicalTable_subfreq <- function() {
+  data(dickensLexicalTable);
+  found <- subfreq(dickensLexicalTable, c("is", "it", "no", "of"), c("1", "2"));
+  expected <- data.frame(
+  Type=c("is", "it", "no", "of","is", "it", "no", "of"),
+  Part=c("1", "1", "1", "1", "2", "2", "2", "2"),
+  Subfrequency=c(1 , 0 , 1 , 0 , 0, 0, 0, 1)
+  );
+  checkEquals(found, expected);
+}
+
 ############################################################
 ##
 ## Utility functions

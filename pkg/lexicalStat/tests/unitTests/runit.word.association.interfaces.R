@@ -28,6 +28,5 @@ test_wam.frequencyList <- function() {
 
 test_wam.lexicalTable <- function() {
    data(robespierre)
-   lt <- lexicalTable(robespierre);
-   wam(lt);
+   wam(robespierre);
 }
