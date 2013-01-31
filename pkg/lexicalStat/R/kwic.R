@@ -4,10 +4,6 @@
  #
  ##
 
-setGeneric("kwic", function(x, pattern, left, right) {
-  return(standardGeneric("kwic"));
-})
-
 setMethod("kwic", "FullText", function(x, pattern, left, right) {
   lines.names <- names(tokens.by.part);
   lines <- lapply(tokens.by.part, function(x) paste(x, collapse=" "));

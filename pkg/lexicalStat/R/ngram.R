@@ -6,14 +6,6 @@
 ##
 ############################################################
 
-##
- #
- # ngram
- #
- ##
-setGeneric("ngram", function(corpus, n=3, sep=" ") {
-  return(standardGeneric("ngram"));
-})
 
 # TODO : test for the fastest implementation.
 

@@ -6,18 +6,6 @@
 ##
 ############################################################
 
-##
- #
- #
- # Given a corpus with part, extract a subcorpus containing tokens found
- # in a given slice in the parts and containing a given lexical type.
- #
- #
- ##
-setGeneric("tactique.subcorpus", function(corpus, slice=1, nslice=5, word, method="ps(s,w)") {
-  return(standardGeneric("tactique.subcorpus"));
-})
-
 setMethod("tactique.subcorpus", "FullText", function(corpus, slice, nslice, word, method) {
   if (slice > nslice) {
     stop("'slice' cannot be greater than 'nslice'");
@@ -37,18 +25,6 @@ setMethod("tactique.subcorpus", "FullText", function(corpus, slice, nslice, word
   subcorpus <- .tactique.subcorpus(words.by.parts.by.slices, slice, word, method);
   return(subcorpus);
 });
-
-##
- #
- #
- # Given a corpus with parts, it is transformed into a corpus
- # where each part contains the token in a given slice in the previous parts.
- #
- #
- ##
-setGeneric("slice", function(corpus, n=10) {
-  return(standardGeneric("slice"));
-})
 
 setMethod("slice", "FullText", function(corpus, n) {
   .get.words.by.slices(corpus, n);
