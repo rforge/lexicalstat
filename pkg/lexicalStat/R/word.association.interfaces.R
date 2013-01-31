@@ -90,6 +90,7 @@ setMethod("wam", "FrequencyList", function(corpus, measure, types, subcorpus) {
  # ------------------------------------------------------------------------
  ##
 # , measure="character", types="character", parts="character"
+# TODO : reference to concrete implementation of LexicalTableSparseMatrix
 setMethod("wam", "LexicalTable", function(corpus, measure, types, parts) {
 
   partMargin <- colSums(corpus);

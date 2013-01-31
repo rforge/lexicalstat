@@ -27,3 +27,4 @@ line2paragraph <- function(lines) {
   y <- sapply(x, paste, collapse=" ");
   return(y);
 }
+

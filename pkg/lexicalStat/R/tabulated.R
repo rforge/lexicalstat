@@ -15,7 +15,7 @@
 
 setClass("Tabulated");
 
-setIs("Tabulated", "Corpus");
+setIs("Tabulated", "CorpusLinear");
 
 ############################################################
 ##

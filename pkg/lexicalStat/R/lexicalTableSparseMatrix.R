@@ -1,7 +1,7 @@
 setClass("LexicalTableSparseMatrix",
          contains = "dgCMatrix", # dgCMatrix sparseMatrix
          validity = function(object) {
-           if (class(object) == "LexicalTable")
+           if (class(object) == "LexicalTableSparseMatrix")
              return(TRUE)
            else
              return(FALSE)
@@ -65,11 +65,30 @@ lexicalTable <- function(mat) {
 ##
 ############################################################
 
-setMethod("N", "LexicalTable", function(obj) sum(obj));
+setMethod("N", "LexicalTableSparseMatrix", function(obj) sum(obj));
 
-setMethod("ntype", "LexicalTable", function(obj) nrow(obj));
+setMethod("ntype", "LexicalTableSparseMatrix", function(obj) nrow(obj));
 
-setMethod("types", "LexicalTable", function(obj) sort(rownames(obj)));
+setMethod("types", "LexicalTableSparseMatrix", function(obj) sort(rownames(obj)));
+
+############################################################
+##
+## Implementation of LexicalTable
+##
+############################################################
+
+setMethod("subfreq", "LexicalTableSparseMatrix", function(obj, types, parts) {
+    ntype <- length(types);
+    npart <- length(parts);
+    
+    submat <- obj[types, parts];
+    subfreq <- data.frame(
+      Type=rep(types, npart),
+      Part=rep(parts, times=rep(ntype, npart)),
+      Subfrequency=as.vector(submat)
+    );
+    return(subfreq);
+});
 
 ############################################################
 ##
@@ -77,15 +96,15 @@ setMethod("types", "LexicalTable", function(obj) sort(rownames(obj)));
 ##
 ############################################################
 
-setMethod("show", signature(object="LexicalTable"), function(object) {
-  printSpMatrix(x, col.names=T)
+setMethod("show", signature(object="LexicalTableSparseMatrix"), function(object) {
+  printSpMatrix(object, col.names=T)
 });
 
-setMethod("print", signature(x="LexicalTable"), function(x) {
+setMethod("print", signature(x="LexicalTableSparseMatrix"), function(x) {
   printSpMatrix(x, col.names=T)
 })
 
-setMethod("summary", signature(object = "LexicalTable"), function(object){
+setMethod("summary", signature(object = "LexicalTableSparseMatrix"), function(object) {
   cat(paste("A lexical table:\n"));
   cat(paste("Number of parts (columns):", ncol(object), "\n"));
   cat(paste("Number of types (rows):", nrow(object), "\n"));
