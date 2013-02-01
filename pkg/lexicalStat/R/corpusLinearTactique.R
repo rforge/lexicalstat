@@ -26,9 +26,13 @@ setMethod("tactique.subcorpus", "FullText", function(corpus, slice, nslice, word
   return(subcorpus);
 });
 
+# TODO : to be implemented for Tabulated
+
 setMethod("slice", "FullText", function(corpus, n) {
   .get.words.by.slices(corpus, n);
 });
+
+# TODO : to be implemented for Tabulated
 
 ##
  #

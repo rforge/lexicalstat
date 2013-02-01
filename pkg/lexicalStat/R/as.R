@@ -5,15 +5,17 @@
 ############################################################
 
 setAs("FullText", "Tabulated", function(from, to) {
-  x <- unlist(from);
-  m <- data.frame(word=as.factor(x));
-  y <- sapply(from, length);
-  m[, "part"] <- as.factor(rep(0:(length(from) - 1), times=y));
-  t <- tabulated(m, "word", "part");
-  return(t);
-});
+  word <- unlist(from);
+  df <- data.frame(word=as.factor(word));
 
-# helpers
+  len <- sapply(from, length);
+  id <- 0:(length(from) - 1);
+  part <- rep(id, times=len);
+  df[, "part"] <- as.factor(part);
+
+  res <- tabulated(df, "word", "part");
+  return(res);
+});
 
 setGeneric("as.Tabulated", function(x) {
   return(standardGeneric("as.Tabulated"));

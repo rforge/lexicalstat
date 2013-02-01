@@ -16,26 +16,35 @@ import(XML)
 exportMethods(N, ntype);
 exportMethods(types);
 
+# functions exported from file "R/corpusLinear.R"
+exportMethods(slice);
+exportMethods(tactique.subcorpus);
+exportMethods(ngram);
+
 # functions exported from file "R/fullText.R"
 export(fullText);
 export(readTexts);
 export(tokenize, tokenize.treetagger, tokenize.simple);
 export(print.tokens.by.parts, untokenize.by.parts);
-export(flip.inner.outer.parts, remove.inner.part);
-export(get.parts.containing.form, get.parts.containing.all.forms, get.tokens.by.context.by.part);
-# get.parts.with.token.fl, 
 
-# functions exported from file "R/lexicalTable.R"
+# functions exported from file "R/lexical.R"
+exportMethods(subfreq);
+
+# functions exported from file "R/lexicalTableSparseMatrix.R"
 export(lexicalTable);
 export(readLexicalTable, writeLexicalTable);
 
 # functions exported from file "R/frequencyList.R"
+exportMethods(freq, contains.types, hapax);
+
+# functions exported from file "R/frequencyListDataFrame.R"
 export(frequencyList, frequencyList.numeric, frequencyList.table, frequencyList.data.frame);
-exportMethods(freq, has.types, hapax);
 
 # functions exported from file "R/tabulated.R"
-export(tabulated);
 exportMethods(lpositional, lstructural);
+
+# functions exported from file "R/tabulatedDataFrame.R"
+export(tabulated);
 
 # functions exported from file "as.R"
 exportMethods(as.Tabulated);
@@ -58,56 +67,25 @@ exportMethods(is.subcorpus.of);
 ## Functions
 ##
 
-# functions exported from file "R/kwic.R"
+# functions exported from file "R/corpusLinearKwic.R"
 exportMethods(kwic);
 export(conc, word.conc, text.conc);
 
 # functions exported from file "R/main.R"
 export(compare.txts);
 
-# functions exported from file "R/ngram.R"
-export(ngram.parts, ngram, ngram.matrix.parts, ngram.matrix);
+# functions exported from file "R/corpusLinearNgram.R"
 
-# functions exported from file "R/tactique.R"
-export(get.words.by.slices, remove.inner.part, flip.inner.outer.parts, get.words.by.slices.by.parts, get.sub.corpus.in.tactique, slice.mot.specificities);
+# functions exported from file "R/corpusLinearTactique.R"
 
 # functions exported from file "R/treetagger.R"
 export(read.treetagger);
 
 # functions exported from file "R/word.association.*.R"
 export(wordAssociation)
+exportMethods(indicator.name)
 exportMethods(wam);
 export(wam.fisher, wam.specificities, wam.binomial, wam.loglikelihood, wam.MI);
 
-#export(extract.field.in.treetagger.struct, remove.unknown.in.treetagger.struct, repair.unknown.in.treetagger.struct, get.treetagger.struct.in.xml.element, characters2treetagger.struct, extract.word.on.pos.in.treetagger.struct);
-
 # functions exported from file "R/textUtils.R"
 export(line2paragraph);
-
-# functions exported from file "R/corpus.R"
-# export(list2lexical.table, list2lexical.table.sparse, .add.to.lexical.table);
-
-# functions exported from file "R/subcorpus.R"
-# export(get.parts.with.token.fl, get.parts.with.token, get.parts.with.tokens);
-
-# functions exported from file "R/read.corpus.R"
-# export(read.corpus.txt, read.corpus.txts);
-
-# functions exported from file "R/tokenize.R"
-# export(tokenize, tokenize.treetagger, tokenize.simple);
-
-# functions exported from file "R/syntex.R"
-# export(seq.apply);
-
-# functions exported from file "R/specificities.R"
-# export(specificities, specificities.lexicon, specificities.probabilities, print.specificities, write.specificities, writeAsXML.specificities);
-
-# functions exported from file "R/xml.R"
-# export(element.content2list, xml.attr2lexical.table, elementcontent2list.sax, xml.attr2vector);
-
-# functions exported from file "R/sparse.matrix.R"
-# export(readSparseMatrix, writeSparseMatrix);
-
-# functions exported from file "R/tokens.by.parts.R"
-# export(print.tokens.by.parts, untokenize.by.parts);
-

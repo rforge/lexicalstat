@@ -15,6 +15,8 @@ setMethod("ngram", "FullText", function(corpus, n, sep) {
   return(y);
 });
 
+# TODO : to be implemented for Tabulated
+
 ##
  #
  # ngram : implementation 1

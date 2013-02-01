@@ -1,8 +1,10 @@
+############################################################
 ##
- #
- # Kwic = keyword in context, or concordancer.
- #
- ##
+##
+## Kwic (keyword in context)
+##
+##
+############################################################
 
 setMethod("kwic", "FullText", function(x, pattern, left, right) {
   lines.names <- names(tokens.by.part);
@@ -11,6 +13,8 @@ setMethod("kwic", "FullText", function(x, pattern, left, right) {
   names(lines) <- lines.names;
   return(conc(lines, pattern, left, right));
 });
+
+# TODO : to be implemented for Tabulated
 
 setMethod("kwic", "Tabulated", function(x, pattern, left=5, right=5) {
   stop("not implemented yet");
