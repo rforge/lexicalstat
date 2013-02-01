@@ -25,3 +25,115 @@ Dans la vignette :
 mettre un data.frame dans le constructeur de l'objet WordAssociation
 
 harmoniser avec les noms de rcqp
+
+
+TODO :
+
+
+
+############################################################
+##
+## Filter, subcorpus
+##
+############################################################
+
+
+# TO BE DELETED
+#get.parts.with.token.fl <- function(tokens.by.part, token) {
+#  subcorpus <- get.parts.with.token(tokens.by.part, token);
+#  subcorpus.fl <- table(unlist(subcorpus));
+#  return(subcorpus.fl);
+#}
+
+get.parts.containing.form <- function(tokens.by.part, form) {
+  if (length(form) != 1) stop("form must have one element");
+  if (!is.character(form)) stop("form must be a character vector");
+  if (attr(tokens.by.part, "depth") != 1) stop("depth must be 1");
+  contain.form <- sapply(tokens.by.part, function(part) form %in% part);
+  if (all(!contain.form)) {
+    stop("No occurrence found");
+  }
+  subcorpus <- tokens.by.part[contain.form];
+  return(subcorpus);
+}
+
+get.parts.containing.all.forms <- function(tokens.by.part, forms) {
+  if (!is.character(forms)) stop("token must be a character vector");
+  if (attr(tokens.by.part, "depth") != 1) stop("depth must be 1");
+  contain.form <- sapply(tokens.by.part, function(part) all(forms %in% part));
+  if (all(!contain.form)) {
+    stop("No occurrence found");
+  }
+  subcorpus <- tokens.by.part[contain.form];
+  return(subcorpus);
+}
+
+##
+ #
+ # Get each occurrence found of a form with a given number of cooccurrent
+ #
+ ##
+get.tokens.by.context.by.part <- function(tokens.by.part, form, span.size) {
+  if (!is.list(tokens.by.part)) stop("tokens.by.part must be a list");
+  subcorpus.by.context.by.part <- lapply(tokens.by.part, function(tokens) {
+      idx <- which(form == tokens);
+      if (length(idx) > 0) {
+        contexts <- vector(mode="list", length=length(idx));
+        for(i in 1:length(idx)) {
+          j <- idx[i];
+          id <- (j-span.size):(j+span.size);
+          id <- id[id > 0 & id <= length(tokens)];
+          contexts[[i]] <- tokens[id];
+        }
+        return(contexts);
+      } else {
+        return(NULL);
+      }
+  });
+  subcorpus.by.context.by.part <- subcorpus.by.context.by.part[
+    ! sapply(subcorpus.by.context.by.part, is.null)
+    ];
+  return(subcorpus.by.context.by.part);
+}
+
+
+Dans fullText
+----------------------------------------------
+
+
+# TODO :
+
+# regrouper des fonctions subcorpus (cf. section ci-dessous, ainsi que dans tabulate) dans un subcorpus.R
+
+# des fonctions pour regrouper différemment les parties... par exemple en fonction de la présence d'une forme. cf. specificities
+
+# Reprendre des choses qui sont dans le package dico :
+# library(dico)
+# data(tlf_exe_lemma)
+# bois <- lapply(tlf_exe_lemma, function(x) if ("femme" %in% x) return(x) else return(NULL))
+# bois <- bois[!sapply(bois, is.null)]
+# bois.lf <- table(unlist(bois))
+# x <- frequencies_lemma["tlf_exe",,drop=FALSE]
+# x <- rbind(x,x)
+# rownames(x) <- c("tlf_exe", "bois")
+# x[2,] <- 0
+# x[2, names(bois.lf)] <- bois.lf
+# x[1,] <- x[1,] - x[2,]
+# x <- x[,colSums(x) > 0] 
+# x <- t(x)
+# specificites(x)
+
+# Pouvoir calculer les spécificités facilement. Par exemple :
+# specificites.fullText <- function(fullText, searched) {
+# 	is.found <- lapply(fullText, function(x) if (lemme %in% x) return(TRUE) else return(FALSE));
+# 	sous.corpus <- fullText[is.found];
+# 	complement <- fullText[!is.found];
+# 	sous.corpus.fl <- table(unlist(sous.corpus));
+# 	complementaire.fl <- table(unlist(complementaire));
+# 	forms <- unique(c(names(sous.corpus.fl), names(complementaire.fl)));
+# 	m <- matrix(0, ncol=2, nrow=length(forms));
+# 	colnames(m) <- c("sous-corpus", "complément");
+# 	rownames(m) <- forms;
+# 	m[names(sous.corpus.fl),] <- sous.corpus.fl;
+# 	m[names(complementaire.fl),] <- complementaire.fl;
+# }
