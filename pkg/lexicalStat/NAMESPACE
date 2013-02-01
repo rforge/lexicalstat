@@ -71,9 +71,6 @@ exportMethods(is.subcorpus.of);
 exportMethods(kwic);
 export(conc, word.conc, text.conc);
 
-# functions exported from file "R/main.R"
-export(compare.txts);
-
 # functions exported from file "R/corpusLinearNgram.R"
 
 # functions exported from file "R/corpusLinearTactique.R"
