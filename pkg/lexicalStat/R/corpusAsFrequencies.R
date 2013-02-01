@@ -1,0 +1,1 @@
+setClass("CorpusAsFrequencies", contains="Corpus");

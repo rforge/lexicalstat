@@ -1,5 +1,5 @@
 setClass("LexicalTableSparseMatrix",
-         contains = "dgCMatrix", # dgCMatrix sparseMatrix
+         contains = c("dgCMatrix", "LexicalTable"), # dgCMatrix sparseMatrix
          validity = function(object) {
            if (class(object) == "LexicalTableSparseMatrix")
              return(TRUE)
@@ -20,44 +20,6 @@ setIs("LexicalTableSparseMatrix", "LexicalTable");
 #> z <- sparseMatrix(i=10, j=10, x=10)
 #> z
 #10 x 10 sparse Matrix of class "dgCMatrix"
-
-############################################################
-##
-## Constructor
-##
-############################################################
-
-lexicalTable <- function(mat) {
-  if (is.data.frame(mat)) {
-    mat <- as.matrix(mat);
-    if (!is.numeric(mat)) {
-      stop("cannot create lexicalTable with a non-numeric data.frame");
-    }
-  }
-  m <- 0;
-  if (is(mat, "sparseMatrix")) {
-    m <- as(mat, "dgCMatrix");
-  } else if (is.matrix(mat)) {
-    m <- Matrix(mat, sparse = TRUE);
-  } else if (class(mat) == "frequencyList") {
-     stop("Not implemented yet");
-  } else if (class(mat) == "fullText") {
-      stop("Not implemented yet");
-  } else if (class(mat) == "tabulated") {
-      stop("Not implemented yet");
-  } else {
-    stop(paste("don't know how to make a lexicalTable with a", class(mat)));
-  }
-
-  if (is.null(rownames(m))) {
-    stop("must have rownames");
-  }
-  if (is.null(colnames(m))) {
-    stop("must have colnames");
-  }
-
-  return(new("LexicalTableSparseMatrix", m));
-}
 
 ############################################################
 ##
