@@ -1,4 +1,4 @@
-setClass("LexicalTable", contains = "CorpusAsFrequency");
+setClass("LexicalTable", contains = "CorpusAsFrequencies");
 
 ############################################################
 ##
