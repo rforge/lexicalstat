@@ -27,11 +27,26 @@ setIs("LexicalTableSparseMatrix", "LexicalTable");
 ##
 ############################################################
 
-setMethod("N", "LexicalTableSparseMatrix", function(obj) sum(obj));
+##############################################################
+#' @rdname N-methods
+#' @aliases N,LexicalTableSparseMatrix-method
+setMethod("N", "LexicalTableSparseMatrix", function(corpus) sum(corpus));
 
-setMethod("ntype", "LexicalTableSparseMatrix", function(obj) nrow(obj));
+############################################################
+##
+## Implementation of CorpusAsFrequencies
+##
+############################################################
 
-setMethod("types", "LexicalTableSparseMatrix", function(obj) sort(rownames(obj)));
+##############################################################
+#' @rdname ntype-methods
+#' @aliases ntype,LexicalTableSparseMatrix-method
+setMethod("ntype", "LexicalTableSparseMatrix", function(corpus) nrow(corpus));
+
+##############################################################
+#' @rdname types-methods
+#' @aliases types,LexicalTableSparseMatrix-method
+setMethod("types", "LexicalTableSparseMatrix", function(corpus) sort(rownames(corpus)));
 
 ############################################################
 ##

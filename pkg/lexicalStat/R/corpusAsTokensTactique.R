@@ -6,7 +6,10 @@
 ##
 ############################################################
 
-setMethod("tactique.subcorpus", "FullText", function(corpus, slice, nslice, word, method) {
+##############################################################
+#' @rdname tactique.subcorpus-methods
+#' @aliases tactique.subcorpus,FullTextList,ANY-method
+setMethod("tactique.subcorpus", "FullTextList", function(corpus, slice, nslice, word, method) {
   if (slice > nslice) {
     stop("'slice' cannot be greater than 'nslice'");
   }
@@ -28,13 +31,16 @@ setMethod("tactique.subcorpus", "FullText", function(corpus, slice, nslice, word
 
 # TODO : to be implemented for Tabulated
 
-setMethod("slice", "FullText", function(corpus, n) {
+##############################################################
+#' @rdname slice-methods
+#' @aliases slice,FullTextList,ANY-method
+setMethod("slice", "FullTextList", function(corpus, n) {
   .get.words.by.slices(corpus, n);
 });
 
 # TODO : to be implemented for Tabulated
 
-##
+## TODO
  #
  #
  # Given a corpus with parts and a lexical type,

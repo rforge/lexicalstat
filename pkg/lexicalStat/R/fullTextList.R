@@ -10,11 +10,14 @@ setClass("FullTextList",
 ##
 ############################################################
 
-setMethod("N", "FullTextList", function(obj) sum(sapply(obj, length)));
+##############################################################
+#' @rdname N-methods
+#' @aliases N,FullTextList-method
+setMethod("N", "FullTextList", function(corpus) sum(sapply(corpus, length)));
 
-setMethod("ntype", "FullTextList", function(obj) length(unique(unlist(obj))));
+# setMethod("ntype", "FullTextList", function(obj) length(unique(unlist(obj))));
 
-setMethod("types", "FullTextList", function(obj) sort(unique(unlist(obj))));
+# setMethod("types", "FullTextList", function(obj) sort(unique(unlist(obj))));
 
 ############################################################
 ##

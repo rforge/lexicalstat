@@ -8,11 +8,14 @@ setClass("TabulatedDataFrame",
 ##
 ############################################################
 
-setMethod("N", "TabulatedDataFrame", function(obj) nrow(obj));
+##############################################################
+#' @rdname N-methods
+#' @aliases N,TabulatedDataFrame-method
+setMethod("N", "TabulatedDataFrame", function(corpus) nrow(corpus));
 
-setMethod("ntype", c("TabulatedDataFrame", "character"), function(obj, positional) nlevels(obj[,positional]));
+# setMethod("ntype", c("TabulatedDataFrame", "character"), function(obj, positional) nlevels(obj[,positional]));
 
-setMethod("types", c("TabulatedDataFrame", "character"), function(obj, positional) sort(levels(obj[,positional])));
+# setMethod("types", c("TabulatedDataFrame", "character"), function(obj, positional) sort(levels(obj[,positional])));
 
 ############################################################
 ##

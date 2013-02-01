@@ -7,11 +7,26 @@ setClass("FrequencyListDataFrame",
 ##
 ############################################################
 
-setMethod("N", "FrequencyListDataFrame", function(obj) sum(obj$frequency));
+##############################################################
+#' @rdname N-methods
+#' @aliases N,FrequencyListDataFrame-method
+setMethod("N", "FrequencyListDataFrame", function(corpus) sum(corpus$frequency));
 
-setMethod("ntype", "FrequencyListDataFrame", function(obj) nrow(obj));
+############################################################
+##
+## Implementation of CorpusAsFrequencies
+##
+############################################################
 
-setMethod("types", "FrequencyListDataFrame", function(obj) sort(as.character(obj$type)));
+##############################################################
+#' @rdname ntype-methods
+#' @aliases ntype,FrequencyListDataFrame-method
+setMethod("ntype", "FrequencyListDataFrame", function(corpus) nrow(corpus));
+
+##############################################################
+#' @rdname types-methods
+#' @aliases types,FrequencyListDataFrame-method
+setMethod("types", "FrequencyListDataFrame", function(corpus) sort(as.character(corpus$type)));
 
 ############################################################
 ##
@@ -19,16 +34,30 @@ setMethod("types", "FrequencyListDataFrame", function(obj) sort(as.character(obj
 ##
 ############################################################
 
-setMethod("freq", c("FrequencyListDataFrame", "character"), function(obj, types) {
-  f <- obj[ match(types, obj[,1]), 2 ];
+##############################################################
+#' @rdname freq-methods
+#' @aliases freq,FrequencyListDataFrame,character-method
+setMethod("freq", c("FrequencyListDataFrame", "character"), function(corpus, types) {
+  f <- corpus[ match(types, corpus[,1]), 2 ];
+  names(f) <- types;
   return(f);
 });
 
-setMethod("contains.types", c("FrequencyListDataFrame", "character"), function(obj, types) {
-  types %in% obj[,1]
+##############################################################
+#' @rdname contains.types-methods
+#' @aliases contains.types,FrequencyListDataFrame,character-method
+setMethod("contains.types", c("FrequencyListDataFrame", "character"), function(corpus, types) {
+  exists <- types %in% corpus[,1]
+  names(exists) <- types;
+  return(exists);
 });
 
-setMethod("hapax", "FrequencyListDataFrame", function(obj) names(obj)[obj == 1] )
+##############################################################
+#' @rdname hapax-methods
+#' @aliases hapax,FrequencyListDataFrame-method
+setMethod("hapax", "FrequencyListDataFrame", function(corpus) {
+  corpus[corpus[,2]==1,1];
+});
 
 ############################################################
 ##

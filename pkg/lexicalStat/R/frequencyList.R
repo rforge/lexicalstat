@@ -1,37 +1,74 @@
+##############################################################
+#' The FrequencyList virtual class
+#'
+#' This virtual class is a subclass of \code{\link{CorpusAsFrequencies}} and the root
+#' hierarchy of all classes representing corpora as a list of types with their total frequencies.
+#'
+#' Subclass of \code{FrequencyList} must implement the generic methods
+#' \code{\link{freq}}, \code{\link{hapax}} and \code{\link{contains.types}}.
+#'
+#' @name FrequencyList
+#' @seealso its superclass \code{\link{CorpusAsFrequencies}}; its sibling and \code{\link{LexicalTable}}; one of its implementation: \code{\link{FrequencyListDataFrame}}
+#' @rdname FrequencyList
+#' @aliases FrequencyList-class
+#' @exportClass FrequencyList
+#' @author Sylvain Loiseau
 setClass("FrequencyList", contains="CorpusAsFrequencies");
 
-############################################################
-##
-##
-## freq
-##
-##
-############################################################
-
-setGeneric("freq", function(obj, types) {
+##############################################################
+#' Get the frequencies of given linguistic type.
+#'
+#' @param corpus Any \code{\link{FrequencyList}} concrete subclass.
+#'
+#' @param types The linguistic types for which the frequency is requested.
+#'
+#' @return A named numeric vector of frequencies.
+#' 
+#' @export
+#' @docType methods
+#' @rdname freq-methods
+#'
+#' @examples
+#' data(dickensFrequencyList)
+#' freq(dickensFrequencyList);
+setGeneric("freq", function(corpus, types) {
   standardGeneric("freq")
 });
 
-############################################################
-##
-##
-## contains.types
-##
-##
-############################################################
-
-setGeneric("contains.types", function(obj, types) {
+##############################################################
+#' Ask if a FrequencyList contains the given linguistic types.
+#'
+#' @param corpus Any \code{\link{FrequencyList}} concrete subclass.
+#'
+#' @param types The linguistic types.
+#'
+#' @return A named logical vector.
+#' 
+#' @export
+#' @docType methods
+#' @rdname contains.types-methods
+#'
+#' @examples
+#' data(dickensFrequencyList)
+#' contains.types(dickensFrequencyList, c("the", "xxxx"));
+setGeneric("contains.types", function(corpus, types) {
   standardGeneric("contains.types")
 });
 
-############################################################
-##
-##
-## hapax
-##
-##
-############################################################
-
+##############################################################
+#' The list of linguistic types occurring only once.
+#'
+#' @param corpus Any \code{\link{FrequencyList}} concrete subclass.
+#'
+#' @return A character vector.
+#' 
+#' @export
+#' @docType methods
+#' @rdname hapax-methods
+#'
+#' @examples
+#' data(dickensFrequencyList)
+#' hapax(dickensFrequencyList);
 setGeneric("hapax", function(obj) {
   return(standardGeneric("hapax"));
 })

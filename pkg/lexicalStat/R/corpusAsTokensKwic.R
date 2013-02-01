@@ -1,12 +1,7 @@
-############################################################
-##
-##
-## Kwic (keyword in context)
-##
-##
-############################################################
-
-setMethod("kwic", "FullText", function(x, pattern, left, right) {
+##############################################################
+#' @rdname kwic-methods
+#' @aliases kwic,FullTextList,ANY-method
+setMethod("kwic", "FullTextList", function(corpus, pattern, left, right) {
   lines.names <- names(tokens.by.part);
   lines <- lapply(tokens.by.part, function(x) paste(x, collapse=" "));
   lines <- as.character(lines);
@@ -14,9 +9,10 @@ setMethod("kwic", "FullText", function(x, pattern, left, right) {
   return(conc(lines, pattern, left, right));
 });
 
-# TODO : to be implemented for Tabulated
-
-setMethod("kwic", "Tabulated", function(x, pattern, left=5, right=5) {
+# TODO
+#' @rdname kwic-methods
+#' @aliases kwic,TabulatedDataFrame,ANY-method
+setMethod("kwic", "TabulatedDataFrame", function(x, pattern, left=5, right=5) {
   stop("not implemented yet");
 });
 
