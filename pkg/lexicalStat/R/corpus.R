@@ -6,6 +6,25 @@
 #'
 #' Subclass of \code{Corpus} must implement the generic methods \code{\link{N}}.
 #'
+#' \itemize{
+#'   \item \textbf{\code{Corpus}}.\\
+#'         Method: \code{\link{N}}.
+#'   \itemize{
+#'     \item \textbf{\code{\link{CorpusAsFrequencies}}}.\\
+#'           Method: \code{\link{ntype}} and \code{\link{types}}.
+#'       \itemize{
+#'         \item \textbf{\code{\link{LexicalTable}}}
+#'         \item \textbf{\code{\link{FrequencyList}}}
+#'     }
+#'     \item \textbf{\code{\link{CorpusAsTokens}}}.\\
+#'           Method: \code{\link{ngram}}, \code{\link{kwic}}, \code{\link{tactique.subcorpus}} and \code{\link{slice}}.
+#'       \itemize{
+#'         \item \textbf{\code{\link{FullText}}}
+#'         \item \textbf{\code{\link{Tabulated}}}
+#'     }
+#'   }
+#' }
+#'
 #' @name Corpus
 #' @rdname Corpus
 #' @seealso The direct virtual subclasses \code{\link{CorpusAsFrequencies}} and \code{\link{CorpusAsTokens}}
