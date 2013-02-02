@@ -1,3 +1,16 @@
+##############################################################
+#' The FrequencyListDataFrame class
+#'
+#' This class is the default implementation of \code{\link{FrequencyList}}. Considere
+#' the function \code{\link{readFrequencyList}} and \code{\link{writeFrequencyList}} for
+#' read/write access to files.
+#'
+#' @name FrequencyListDataFrame
+#' @seealso \code{\link{FrequencyList}}
+#' @rdname FrequencyListDataFrame
+#' @aliases FrequencyListDataFrame-class
+#' @exportClass FrequencyListDataFrame
+#' @author Sylvain Loiseau
 setClass("FrequencyListDataFrame",
          contains = c("data.frame", "FrequencyList"));
 

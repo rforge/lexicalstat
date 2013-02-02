@@ -32,4 +32,25 @@ setClass("Corpus");
 #' N(dickensFrequencyList);
 setGeneric("N", function(corpus) standardGeneric("N"));
 
+##############################################################
+#' Number of tokens of a corpus.
+#'
+#' @param corpus Any \code{\link{corpus}} concrete subclass.
+#'
+#' @param ... more arguments for the different implementations.
+#'
+#' @return The number of tokens in the corpus.
+#' 
+#' @seealso \code{\link{ntypes}} and \code{\link{type}}
+#' 
+#' @export
+#' @docType methods
+#' @rdname N-methods
+#'
+#' @examples
+#' data(dickensFrequencyList)
+#' N(dickensFrequencyList);
+setGeneric("subcorpus", function(corpus, ...) {
+  return(standardGeneric("subcorpus"));
+})
 

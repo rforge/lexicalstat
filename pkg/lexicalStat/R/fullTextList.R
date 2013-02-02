@@ -1,5 +1,16 @@
-## Corpus as raw character vectors into a list.
-
+##############################################################
+#' The FullTextList class
+#'
+#' This class is the default implementation of \code{\link{FullText}}. Considere
+#' the function \code{\link{readTexts}} for creating easily \code{FullTextList}
+#' corpus thanks to text files.
+#'
+#' @name FullTextList
+#' @seealso \code{\link{FullText}}
+#' @rdname FullTextList
+#' @aliases FullTextList-class
+#' @exportClass FullTextList
+#' @author Sylvain Loiseau
 setClass("FullTextList",
          representation(depth = "numeric"),
          contains = c("list", "FullText"));

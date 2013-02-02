@@ -1,9 +1,33 @@
+##############################################################
+#' The Tabulated virtual class
+#'
+#' This virtual class is a subclass of \code{\link{CorpusAsTokens}}. Corpus of type
+#' \code{\link{Tabulated}} give several representation for each tokens (such as
+#' part of speech, inflected form, lemma) and each token may belong to named range 
+#' of different kinds (such as a sentence, a paragraph, a chapter...)
+#'
+#' Each character representation of tokens is called a "positional attribute". Each kind of
+#' token sequences is called a "structural attribute".
+#
+#' This corpus representation is inspired by corpus representation in the CWB Workbench corpus.
+#'
+#' Subclass of \code{FrequencyList} must implement the generic methods
+#' \code{\link{subfreq}}.
+#'
+#' @name Tabulated
+#' @seealso its superclass \code{\link{CorpusAsTokens}}; its sibling \code{\link{FullText}}; one of its implementation: \code{\link{TabulatedDataFrame}
+#' @seealso \url{http://cwb.sourceforge.net}
+#' @rdname Tabulated
+#' @aliases Tabulated-class
+#' @exportClass Tabulated
+#' @author Sylvain Loiseau
+setClass("Tabulated", contains = "CorpusAsTokens");
+
 # TODO : faire une fonction pour créer une partition sur la base de la position dans une autre partition
 
 #
 #
-# cwb-like representation : un vecteur forme, un vecteur index de
-# partie...
+# cwb-like representation : un vecteur forme, un vecteur index de partie...
 #
 #
 
@@ -13,29 +37,39 @@
 # - some other columns are numeric and regroup range of consecutive tokens by giving them
 #   a common id.
 
-setClass("Tabulated", contains = "CorpusAsTokens");
-
-############################################################
-##
-##
-## lstructural
-##
-##
-############################################################
-
-setGeneric("lstructural", function(obj) {
+##############################################################
+#' Get the list of the names of the structural attribute.
+#'
+#' @param corpus Any \code{\link{Tabulated}} concrete subclass.
+#'
+#' @return A character vector
+#'
+#' @export
+#' @docType methods
+#' @rdname lstructural-methods
+#'
+#' @examples
+#' data(dickensTabulated)
+#' lstructural(dickensTabulated);
+setGeneric("lstructural", function(corpus) {
   return(standardGeneric("lstructural"));
 })
 
-############################################################
-##
-##
-## lpositional
-##
-##
-############################################################
-
-setGeneric("lpositional", function(obj) {
+##############################################################
+#' Get the list of the names of the positional attribute.
+#'
+#' @param corpus Any \code{\link{Tabulated}} concrete subclass.
+#'
+#' @return A character vector
+#'
+#' @export
+#' @docType methods
+#' @rdname lpositional-methods
+#'
+#' @examples
+#' data(dickensTabulated)
+#' lpositional(dickensTabulated);
+setGeneric("lpositional", function(corpus) {
   return(standardGeneric("lpositional"));
 })
 

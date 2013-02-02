@@ -1,3 +1,15 @@
+##############################################################
+#' The TabulatedDataFrame class
+#'
+#' This class is the default implementation of \code{\link{Tabulated}}. It can be used
+#' for representing corpus read from tabulated files as produced by most POS tagger.
+#'
+#' @name TabulatedDataFrame
+#' @seealso \code{\link{Tabulated}}
+#' @rdname TabulatedDataFrame
+#' @aliases TabulatedDataFrame-class
+#' @exportClass TabulatedDataFrame
+#' @author Sylvain Loiseau
 setClass("TabulatedDataFrame",
          representation(positional = "character", structural = "character"),
          contains = c("data.frame", "Tabulated"));
@@ -23,9 +35,9 @@ setMethod("N", "TabulatedDataFrame", function(corpus) nrow(corpus));
 ##
 ############################################################
 
-setMethod("lstructural", "TabulatedDataFrame", function(obj) obj@structural)
+setMethod("lstructural", "TabulatedDataFrame", function(corpus) corpus@structural)
 
-setMethod("lpositional", "TabulatedDataFrame", function(obj) obj@positional)
+setMethod("lpositional", "TabulatedDataFrame", function(corpus) corpus@positional)
 
 ############################################################
 ##

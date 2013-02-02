@@ -8,7 +8,7 @@
 #' \code{\link{freq}}, \code{\link{hapax}} and \code{\link{contains.types}}.
 #'
 #' @name FrequencyList
-#' @seealso its superclass \code{\link{CorpusAsFrequencies}}; its sibling and \code{\link{LexicalTable}}; one of its implementation: \code{\link{FrequencyListDataFrame}}
+#' @seealso its superclass \code{\link{CorpusAsFrequencies}}; its sibling \code{\link{LexicalTable}}; one of its implementation: \code{\link{FrequencyListDataFrame}}
 #' @rdname FrequencyList
 #' @aliases FrequencyList-class
 #' @exportClass FrequencyList

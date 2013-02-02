@@ -1,14 +1,40 @@
+##############################################################
+#' The LexicalTable virtual class
+#'
+#' This virtual class is a subclass of \code{\link{CorpusAsFrequencies}} and the root
+#' hierarchy of all classes representing corpora as subfrequencides of tokens in parts.
+#'
+#' Subclass of \code{FrequencyList} must implement the generic methods
+#' \code{\link{subfreq}}.
+#'
+#' @name LexicalTable
+#' @seealso its superclass \code{\link{CorpusAsFrequencies}}; its sibling \code{\link{FrequencyList}}; one of its implementation: \code{\link{LexicalTableSparseMatrix}}
+#' @rdname LexicalTable
+#' @aliases LexicalTable-class
+#' @exportClass LexicalTable
+#' @author Sylvain Loiseau
 setClass("LexicalTable", contains = "CorpusAsFrequencies");
 
-############################################################
-##
-##
-## Return a data.frame where columns = types, parts, subfreq.
-##
-##
-############################################################
 
-setGeneric("subfreq", function(obj, types, parts) standardGeneric("subfreq"));
+##############################################################
+#' Get the subfrequencies of given linguistic types in given types.
+#'
+#' @param corpus Any \code{\link{LexicalTable}} concrete subclass.
+#'
+#' @param types The linguistic types for which the subfrequencies are requested.
+#'
+#' @param parts The parts for which the subfrequencies are requested.
+#'
+#' @return A data.frame where columns = (Type, Part, Subrequency).
+#'
+#' @export
+#' @docType methods
+#' @rdname subfreq-methods
+#'
+#' @examples
+#' data(dickensLexicalTable)
+#' subfreq(dickensLexicalTable, "the", "3");
+setGeneric("subfreq", function(corpus, types, parts) standardGeneric("subfreq"));
 
 ############################################################
 ##

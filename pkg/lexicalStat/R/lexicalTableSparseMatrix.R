@@ -1,3 +1,14 @@
+##############################################################
+#' The LexicalTableSparseMatrix class
+#'
+#' This class is the default implementation of \code{\link{LexicalTable}}.
+#'
+#' @name LexicalTableSparseMatrix
+#' @seealso \code{\link{LexicalTable}}
+#' @rdname LexicalTableSparseMatrix
+#' @aliases LexicalTableSparseMatrix-class
+#' @exportClass LexicalTableSparseMatrix
+#' @author Sylvain Loiseau
 setClass("LexicalTableSparseMatrix",
          contains = c("dgCMatrix", "LexicalTable"), # dgCMatrix sparseMatrix
          validity = function(object) {
@@ -6,8 +17,6 @@ setClass("LexicalTableSparseMatrix",
            else
              return(FALSE)
          })
-
-setIs("LexicalTableSparseMatrix", "LexicalTable");
 
 #> x <- spMatrix(ncol=10, nrow=10, i=1:10, 1:10, x=1:10)
 #> x
@@ -54,11 +63,13 @@ setMethod("types", "LexicalTableSparseMatrix", function(corpus) sort(rownames(co
 ##
 ############################################################
 
-setMethod("subfreq", "LexicalTableSparseMatrix", function(obj, types, parts) {
+##############################################################
+#' @rdname subfreq-methods
+#' @aliases subfreq,LexicalTableSparseMatrix,ANY,ANY-method
+setMethod("subfreq", "LexicalTableSparseMatrix", function(corpus, types, parts) {
     ntype <- length(types);
     npart <- length(parts);
-    
-    submat <- obj[types, parts];
+    submat <- corpus[types, parts];
     subfreq <- data.frame(
       Type=rep(types, npart),
       Part=rep(parts, times=rep(ntype, npart)),

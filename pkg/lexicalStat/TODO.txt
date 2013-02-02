@@ -1,3 +1,10 @@
+subcorpus.R à dispatcher dans les différentes classes dans la section "Implementation Corpus"
+
+
+corpusLinear -> corpusAsToken, similaire à corpusAsFrequencies
+vignette = 
+doc (man)
+
 Segments répétés
 Motifs
 Ngram

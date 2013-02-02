@@ -4,10 +4,6 @@
 ##
 ############################################################
 
-setGeneric("subcorpus", function(corpus, ...) {
-  return(standardGeneric("subcorpus"));
-})
-
 setMethod("subcorpus", c(corpus="FrequencyList"), function(corpus, min.frequency) {
   x <- corpus[corpus >= min.frequency];
   return(frequencyList(x));
@@ -19,8 +15,6 @@ setMethod("subcorpus", c(corpus="FullText"), function(corpus, type) {
 	contains.type <- sapply(corpus, function(x) type %in% x);
 	return(fullText(corpus[contains.type]));
 });
-
-`[`
 
 setMethod("subcorpus", c(corpus="Tabulated"), function(corpus, structural, positional=NULL, value=NULL) {
   if (! structural %in% lstructural(corpus)) {
