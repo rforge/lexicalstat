@@ -12,7 +12,7 @@ setMethod("kwic", "FullTextList", function(corpus, pattern, left, right) {
 # TODO
 #' @rdname kwic-methods
 #' @aliases kwic,TabulatedDataFrame,ANY-method
-setMethod("kwic", "TabulatedDataFrame", function(x, pattern, left=5, right=5) {
+setMethod("kwic", "TabulatedDataFrame", function(corpus, pattern, left=5, right=5) {
   stop("not implemented yet");
 });
 

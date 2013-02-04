@@ -5,7 +5,7 @@
 #' each actual tokens, in their textual order
 #'
 #' Subclass of \code{CorpusAsTokens} must implement the generic methods
-#' \code{\link{ngram}}, \code{\link{tactique.subcorpus}} and \code{\link{slice}}.
+#' \code{\link{ngram}}, \code{\link{kwic}}, \code{\link{tactique.subcorpus}} and \code{\link{slice}}.
 #'
 #' @name CorpusAsTokens
 #' @seealso \code{\link{Corpus}} and the subclasses \code{\link{FullText}} and \code{\link{Tabulated}}

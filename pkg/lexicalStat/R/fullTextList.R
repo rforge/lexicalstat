@@ -44,6 +44,9 @@ setMethod("N", "FullTextList", function(corpus) sum(sapply(corpus, length)));
 readTexts <- function(filenames, is.dir=FALSE, pattern=NULL, split.on="lines", enc="UTF-8", skipEmpty=TRUE) {
   
   filenames <- .filename(filenames, is.dir, pattern);
+  if (length(filenames) == 0) {
+    stop("no files selected");
+  }
 
 # TODO : source d'erreur dans le fait d'énumérer les options ici (+ dans le message d'erreur) et encore ci-dessous dans le 'if-else'.
   if (!is.character(split.on)) {
@@ -81,8 +84,14 @@ readTexts <- function(filenames, is.dir=FALSE, pattern=NULL, split.on="lines", e
   if (any(is.empty)) {
     files <- files[-which(is.empty)];
   }
-  
-    for (i in 1:length(filenames)) {
+
+  print("---");
+  print(length(files));
+  print("---");
+
+    for (i in 1:length(files)) {
+      print(filenames[i]);
+      print(length(files[[i]]));
       files[[i]] <- tokenize(files[[i]]);
     }
 
@@ -203,10 +212,6 @@ untokenize.by.parts <- function(tokens.by.parts) {
     if (any(are.dir)) {
       filenames <- filenames[!are.dir];
     }
-  }
-
-  if (length(filenames) == 0) {
-    stop("no files selected");
   }
 
   nonexistent <- !file.exists(filenames);

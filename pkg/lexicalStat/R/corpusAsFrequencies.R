@@ -47,5 +47,5 @@ setGeneric("ntype", function(corpus) standardGeneric("ntype"));
 #' @examples
 #' data(dickensFrequencyList)
 #' types(dickensFrequencyList);
-setGeneric("types", function(corpus) standardGeneric("corpus"));
+setGeneric("types", function(corpus) standardGeneric("types"));
 

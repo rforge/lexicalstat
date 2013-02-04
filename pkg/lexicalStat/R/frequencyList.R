@@ -69,7 +69,7 @@ setGeneric("contains.types", function(corpus, types) {
 #' @examples
 #' data(dickensFrequencyList)
 #' hapax(dickensFrequencyList);
-setGeneric("hapax", function(obj) {
+setGeneric("hapax", function(corpus) {
   return(standardGeneric("hapax"));
 })
 
