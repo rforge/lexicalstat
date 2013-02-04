@@ -8,7 +8,7 @@
 #' \code{\link{ntype}} and \code{\link{types}}.
 #'
 #' @name CorpusAsFrequencies
-#' @seealso \code{\link{Corpus}} and the subclasses \code{\link{FrequencyList}} and \code{\link{LexicalTable}}
+#' @seealso \code{\link{Corpus}} (for an overview of the available classes) and the subclasses \code{\link{FrequencyList}} and \code{\link{LexicalTable}}
 #' @rdname CorpusAsFrequencies
 #' @aliases CorpusAsFrequencies-class
 #' @exportClass CorpusAsFrequencies

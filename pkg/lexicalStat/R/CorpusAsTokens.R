@@ -8,7 +8,7 @@
 #' \code{\link{ngram}}, \code{\link{kwic}}, \code{\link{tactique.subcorpus}} and \code{\link{slice}}.
 #'
 #' @name CorpusAsTokens
-#' @seealso \code{\link{Corpus}} and the subclasses \code{\link{FullText}} and \code{\link{Tabulated}}
+#' @seealso \code{\link{Corpus}} (for an overview of the available classes) and the subclasses \code{\link{FullText}} and \code{\link{Tabulated}}
 #' @rdname CorpusAsTokens
 #' @aliases CorpusAsTokens-class
 #' @exportClass CorpusAsTokens

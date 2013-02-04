@@ -6,7 +6,7 @@
 #' corpus thanks to text files.
 #'
 #' @name FullTextList
-#' @seealso \code{\link{FullText}}
+#' @seealso \code{\link{FullText}} ; \code{\link{Corpus}} for an overview of the available classes.
 #' @rdname FullTextList
 #' @aliases FullTextList-class
 #' @exportClass FullTextList

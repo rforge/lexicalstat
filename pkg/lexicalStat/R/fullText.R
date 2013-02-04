@@ -5,7 +5,7 @@
 #' hierarchy of all classes representing corpora as sequences of character strings.
 #'
 #' @name FullText
-#' @seealso its superclass \code{\link{CorpusAsTokens}}; its sibling \code{\link{Tabulated}}; one of its implementation: \code{\link{FullTextList}}
+#' @seealso its superclass \code{\link{CorpusAsTokens}}; its sibling \code{\link{Tabulated}}; one of its implementation: \code{\link{FullTextList}}. \code{\link{Corpus}} for an overview of the available classes.
 #' @rdname FullText
 #' @aliases FullText-class
 #' @exportClass FullText

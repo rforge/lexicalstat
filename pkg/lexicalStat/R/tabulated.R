@@ -15,7 +15,7 @@
 #' \code{\link{subfreq}}.
 #'
 #' @name Tabulated
-#' @seealso its superclass \code{\link{CorpusAsTokens}}; its sibling \code{\link{FullText}}; one of its implementation: \code{\link{TabulatedDataFrame}
+#' @seealso its superclass \code{\link{CorpusAsTokens}}; its sibling \code{\link{FullText}}; one of its implementation: \code{\link{TabulatedDataFrame}. \code{\link{Corpus}} for an overview of the available classes.
 #' @seealso \url{http://cwb.sourceforge.net}
 #' @rdname Tabulated
 #' @aliases Tabulated-class

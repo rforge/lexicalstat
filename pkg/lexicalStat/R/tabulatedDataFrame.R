@@ -5,7 +5,7 @@
 #' for representing corpus read from tabulated files as produced by most POS tagger.
 #'
 #' @name TabulatedDataFrame
-#' @seealso \code{\link{Tabulated}}
+#' @seealso \code{\link{Tabulated}} ; \code{\link{Corpus}} for an overview of the available classes.
 #' @rdname TabulatedDataFrame
 #' @aliases TabulatedDataFrame-class
 #' @exportClass TabulatedDataFrame

@@ -6,7 +6,7 @@
 #' read/write access to files.
 #'
 #' @name FrequencyListDataFrame
-#' @seealso \code{\link{FrequencyList}}
+#' @seealso \code{\link{FrequencyList}} ; \code{\link{Corpus}} for an overview of the available classes.
 #' @rdname FrequencyListDataFrame
 #' @aliases FrequencyListDataFrame-class
 #' @exportClass FrequencyListDataFrame

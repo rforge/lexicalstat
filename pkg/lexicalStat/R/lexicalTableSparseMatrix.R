@@ -4,7 +4,7 @@
 #' This class is the default implementation of \code{\link{LexicalTable}}.
 #'
 #' @name LexicalTableSparseMatrix
-#' @seealso \code{\link{LexicalTable}}
+#' @seealso \code{\link{LexicalTable}} ; \code{\link{Corpus}} for an overview of the available classes.
 #' @rdname LexicalTableSparseMatrix
 #' @aliases LexicalTableSparseMatrix-class
 #' @exportClass LexicalTableSparseMatrix

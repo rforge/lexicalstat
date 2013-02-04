@@ -8,7 +8,7 @@
 #' \code{\link{subfreq}}.
 #'
 #' @name LexicalTable
-#' @seealso its superclass \code{\link{CorpusAsFrequencies}}; its sibling \code{\link{FrequencyList}}; one of its implementation: \code{\link{LexicalTableSparseMatrix}}
+#' @seealso its superclass \code{\link{CorpusAsFrequencies}}; its sibling \code{\link{FrequencyList}}; one of its implementation: \code{\link{LexicalTableSparseMatrix}}. \code{\link{Corpus}} for an overview of the available classes.
 #' @rdname LexicalTable
 #' @aliases LexicalTable-class
 #' @exportClass LexicalTable
