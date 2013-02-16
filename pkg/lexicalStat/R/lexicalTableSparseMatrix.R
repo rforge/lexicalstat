@@ -135,11 +135,12 @@ writeLexicalTable <- function(obj, file) {
    types.filename <- paste(file, "types", sep=".");
    parts.filename <- paste(file, "parts", sep=".");
 
-   s <- summary(x)
+   obj <- as(obj,"dgCMatrix");
+   s <- summary(obj)
    values <- data.frame(s$i, s$j, s$x)
    write.table(values, freqs.filename, row.names = FALSE, col.names = FALSE)
 
-   write(rownames(x), types.filename, sep="\n");
-   write(colnames(x), parts.filename, sep="\n");
+   write(rownames(obj), types.filename, sep="\n");
+   write(colnames(obj), parts.filename, sep="\n");
 }
 

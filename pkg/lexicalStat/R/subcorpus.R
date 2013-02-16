@@ -4,6 +4,11 @@
 ##
 ############################################################
 
+#' @genericMethods
+setGeneric("subcorpus", function(corpus, ...) {
+  return(standardGeneric("subcorpus"));
+})
+
 setMethod("subcorpus", c(corpus="FrequencyList"), function(corpus, min.frequency) {
   x <- corpus[corpus >= min.frequency];
   return(frequencyList(x));

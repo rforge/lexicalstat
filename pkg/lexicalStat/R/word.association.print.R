@@ -1,11 +1,17 @@
 # TODO : dans l'impression : mettre option si "+" ou "-".
 # sort.by
 
+setMethod("summary", signature(object = "WordAssociation"), function(object) {
+  cat(paste("Word association measure for ", length(types(object)), " types.\n"));
+})
+
 setMethod("show", signature(object="WordAssociation"), function(object) {
   print(object);
 });
 
-setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, threshold=NULL, types=NULL, parts=NULL, sort.by=indicator.name(x)[1], file="", append=FALSE, ...) {
+setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, threshold=NULL,
+        types=NULL, parts=NULL,
+        sort.by=indicator.name(x)[1], file="", append=FALSE, ...) {
 
   printable <- .get.printable(x, from, to, threshold, types, parts, sort.by);
 
@@ -60,6 +66,16 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
 
   if(!class(x) == "WordAssociation") stop("x must be of class WordAssociation");
 
+  if (is.null(sort.by)) {
+      stop(paste("'sort.by' cannot be null"));
+  }
+  if(!length(sort.by) == 1) {
+    stop(paste("cannot sort with more than one key"));
+  }
+  if(!sort.by %in% colnames(df)) {
+    stop(paste("cannot sort by '", sort.by, "': no column of that names (in: ", paste(colnames(df), collapse=" "), ")", sep=""));
+  }
+
   if (is.null(threshold)) {
     if (is.null(from) | is.null(to)) {
       stop("either 'threshold' or 'from' and 'to' options must be given");
@@ -67,15 +83,21 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
     if ((!is.numeric(from)) | (!is.numeric(to))) {
       stop("both 'from' and 'to' must be numeric");
     }
+    if ((length(from) > 1) | (length(to) > 1)) {
+      stop("both 'length(from)' and 'length(to)' must be '1'");
+    }
     if (from >= to) {
       stop("'to' must be greater than 'from'");
     }
   } else {
     if (!is.numeric(threshold)) {
-      stop("threshold must be numeric");
+      stop("'threshold' must be numeric");
+    }
+    if (length(threshold) > 1) {
+      stop("'threshold' must be of length 1");
     }
     if (threshold <= 0) {
-      stop("threshold must be greater than 0");
+      stop("'threshold' must be greater than 0");
     }
   }
 
@@ -91,16 +113,6 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
     df$parts <- droplevels(df$parts);
   }
 
-  if (is.null(sort.by)) {
-      stop(paste("sort.by cannot be null"));
-  }
-  if(!length(sort.by) == 1) {
-    stop(paste("cannot sort with more than one key"));
-  }
-  if(!sort.by %in% colnames(df)) {
-    stop(paste("cannot sort by '", sort.by, "': no column of that names (in: ", paste(colnames(df), collapse=" "), ")", sep=""));
-  }
-  key <- 
   if (!is.null(threshold)) {
     df <- df[ abs(df[, sort.by]) > threshold, ];
   }
@@ -111,19 +123,30 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
 
   # extract lines 'from' to 'to' in both positive and negative values
   if (!is.null(from)) {
-    l <- lapply(l, function(x) { 
-       n.positive <- sum(x[, sort.by] > 0);
-       n.negative <- sum(x[, sort.by] < 0);
-       l <- row(x);
-       x <- x[
-        c(
-          min(from, n.positive):(min(to, n.positive)),
-          min(l-to-1, n.negative):(min(l-from-1, l))          
-        )
-      ,]});
+    l <- lapply(l, function(x) {
+       .reduce.matrix(x, from, to, sort.by);
+    });
   }
-
   return(l);
+}
+
+.reduce.matrix <- function(x, from, to, sort.by) {
+    n.positive <- sum(x[, sort.by] > 0);
+    n.negative <- sum(x[, sort.by] < 0);
+    index <- 0;
+    if (from > n.positive) {
+        index <- numeric();
+    } else {
+       index <- from:(min(to, n.positive));
+    }
+    if (n.negative > 0) {
+        if (from > n.negative) {
+        } else {
+           index <- c(index, from:(min(to, n.negative)));
+        }
+    }
+    x <- x[index, ];
+    return(x);
 }
 
 writeWordAssociation <- function(x, file, from=1, to=50, threshold=NULL, types=NULL, parts=NULL) {
@@ -148,3 +171,36 @@ function(x, file, from=1, to=100, threshold=NULL, types=NULL, parts=NULL) {
   .saveDataFrameAsXML(as.data.frame(printable), file);
 }
 
+.saveDataFrameAsXML <- function(data, filename) {
+  r <- nrow(data);
+  c <- ncol(data);
+  rname <- rownames(data);
+  cname <- colnames(data);
+  write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>", file=filename);
+  write("<table>", file=filename, append=T);
+  if (length(cname) > 0) {
+    write("<row role=\"label\">", file=filename, append=T);
+    write("<cell/>", file=filename, append=T);
+    for(i in cname) {
+      write("<cell>", file=filename, append=T);
+      write(i, file=filename, append=T);
+      write("</cell>", file=filename, append=T);
+    }
+    write("</row>", file=filename, append=T);
+  }
+  if (length(r) > 0) {
+    for(i in 1:r) {
+      write("<row role=\"data\">", file=filename, append=T);
+      write("<cell role=\"label\">", file=filename, append=T);
+      write(rname[i], file=filename, append=T);
+      write("</cell>", file=filename, append=T);
+      for(j in 1:c) {
+        write("<cell>", file=filename, append=T);
+        write(data[i,j], file=filename, append=T);
+        write("</cell>", file=filename, append=T);
+      }
+      write("</row>", file=filename, append=T);
+    }
+  }
+  write("</table>", file=filename, append=T);
+}

@@ -1,3 +1,21 @@
+##############################################################
+#' The result of word association measure.
+#' 
+#' @slot types graphical form of the linguistic types 
+#' @slot parts name of the subset of the corpus with which the attraction is measured
+#' @slot N number of tokens in the corpus
+#' @slot n number of tokens in the subcorpus
+#' @slot K frequency of the type in the corpus
+#' @slot k frequency of the type in the subcorpus
+#' @slot indicator.name names of the statistical attraction measures used
+#' @slot association a matrix with the association measures (row = types, one column for each indicators)
+#'
+#' @name WordAssociation
+#' @rdname WordAssociation
+#' @seealso \code{\link{wam}}, \code{\link{wordAssociation}}
+#' @aliases WordAssociation-class
+#' @exportClass WordAssociation
+#' @author Sylvain Loiseau
 setClass(
     "WordAssociation",
     representation(
@@ -12,17 +30,18 @@ setClass(
       ),
     );
 
-##
- #
- # Four vector of same length ; may be recycled.
- # Each element of these vector correspond to a form.
- #
- # N : size (number of tokens) of the corpus
- # n : size (number of tokens) of the sub-corpus
- # K : Number of occurrences of a form in the corpus
- # k : Number of occurrences of a form in the subcorpus
- #
- ##
+##############################################################
+#' Compute association measure and construct a \code{\link{WordAssociation}} object.
+#' 
+#' @param types graphical form of the linguistic types 
+#' @param parts name of the subset of the corpus with which the attraction is measured
+#' @param N number of tokens in the corpus
+#' @param n number of tokens in the subcorpus
+#' @param K frequency of the type in the corpus
+#' @param k frequency of the type in the subcorpus
+#' @param indicator.name names of the statistical attraction measures used
+#' 
+#' @seealso \code{\link{WordAssociation}}
 # TODO : as.character(types) : trancher si les listes de formes sont plutôt des vecteurs caractères ou des facteurs.
 wordAssociation <- function(N, n, K, k, measure="wam.specificities", types, parts) {
 
@@ -62,102 +81,50 @@ wordAssociation <- function(N, n, K, k, measure="wam.specificities", types, part
          parts=parts));
 }
 
-##
- #
- # N
- #
- ##
- # TODO : not the same semantic as other N()
-#setGeneric("N", function(obj) {
-#  return(standardGeneric("N"));
-#})
+# TODO : not the same semantic as other N()
 
-setMethod("N", "WordAssociation", function(obj) obj@N)
+setMethod("N", "WordAssociation", function(corpus) corpus@N)
 
-##
- #
- # n
- #
- ##
+# TODO : not the same semantic as other N()
+
+setMethod("types", "WordAssociation", function(corpus) corpus@types)
+
 setGeneric("n", function(obj) {
   return(standardGeneric("n"));
 })
 
 setMethod("n", "WordAssociation", function(obj) obj@n)
 
-##
- #
- # K
- #
- ##
 setGeneric("K", function(obj) {
   return(standardGeneric("K"));
 })
 
 setMethod("K", "WordAssociation", function(obj) obj@K)
 
-##
- #
- # k
- #
- ##
 setGeneric("k", function(obj) {
   return(standardGeneric("k"));
 })
 
 setMethod("k", "WordAssociation", function(obj) obj@k)
 
-
-##
- #
- # k
- #
- ##
 setGeneric("k", function(obj) {
   return(standardGeneric("k"));
 })
 
 setMethod("k", "WordAssociation", function(obj) obj@k)
 
-##
- #
- # association
- #
- ##
 setGeneric("association", function(obj) {
   return(standardGeneric("association"));
 })
 
 setMethod("association", "WordAssociation", function(obj) obj@association)
 
-##
- #
- # indicator.name
- #
- ##
 setGeneric("indicator.name", function(obj) {
   return(standardGeneric("indicator.name"));
 })
 
 setMethod("indicator.name", "WordAssociation", function(obj) obj@indicator.name)
 
-##
- #
- # types
- #
- ##
-# TODO : attention même nom mais pas même sémantique que la fonction "typ" 
-# setGeneric("types", function(obj) {
-#   return(standardGeneric("types"));
-# })
-
-setMethod("types", "WordAssociation", function(obj) obj@types)
-
-##
- #
- # parts
- #
- ##
 setGeneric("parts", function(obj) {
   return(standardGeneric("parts"));
 })

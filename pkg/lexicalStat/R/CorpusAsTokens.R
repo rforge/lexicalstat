@@ -1,5 +1,5 @@
 ##############################################################
-#' The CorpusAsTokens virtual class
+#' The parent of classes representing corpus as a list of tokens with their textual order
 #'
 #' This virtual class is the root hierarchy of all classes representing corpora with
 #' each actual tokens, in their textual order
@@ -26,6 +26,7 @@ setClass("CorpusAsTokens", contains="Corpus");
 #' @export
 #' @docType methods
 #' @rdname ngram-methods
+#' @genericMethods
 #'
 #' @examples
 #' data(dickensFullText)
@@ -52,6 +53,7 @@ setGeneric("ngram", function(corpus, n=3, sep=" ") {
 #' @export
 #' @docType methods
 #' @rdname tactique.subcorpus-methods
+#' @genericMethods
 #'
 #' @examples
 #' # The first half of all parts in the corpus
@@ -75,6 +77,7 @@ setGeneric("tactique.subcorpus", function(corpus, slice=1, nslice=5, word, metho
 #' @export
 #' @docType methods
 #' @rdname slice-methods
+#' @genericMethods
 #'
 #' @examples
 #' data(dickensFullText)
@@ -100,6 +103,7 @@ setGeneric("slice", function(corpus, n=10) {
 #' @export
 #' @docType methods
 #' @rdname kwic-methods
+#' @genericMethods
 #'
 #' @examples
 #' data(dickensFullText)

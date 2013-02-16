@@ -1,5 +1,5 @@
 ##############################################################
-#' The FrequencyList virtual class
+#' The parent of classes representing corpus as a list of total frequencies of types
 #'
 #' This virtual class is a subclass of \code{\link{CorpusAsFrequencies}} and the root
 #' hierarchy of all classes representing corpora as a list of types with their total frequencies.
@@ -27,6 +27,7 @@ setClass("FrequencyList", contains="CorpusAsFrequencies");
 #' @export
 #' @docType methods
 #' @rdname freq-methods
+#' @genericMethods
 #'
 #' @examples
 #' data(dickensFrequencyList)
@@ -47,6 +48,7 @@ setGeneric("freq", function(corpus, types) {
 #' @export
 #' @docType methods
 #' @rdname contains.types-methods
+#' @genericMethods
 #'
 #' @examples
 #' data(dickensFrequencyList)
@@ -65,6 +67,7 @@ setGeneric("contains.types", function(corpus, types) {
 #' @export
 #' @docType methods
 #' @rdname hapax-methods
+#' @genericMethods
 #'
 #' @examples
 #' data(dickensFrequencyList)
@@ -79,8 +82,22 @@ setGeneric("hapax", function(corpus) {
 ##
 ############################################################
 
+##############################################################
+#' Construct a \code{\link{FrequencyList}}
+#' 
+#' @param x the data with the types and their frequency.
+#' 
+#' @seealso \code{\link{FrequencyList}}
+#' @S3method frequencyList
 frequencyList <- function (x) UseMethod("frequencyList");
 
+##############################################################
+#' Construct a \code{\link{FrequencyList}} with a numeric vector
+#' 
+#' @param x a named numeric vector.
+#' 
+#' @seealso \code{\link{FrequencyList}}
+#' @method frequencyList numeric
 frequencyList.numeric <- function(x) {
   if (is.null(names(x))) {
     stop("frequencyList needs an named vector");
@@ -89,6 +106,13 @@ frequencyList.numeric <- function(x) {
   frequencyList(y);
 }
 
+##############################################################
+#' Construct a \code{\link{FrequencyList}} with a table object 
+#' 
+#' @param x a table object (such as created with \code{\link{table}}).
+#' 
+#' @seealso \code{\link{FrequencyList}}, \code{\link{table}}
+#' @method frequencyList numeric
 frequencyList.table <- function(x) {
     n <- names(x);
     y <- as.numeric(x);
@@ -96,6 +120,13 @@ frequencyList.table <- function(x) {
     frequencyList(y);
 }
 
+##############################################################
+#' Construct a \code{\link{FrequencyList}} with a data.frame
+#' 
+#' @param x a data.frame with two columns, "type" and "frequency" (with that names).
+#' 
+#' @seealso \code{\link{FrequencyList}}
+#' @method frequencyList numeric
 frequencyList.data.frame <- function(x) {
   if (ncol(x) != 2) stop("x must have two columns ('type' and 'frequency')");
   if (!is.character(x[,1])) stop("x$type must be a character vector");

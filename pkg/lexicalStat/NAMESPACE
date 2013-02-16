@@ -13,7 +13,8 @@ import(XML)
 ##
 
 # functions exported from file "R/corpus.R"
-exportMethods(N, ntype);
+exportMethods(N);
+exportMethods(ntype);
 exportMethods(types);
 
 # functions exported from file "R/corpusLinear.R"
@@ -24,24 +25,34 @@ exportMethods(ngram);
 # functions exported from file "R/fullText.R"
 export(fullText);
 export(readTexts);
-export(tokenize, tokenize.treetagger, tokenize.simple);
-export(print.tokens.by.parts, untokenize.by.parts);
+export(tokenize);
+export(tokenize.treetagger);
+export(tokenize.simple);
+export(print.tokens.by.parts);
+export(untokenize.by.parts);
 
 # functions exported from file "R/lexical.R"
 exportMethods(subfreq);
 
 # functions exported from file "R/lexicalTableSparseMatrix.R"
 export(lexicalTable);
-export(readLexicalTable, writeLexicalTable);
+export(readLexicalTable);
+export(writeLexicalTable);
 
 # functions exported from file "R/frequencyList.R"
-exportMethods(freq, contains.types, hapax);
+exportMethods(freq);
+export(contains.types);
+export(hapax);
 
 # functions exported from file "R/frequencyListDataFrame.R"
-export(frequencyList, frequencyList.numeric, frequencyList.table, frequencyList.data.frame);
+export(frequencyList);
+export(frequencyList.numeric);
+export(frequencyList.table);
+export(frequencyList.data.frame);
 
 # functions exported from file "R/tabulated.R"
-exportMethods(lpositional, lstructural);
+exportMethods(lpositional);
+export(lstructural);
 
 # functions exported from file "R/tabulatedDataFrame.R"
 export(tabulated);
@@ -69,7 +80,8 @@ exportMethods(is.subcorpus.of);
 
 # functions exported from file "R/corpusLinearKwic.R"
 exportMethods(kwic);
-export(conc, word.conc, text.conc);
+export(conc);
+export(word.conc, text.conc);
 
 # functions exported from file "R/corpusLinearNgram.R"
 
@@ -82,7 +94,11 @@ export(read.treetagger);
 export(wordAssociation)
 exportMethods(indicator.name)
 exportMethods(wam);
-export(wam.fisher, wam.specificities, wam.binomial, wam.loglikelihood, wam.MI);
+export(wam.fisher);
+export(wam.specificities);
+export(wam.binomial);
+export(wam.loglikelihood);
+export(wam.MI);
 
 # functions exported from file "R/textUtils.R"
 export(line2paragraph);

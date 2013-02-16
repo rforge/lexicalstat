@@ -1,5 +1,5 @@
 ##############################################################
-#' The LexicalTable virtual class
+#' The parent of classes representing corpus as a table of subfrequencies of types in parts of a corpus
 #'
 #' This virtual class is a subclass of \code{\link{CorpusAsFrequencies}} and the root
 #' hierarchy of all classes representing corpora as subfrequencides of tokens in parts.
@@ -30,6 +30,7 @@ setClass("LexicalTable", contains = "CorpusAsFrequencies");
 #' @export
 #' @docType methods
 #' @rdname subfreq-methods
+#' @genericMethods
 #'
 #' @examples
 #' data(dickensLexicalTable)

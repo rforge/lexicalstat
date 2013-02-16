@@ -1,75 +1,87 @@
-## Interface for computing word association measure with corpus classes
-## (FullText, LexicalTable, Tabulated, FrequencyList)
-##
-## wam = Word association measure
-##
-## Functions for each corpus data structure (fullText,
-## lexicalTable, frequencyList, corpus).
-##
-## All these functions return an object "WordAssociation" (see word
-## word.association.R).
-##
-## This object can be printed with several options (see word.association.print.R).
-
-############################################################
-##
-##
-## "wam.*" : functions for different data structures representing a corpus
-##
-## All these functions have an argument, "corpus", an argument "measure"
-## transmited to wam.numeric(), and an argument "types" for filtering the
-## types on which the attraction measures are to be computed.
-##
-##
-############################################################
-
-setGeneric("wam", function(corpus, measure="wam.specificities", types=NULL, parts=NULL, positional=NULL, structural=NULL, subcorpus=NULL) {
+##############################################################
+#' Compute word association measure (wam) given a corpus object.
+#'
+#' @param corpus a \code{\link{Corpus}}
+#'
+#' @param subcorpus a \code{\link{Corpus}} representing a subset of the
+#'        \code{Corpus} argument. For the Corpus with part
+#'        (\code{\link{LexicalTable}, \code{\link{FullText}}), may be missing or NULL 
+#'        (in which case the attracted forms are measured for each part) or numeric vector
+#'        giving the index of the parts of the corpus to be used as subcorpus.
+#'
+#' @return Return an object \code{\link{WordAssociation}}
+#' This object can be printed with several options (see function \code{\link{print.WordAssociation}}).
+#' 
+#' @export
+#' @docType methods
+#' @rdname wam-methods
+#' @seealso \code{\link{WordAssociation}}, \code{\link{print.WordAssociation}}
+#'
+#' @examples
+#' data(dickensFullText)
+#' wam(dickensFullText, 1)
+setGeneric("wam", function(corpus, subcorpus=NULL, measure="wam.specificities", ...) {
   return(standardGeneric("wam"));
 })
 
-## 
- # ------------------------------------------------------------------------
- # For "fullText" object
- # ------------------------------------------------------------------------
- ##
-setMethod("wam", c("FullText"), function(corpus, measure, types) {
-    m <- as.LexicalTable(corpus);
-    w <- wam(m, measure, types);
-    return(w);
-    });
+##############################################################
+#' @rdname wam-methods
+#' @aliases wam,FullText,missing-method
+setMethod("wam", c("FullText", "missing"), function(corpus, subcorpus, measure, types) {
+  m <- as.LexicalTable(corpus);
+  w <- wam(corpus=m, measure=measure, types=types);
+  return(w);
+});
 
-##
- # ------------------------------------------------------------------------
- # for "tabulated" object
- # - positional = the column giving the forms (should inflected form, lemma, or
- # pos be used if they are available?)
- # - structural = the column giving the partition factor for the forms.
- # ------------------------------------------------------------------------
- ##
-#TODO : would it be possible to have positional and structural in 2nd and 3rd position?
-setMethod("wam", "Tabulated", function(corpus, measure, types, positional, structural) {
-  if (is.null(positional)) {
-    stop("positional cannot be null");
-  }
-  if (is.null(structural)) {
-    stop("structural cannot be null");
-  }
+##############################################################
+#' @rdname wam-methods
+#' @aliases wam,FullText,missing-method
+setMethod("wam", c("FullText", "NULL"), function(corpus, subcorpus, measure, types) {
+   wam(corpus=corpus, measure=measure, types=types);
+});
+
+##############################################################
+#' @rdname wam-methods
+#' @aliases wam,FullText,numeric-method
+setMethod("wam", c("FullText", "numeric"), function(corpus, subcorpus, measure, types) {
+  m <- as.FrequencyList(corpus);
+  x <- as.FrequencyList(corpus[subcorpus]);
+  w <- wam(corpus=m, subcorpus=x, measure=measure, types=types);
+  return(w);
+});
+
+##############################################################
+#' @rdname wam-methods
+#' @aliases wam,Tabulated,missing-method
+setMethod("wam", c("Tabulated", "missing"), function(corpus, subcorpus, measure,  positional="word", structural, types) {
+  .arg_length1(positional) & .arg_character(positional)
+  .arg_length1(structural) & .arg_character(structural)
+
   m <- as.LexicalTable(corpus, positional, structural);
   w <- wam(m, measure, types);
   return(w);
-})
+});
 
-##
- # ------------------------------------------------------------------------
- # For "frequencyList" object
- # TODO : problem with the formal name "corpus": actually it is the subcorpus
- # ------------------------------------------------------------------------
- ##
-setMethod("wam", "FrequencyList", function(corpus, measure, types, subcorpus) {
-  if (is.null(subcorpus)) {
-    stop("'subcorpus' cannot be null");
-  }
+##############################################################
+#' @rdname wam-methods
+#' @aliases wam,Tabulated,NULL-method
+setMethod("wam", c("Tabulated", "NULL"), function(corpus, subcorpus, measure,  positional="word", structural, types) {
+  wam(corpus=corpus, measure=measure, positional=positional, structural=structural, types=types);
+});
 
+##############################################################
+#' @rdname wam-methods
+#' @aliases wam,Tabulated,Tabulated-method
+setMethod("wam", c("Tabulated", "Tabulated"), function(corpus, subcorpus, measure,  positional="word", types) {
+  fl <- as.FrequencyList(corpus, positional);
+  sfl <- as.FrequencyList(subcorpus, positional);
+  wam(corpus=fl, subcorpus=sfl, measure=measure, types=types);
+});
+
+##############################################################
+#' @rdname wam-methods
+#' @aliases wam,FrequencyList,FrequencyList-method
+setMethod("wam", c("FrequencyList","FrequencyList"), function(corpus, subcorpus, measure, types) {
   if(!is.subcorpus.of(subcorpus, corpus)) {
     stop("'subcorpus' does not appear to be a subcorpus of 'corpus'");
   }
@@ -77,21 +89,20 @@ setMethod("wam", "FrequencyList", function(corpus, measure, types, subcorpus) {
   N <- N(corpus);
   n <- N(subcorpus);
   k <- subcorpus[,2];
+# Pb d'encapsulation!
 # TODO utiliser freq(corpus, types(subcorpus)) mais ne respecterait pas l'ordre
   K <- corpus[ match(subcorpus[,1], corpus[,1]), 2 ];
 
   return(wordAssociation(N, n, K, k, measure, types(subcorpus), "subcorpus"));
 });
 
-##
- # ------------------------------------------------------------------------
- # For "lexicalTable" object
- # wam called on a "lexicalTable" corpus
- # ------------------------------------------------------------------------
- ##
-# , measure="character", types="character", parts="character"
 # TODO : reference to concrete implementation of LexicalTableSparseMatrix
-setMethod("wam", "LexicalTable", function(corpus, measure, types, parts) {
+# TODO = parts => subcorpus
+
+##############################################################
+#' @rdname wam-methods
+#' @aliases wam,FrequencyList,FrequencyList-method
+setMethod("wam", "LexicalTable", function(corpus, subcorpus, measure, types) {
 
   partMargin <- colSums(corpus);
   names(partMargin) <- colnames(corpus);
@@ -163,12 +174,3 @@ setMethod("wam", "LexicalTable", function(corpus, measure, types, parts) {
 
   return(wordAssociation(N, n, K, k, measure, names(K), names(n)));
 });
-
-############################################################
-##
-##
-## The common method
-##
-##
-############################################################
-

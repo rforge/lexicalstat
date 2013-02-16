@@ -4,6 +4,7 @@
 ##
 ############################################################
 
+#' @genericMethods
 setGeneric("is.subcorpus.of", function(subcorpus, corpus) {
   return(standardGeneric("is.subcorpus.of"));
 })

@@ -1,5 +1,5 @@
 ##############################################################
-#' The FullText virtual class
+#' The parent of classes representing corpus as a list of character (tokens) vectors (= parts)
 #'
 #' This virtual class is a subclass of \code{\link{CorpusAsTokens}} and the root
 #' hierarchy of all classes representing corpora as sequences of character strings.

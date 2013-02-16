@@ -6,16 +6,13 @@ Date: 2010-04-06
 Author: Sylvain Loiseau <sylvain.loiseau@univ-paris13.fr>, Bernard Desgraupes <bernard.desgraupes@u-paris10.fr>
 Maintainer: Sylvain Loiseau <sloiseau@univ-paris13.fr>
 Description: Different methods for statistics for textual corpora.
-Depends: R (>= 2.9.0), Matrix, XML, plyr
+Depends: R (>= 2.9.0), Matrix, XML, plyr, methods
 License: BSD
 LazyLoad: yes
 Suggests: 
 Description: Implementations of statistical methods such as measure of word attraction for statistical analysis of large corpora through lexical phenomena.
 URL: http://www.r-project.org
-Collate: corpus.R corpusAsTokens.R corpusAsFrequencies.R
-          frequencyList.R frequencyListDataFrame.R fullText.R fullTextList.R 
-         lexicalTable.R lexicalTableSparseMatrix.R tabulated.R tabulatedDataFrame.R
-         corpusAsTokensKwic.R corpusAsTokensNgram.R corpusAsTokensTactique.R treetagger.R is.subcorpus.of.R as.R subcorpus.R word.association.R word.association.indicators.R word.association.interfaces.R word.association.print.R textUtils.R
+Collate: corpus.R CorpusAsTokens.R corpusAsFrequencies.R frequencyList.R frequencyListDataFrame.R fullText.R fullTextList.R lexicalTable.R lexicalTableSparseMatrix.R tabulated.R tabulatedDataFrame.R corpusAsTokensKwic.R corpusAsTokensNgram.R corpusAsTokensTactique.R treetagger.R is.subcorpus.of.R as.R subcorpus.R word.association.R word.association.indicators.R word.association.interfaces.R word.association.print.R textUtils.R utils.R
 Encoding: utf-8
 
 

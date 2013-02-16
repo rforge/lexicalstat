@@ -1,5 +1,5 @@
 ##############################################################
-#' The CorpusAsFrequencies virtual class
+#' The parent of classes representing corpus as a list frequencies of types
 #'
 #' This virtual class is the root hierarchy of all classes representing corpora with
 #' frequency count of linguistic types rather than with the list of actual phenomena.
@@ -26,6 +26,7 @@ setClass("CorpusAsFrequencies", contains="Corpus");
 #' @export
 #' @docType methods
 #' @rdname ntype-methods
+#' @genericMethods
 #'
 #' @examples
 #' data(dickensFrequencyList)
@@ -43,6 +44,7 @@ setGeneric("ntype", function(corpus) standardGeneric("ntype"));
 #' @export
 #' @docType methods
 #' @rdname types-methods
+#' @genericMethods
 #'
 #' @examples
 #' data(dickensFrequencyList)

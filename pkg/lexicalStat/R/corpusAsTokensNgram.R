@@ -17,8 +17,8 @@ setMethod("ngram", "FullTextList", function(corpus, n, sep) {
  #
  ##
 do.ngram.implementation1 <- function(tokens, n, sep) {
-  parts.ok <- sapply(corpus, function(x) length(x) > n);
-  parts <- corpus[parts.ok];
+  parts.ok <- sapply(tokens, function(x) length(x) > n);
+  parts <- tokens[parts.ok];
   lapply(parts, .create.ngram, n, sep);
 }
 

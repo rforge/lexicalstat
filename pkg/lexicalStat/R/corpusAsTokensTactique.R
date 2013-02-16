@@ -47,6 +47,7 @@ setMethod("slice", "FullTextList", function(corpus, n) {
  # get the distance to the closer type and to the
  # the begning of its part for each occurrences.
  #
+#' @genericMethods
  #
  ##
 setGeneric("tactique.dist", function(corpus, type) {

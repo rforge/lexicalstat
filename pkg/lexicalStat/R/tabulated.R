@@ -1,13 +1,13 @@
 ##############################################################
-#' The Tabulated virtual class
+#' The parent of classes representing corpus as a list of tokens representend as tuples
 #'
 #' This virtual class is a subclass of \code{\link{CorpusAsTokens}}. Corpus of type
 #' \code{\link{Tabulated}} give several representation for each tokens (such as
 #' part of speech, inflected form, lemma) and each token may belong to named range 
 #' of different kinds (such as a sentence, a paragraph, a chapter...)
 #'
-#' Each character representation of tokens is called a "positional attribute". Each kind of
-#' token sequences is called a "structural attribute".
+#' Each character representation of tokens is called a \emph{positional attribute}. Each kind of
+#' token sequences is called a \emph{structural attribute}.
 #
 #' This corpus representation is inspired by corpus representation in the CWB Workbench corpus.
 #'
@@ -47,6 +47,7 @@ setClass("Tabulated", contains = "CorpusAsTokens");
 #' @export
 #' @docType methods
 #' @rdname lstructural-methods
+#' @genericMethods
 #'
 #' @examples
 #' data(dickensTabulated)
@@ -65,6 +66,7 @@ setGeneric("lstructural", function(corpus) {
 #' @export
 #' @docType methods
 #' @rdname lpositional-methods
+#' @genericMethods
 #'
 #' @examples
 #' data(dickensTabulated)

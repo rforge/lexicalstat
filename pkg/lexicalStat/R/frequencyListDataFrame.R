@@ -51,7 +51,15 @@ setMethod("types", "FrequencyListDataFrame", function(corpus) sort(as.character(
 #' @rdname freq-methods
 #' @aliases freq,FrequencyListDataFrame,character-method
 setMethod("freq", c("FrequencyListDataFrame", "character"), function(corpus, types) {
-  f <- corpus[ match(types, corpus[,1]), 2 ];
+  .arg_notEmpty(types);
+  index <- match(types, corpus[,1]);
+  if (any(is.na(index))) {
+    stop(paste(
+        "some 'types' does not exist in this frequency list: ",
+        paste(types[is.na(index)], collpase=" ")
+    ));
+  }
+  f <- corpus[ index, 2 ];
   names(f) <- types;
   return(f);
 });
@@ -60,6 +68,7 @@ setMethod("freq", c("FrequencyListDataFrame", "character"), function(corpus, typ
 #' @rdname contains.types-methods
 #' @aliases contains.types,FrequencyListDataFrame,character-method
 setMethod("contains.types", c("FrequencyListDataFrame", "character"), function(corpus, types) {
+  .arg_notEmpty(types);
   exists <- types %in% corpus[,1]
   names(exists) <- types;
   return(exists);
@@ -69,7 +78,7 @@ setMethod("contains.types", c("FrequencyListDataFrame", "character"), function(c
 #' @rdname hapax-methods
 #' @aliases hapax,FrequencyListDataFrame-method
 setMethod("hapax", "FrequencyListDataFrame", function(corpus) {
-  corpus[corpus[,2]==1,1];
+  return(corpus[corpus[,2]==1,1]);
 });
 
 ############################################################
@@ -111,7 +120,7 @@ readFrequencyList <- function(filename, header=FALSE, sep="\t") {
 writeFrequencyList <- function(frequencyList, filename) {
   if (class(frequencyList != "FrequencyListDataFrame")) stop("must be a 'FrequencyListDataFrame' object");
   df <- data.frame(names(frequencyList), frequencyList);
-  x <- write.table(df, file=filename, header=FALSE, colClasses=c("character", "numeric"), sep="\t");
+  x <- write.table(df, file=filename, col.names=TRUE, sep="\t");
 }
 
 

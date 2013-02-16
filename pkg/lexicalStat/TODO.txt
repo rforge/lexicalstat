@@ -1,3 +1,41 @@
+stopifnot()
+
+##################
+Implémenter [ et $ pour FrequencyList, FrequencyTable, et tabulated.
+Pour tabulated : "$" = une colonne ; [cpos, column names], ... ?
+
+
+## Select rows
+setMethod("[", signature(x = "TsparseMatrix", i = "index", j = "missing",
+			 drop = "logical"),
+	  function (x, i, j, ..., drop) { ## select rows
+	      na <- nargs()
+	      Matrix.msg("Tsp[i,m,l]: nargs()=", na, .M.level=2)
+	      if(na == 4)
+		  .as.Tsp(as(x,"CsparseMatrix")[i, , drop=drop], noCheck = !drop)
+	      else if(na == 3) ## e.g. M[0] , M[TRUE],	M[1:2]
+		  .M.vectorSub(x,i)
+	      else ## should not happen
+		  stop("Matrix-internal error in <TsparseM>[i,,d]; please report")
+	  })
+
+## Select columns
+setMethod("[", signature(x = "TsparseMatrix", i = "missing", j = "index",
+			 drop = "logical"),
+	  function (x, i, j, ..., drop) { ## select columns
+	      .as.Tsp(as(x,"CsparseMatrix")[, j, drop=drop], noCheck = !drop)
+	  })
+
+
+
+setMethod("[", signature(x = "sparseVector", i = "index"),
+	  function (x, i, j, ..., drop) {
+	      cld <- getClassDef(class(x))
+
+
+##################
+
+
 subcorpus.R à dispatcher dans les différentes classes dans la section "Implementation Corpus"
 
 
