@@ -61,7 +61,6 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
   }
 });
 
-
 .get.printable <- function(x, from, to, threshold, types=NULL, parts=NULL, sort.by) {
 
   if(!class(x) == "WordAssociation") stop("x must be of class WordAssociation");
@@ -88,6 +87,9 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
     }
     if (from >= to) {
       stop("'to' must be greater than 'from'");
+    }
+    if (from < 1) {
+      stop("'from' must be greater than 0");
     }
   } else {
     if (!is.numeric(threshold)) {
@@ -124,15 +126,15 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
   # extract lines 'from' to 'to' in both positive and negative values
   if (!is.null(from)) {
     l <- lapply(l, function(x) {
-       .reduce.matrix(x, from, to, sort.by);
+        n.negative <- sum(x[, sort.by] < 0);
+       .matrix.head.tail(x, from, to, n.negative);
     });
   }
   return(l);
 }
 
-.reduce.matrix <- function(x, from, to, sort.by) {
-    n.positive <- sum(x[, sort.by] > 0);
-    n.negative <- sum(x[, sort.by] < 0);
+.matrix.head.tail <- function(x, from, to, n.negative) {
+    n.positive <- nrow(x) - n.negative;
     index <- 0;
     if (from > n.positive) {
         index <- numeric();
@@ -142,7 +144,10 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
     if (n.negative > 0) {
         if (from > n.negative) {
         } else {
-           index <- c(index, from:(min(to, n.negative)));
+           from.negative <- nrow(x) + 1 - from;
+           to.negative <- nrow(x) + 1 - to;
+           index.first.negative <- nrow(x) + 1 - n.negative;
+           index <- c(index, (max(to.negative, index.first.negative)):from.negative);
         }
     }
     x <- x[index, ];
