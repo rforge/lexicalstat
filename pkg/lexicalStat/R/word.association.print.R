@@ -133,6 +133,13 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
   return(l);
 }
 
+##
+#
+# x = the matrix
+# from = first index of the row to kept
+# to = last index of the row to kept
+# n.negative = number of row with negative value. If > 0, the value from and to
+# are used for collecting rows, symetrically, at the bottom of the matrix.
 .matrix.head.tail <- function(x, from, to, n.negative) {
     n.positive <- nrow(x) - n.negative;
     index <- 0;

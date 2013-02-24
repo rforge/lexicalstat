@@ -4,7 +4,6 @@
 ##
 ############################################################
 
-#' @genericMethods
 setGeneric("subcorpus", function(corpus, ...) {
   return(standardGeneric("subcorpus"));
 })
@@ -39,7 +38,7 @@ setMethod("subcorpus", c(corpus="Tabulated"), function(corpus, structural, posit
     ids <- unique(p[ a == value ]);
     m <- corpus[ p == ids , ]    
   } else {
-    stop("both 'positional' and 'value' must be NULL, or none of them");
+    stop("either both 'positional' and 'value' must be NULL, or none of them");
   }
   newcorpus <- tabulated(m, lpositional(corpus), lstructural(corpus));
   return(newcorpus);

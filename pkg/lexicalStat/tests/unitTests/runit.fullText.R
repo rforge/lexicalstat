@@ -149,7 +149,7 @@ test_tokenize_with_empty_string <- function() {
 
 test_filename_dir1 <- function() {
    filename <- lexicalStat:::.filename(".", is.dir=TRUE, pattern="*.R$")
-   checkEquals(filename, "doRUnit.R");
+   checkEquals(filename, "./doRUnit.R");
 }
 
 test_filename_dir2 <- function() {
@@ -171,6 +171,6 @@ test_filename_filename_exception_pattern_with_file <- function() {
 }
 
 test_filename_exception_no_file_found <- function() {
-   checkException(lexicalStat:::.filename(".", is.dir=TRUE, pattern=".null"));
+   checkEqualsNumeric(length(lexicalStat:::.filename(".", is.dir=TRUE, pattern=".null")), 0);
 }
 

@@ -7,8 +7,6 @@
 ############################################################
 
 ##############################################################
-#' @rdname tactique.subcorpus-methods
-#' @aliases tactique.subcorpus,FullTextList,ANY-method
 setMethod("tactique.subcorpus", "FullTextList", function(corpus, slice, nslice, word, method) {
   if (slice > nslice) {
     stop("'slice' cannot be greater than 'nslice'");
@@ -32,8 +30,6 @@ setMethod("tactique.subcorpus", "FullTextList", function(corpus, slice, nslice, 
 # TODO : to be implemented for Tabulated
 
 ##############################################################
-#' @rdname slice-methods
-#' @aliases slice,FullTextList,ANY-method
 setMethod("slice", "FullTextList", function(corpus, n) {
   .get.words.by.slices(corpus, n);
 });
@@ -47,7 +43,6 @@ setMethod("slice", "FullTextList", function(corpus, n) {
  # get the distance to the closer type and to the
  # the begning of its part for each occurrences.
  #
-#' @genericMethods
  #
  ##
 setGeneric("tactique.dist", function(corpus, type) {
@@ -80,12 +75,15 @@ setGeneric("tactique.dist", function(corpus, type) {
 #   part2=c(wordA3, wordA4, wordB3, wordB4)
 # );
 .get.words.by.slices <- function(words.by.parts, nslice=10) {
+#  print("a");
   words.by.slices.by.parts <- .get.words.by.slices.by.parts(words.by.parts, nslice=nslice);
+#  print("b");
   words.by.parts.by.slices <- .flip.inner.outer.parts(words.by.slices.by.parts, nslice);
+#  print("c");
   words.by.slices <- .remove.inner.part(words.by.parts.by.slices);
-
+#  print("d");
   names(words.by.slices) <- paste("slice", 1:nslice);
-
+#  print("e");
   x <- fullText(words.by.slices);
   return(x);
 }
@@ -217,7 +215,7 @@ setGeneric("tactique.dist", function(corpus, type) {
  ##
 # keep only the division in subpart:
 .remove.inner.part <- function(tokens.by.parts.by.subparts) {
-  tokens.by.subparts <- lapply(tokens.by.parts.by.subparts, function(x) {unlist(x)});
+  tokens.by.subparts <- lapply(tokens.by.parts.by.subparts, function(x) {unlist(x, use.names=FALSE)});
   return(tokens.by.subparts);
 }
 

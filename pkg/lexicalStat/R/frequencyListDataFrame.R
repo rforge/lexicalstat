@@ -1,16 +1,4 @@
 ##############################################################
-#' The FrequencyListDataFrame class
-#'
-#' This class is the default implementation of \code{\link{FrequencyList}}. Considere
-#' the function \code{\link{readFrequencyList}} and \code{\link{writeFrequencyList}} for
-#' read/write access to files.
-#'
-#' @name FrequencyListDataFrame
-#' @seealso \code{\link{FrequencyList}} ; \code{\link{Corpus}} for an overview of the available classes.
-#' @rdname FrequencyListDataFrame
-#' @aliases FrequencyListDataFrame-class
-#' @exportClass FrequencyListDataFrame
-#' @author Sylvain Loiseau
 setClass("FrequencyListDataFrame",
          contains = c("data.frame", "FrequencyList"));
 
@@ -21,8 +9,6 @@ setClass("FrequencyListDataFrame",
 ############################################################
 
 ##############################################################
-#' @rdname N-methods
-#' @aliases N,FrequencyListDataFrame-method
 setMethod("N", "FrequencyListDataFrame", function(corpus) sum(corpus$frequency));
 
 ############################################################
@@ -32,13 +18,9 @@ setMethod("N", "FrequencyListDataFrame", function(corpus) sum(corpus$frequency))
 ############################################################
 
 ##############################################################
-#' @rdname ntype-methods
-#' @aliases ntype,FrequencyListDataFrame-method
 setMethod("ntype", "FrequencyListDataFrame", function(corpus) nrow(corpus));
 
 ##############################################################
-#' @rdname types-methods
-#' @aliases types,FrequencyListDataFrame-method
 setMethod("types", "FrequencyListDataFrame", function(corpus) sort(as.character(corpus$type)));
 
 ############################################################
@@ -48,8 +30,6 @@ setMethod("types", "FrequencyListDataFrame", function(corpus) sort(as.character(
 ############################################################
 
 ##############################################################
-#' @rdname freq-methods
-#' @aliases freq,FrequencyListDataFrame,character-method
 setMethod("freq", c("FrequencyListDataFrame", "character"), function(corpus, types) {
   .arg_notEmpty(types);
   index <- match(types, corpus[,1]);
@@ -65,8 +45,6 @@ setMethod("freq", c("FrequencyListDataFrame", "character"), function(corpus, typ
 });
 
 ##############################################################
-#' @rdname contains.types-methods
-#' @aliases contains.types,FrequencyListDataFrame,character-method
 setMethod("contains.types", c("FrequencyListDataFrame", "character"), function(corpus, types) {
   .arg_notEmpty(types);
   exists <- types %in% corpus[,1]
@@ -75,8 +53,6 @@ setMethod("contains.types", c("FrequencyListDataFrame", "character"), function(c
 });
 
 ##############################################################
-#' @rdname hapax-methods
-#' @aliases hapax,FrequencyListDataFrame-method
 setMethod("hapax", "FrequencyListDataFrame", function(corpus) {
   return(corpus[corpus[,2]==1,1]);
 });

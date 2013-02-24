@@ -14,10 +14,12 @@ import(XML)
 
 # functions exported from file "R/corpus.R"
 exportMethods(N);
+
+# functions exported from file "R/corpusAsFrequencies.R"
 exportMethods(ntype);
 exportMethods(types);
 
-# functions exported from file "R/corpusLinear.R"
+# functions exported from file "R/corpusAsTokens.R"
 exportMethods(slice);
 exportMethods(tactique.subcorpus);
 exportMethods(ngram);
@@ -31,7 +33,7 @@ export(tokenize.simple);
 export(print.tokens.by.parts);
 export(untokenize.by.parts);
 
-# functions exported from file "R/lexical.R"
+# functions exported from file "R/lexicalTable.R"
 exportMethods(subfreq);
 
 # functions exported from file "R/lexicalTableSparseMatrix.R"
@@ -41,8 +43,8 @@ export(writeLexicalTable);
 
 # functions exported from file "R/frequencyList.R"
 exportMethods(freq);
-export(contains.types);
-export(hapax);
+exportMethods(contains.types);
+exportMethods(hapax);
 
 # functions exported from file "R/frequencyListDataFrame.R"
 export(frequencyList);

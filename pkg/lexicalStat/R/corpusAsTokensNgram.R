@@ -1,8 +1,6 @@
 # TODO : test for the fastest implementation.
 
 ##############################################################
-#' @rdname ngram-methods
-#' @aliases ngram,FullTextList,ANY-method
 setMethod("ngram", "FullTextList", function(corpus, n, sep) {
   x <- do.ngram.implementation2(corpus, n, sep);
   y <- fullText(x);

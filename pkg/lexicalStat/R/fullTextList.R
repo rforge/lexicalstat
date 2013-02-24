@@ -1,16 +1,4 @@
 ##############################################################
-#' The FullTextList class
-#'
-#' This class is the default implementation of \code{\link{FullText}}. Considere
-#' the function \code{\link{readTexts}} for creating easily \code{FullTextList}
-#' corpus thanks to text files.
-#'
-#' @name FullTextList
-#' @seealso \code{\link{FullText}} ; \code{\link{Corpus}} for an overview of the available classes.
-#' @rdname FullTextList
-#' @aliases FullTextList-class
-#' @exportClass FullTextList
-#' @author Sylvain Loiseau
 setClass("FullTextList",
          representation(depth = "numeric"),
          contains = c("list", "FullText"));
@@ -22,8 +10,6 @@ setClass("FullTextList",
 ############################################################
 
 ##############################################################
-#' @rdname N-methods
-#' @aliases N,FullTextList-method
 setMethod("N", "FullTextList", function(corpus) sum(sapply(corpus, length)));
 
 # setMethod("ntype", "FullTextList", function(obj) length(unique(unlist(obj))));

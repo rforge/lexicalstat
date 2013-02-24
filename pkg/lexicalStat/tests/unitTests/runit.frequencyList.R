@@ -35,22 +35,22 @@ test_frequencyList_freq <- function() {
   data(dickensFrequencyList)
   types <- c("doubt", ".", "the");
   expected <- c(1, 3, 4)
+  names(expected) <- types;
   found <- freq(dickensFrequencyList, types);
   checkEquals(expected, found);
 }
 
-test_frequencyList_freq_withNA <- function() {
+test_frequencyList_freq_with_unknown <- function() {
   data(dickensFrequencyList)
   types <- c("doubt", ".", "the", "blablabla");
-  expected <- c(1, 3, 4, NA)
-  found <- freq(dickensFrequencyList, types);
-  checkEquals(expected, found);
+  checkException(freq(dickensFrequencyList, types));
 }
 
 test_frequencyList_contains.types <- function() {
   data(dickensFrequencyList)
   types <- c("doubt", ".", "the", "blablabla");
   expected <- c(TRUE, TRUE, TRUE, FALSE);
+  names(expected) <- types;
   found <- contains.types(dickensFrequencyList, types);
   checkEquals(expected, found);
 }

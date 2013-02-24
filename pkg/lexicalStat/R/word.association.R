@@ -1,21 +1,4 @@
 ##############################################################
-#' The result of word association measure.
-#' 
-#' @slot types graphical form of the linguistic types 
-#' @slot parts name of the subset of the corpus with which the attraction is measured
-#' @slot N number of tokens in the corpus
-#' @slot n number of tokens in the subcorpus
-#' @slot K frequency of the type in the corpus
-#' @slot k frequency of the type in the subcorpus
-#' @slot indicator.name names of the statistical attraction measures used
-#' @slot association a matrix with the association measures (row = types, one column for each indicators)
-#'
-#' @name WordAssociation
-#' @rdname WordAssociation
-#' @seealso \code{\link{wam}}, \code{\link{wordAssociation}}
-#' @aliases WordAssociation-class
-#' @exportClass WordAssociation
-#' @author Sylvain Loiseau
 setClass(
     "WordAssociation",
     representation(
@@ -31,22 +14,11 @@ setClass(
     );
 
 ##############################################################
-#' Compute association measure and construct a \code{\link{WordAssociation}} object.
-#' 
-#' @param types graphical form of the linguistic types 
-#' @param parts name of the subset of the corpus with which the attraction is measured
-#' @param N number of tokens in the corpus
-#' @param n number of tokens in the subcorpus
-#' @param K frequency of the type in the corpus
-#' @param k frequency of the type in the subcorpus
-#' @param indicator.name names of the statistical attraction measures used
-#' 
-#' @seealso \code{\link{WordAssociation}}
 # TODO : as.character(types) : trancher si les listes de formes sont plutôt des vecteurs caractères ou des facteurs.
-wordAssociation <- function(N, n, K, k, measure="wam.specificities", types, parts) {
+wordAssociation <- function(N, n, K, k, measure="wam.specificities", types=NULL, parts=NULL) {
 
   if (!is.character(types)) {
-    stop("types must be a character vector");
+    stop("types must be a character vector or NULL");
   }
 
   if (!is.character(parts)) {

@@ -6,22 +6,44 @@
 ##
 ############################################################
 
-test_tactique_normal_case <- function() {
+test_tactique.get.words.by.slices.by.parts <- function() {
   input <- list(
     part1=c("wordA1", "wordA2", "wordA3", "wordA4"),
     part2=c("wordB1", "wordB2", "wordB3", "wordB4")
   );
   expected <- list(
-    part1=c("wordA1", "wordA2", "wordB1", "wordB2"),
-    part2=c("wordA3", "wordA4", "wordB3", "wordB4")
+    part1=list("1"=c("wordA1", "wordA2"), "2"=c("wordA3", "wordA4")),
+    part2=list("1"=c("wordB1", "wordB2"), "2"=c("wordB3", "wordB4"))
   );
-  x <- fullText(input);
-  found <- lexicalStat:::.get.words.by.slices(x, 2);
-  checkEquals(expected, found);
+  checkEquals(expected, lexicalStat:::.get.words.by.slices.by.parts(input, 2));
+}
+
+test_tactique.flip.inner.outer.parts <- function() {
+  input <- list(
+    part1=list("1"=c("wordA1", "wordA2"), "2"=c("wordA3", "wordA4")),
+    part2=list("1"=c("wordB1", "wordB2"), "2"=c("wordB3", "wordB4"))
+  );
+  expected <- list(
+    list("part1"=c("wordA1", "wordA2"), "part2"=c("wordB1", "wordB2")),
+    list("part1"=c("wordA3", "wordA4"), "part2"=c("wordB3", "wordB4"))
+  );
+  checkEquals(expected, lexicalStat:::.flip.inner.outer.parts(input, 2));
+}
+
+test_tactique.remove.inner.part <- function() {
+  input <- list(
+    list("part1"=c("wordA1", "wordA2"), "part2"=c("wordB1", "wordB2")),
+    list("part1"=c("wordA3", "wordA4"), "part2"=c("wordB3", "wordB4"))
+  );
+  expected <- list(
+    c("wordA1", "wordA2", "wordB1", "wordB2"),
+    c("wordA3", "wordA4", "wordB3", "wordB4")
+  );
+  checkEquals(expected, lexicalStat:::.remove.inner.part(input));
 }
 
 test_tactique_.get.sub.corpus.in.tactique_ps_s_w <- function() {
-  c <- .get.corpus.test();
+  corpus <- .get.corpus.test();
   expected <- list(slice=list(part2=c("trois", "deux")));
   found <- lexicalStat:::.get.sub.corpus.in.tactique(corpus, "trois", 1, "ps(s,w)");
   checkEquals(expected, found);
@@ -43,3 +65,19 @@ test_tactique_.get.sub.corpus.in.tactique_ps_s_w <- function() {
  )
  );
 }
+
+test_tactique.get.words.by.slices <- function() {
+  input <- list(
+    part1=c("wordA1", "wordA2", "wordA3", "wordA4"),
+    part2=c("wordB1", "wordB2", "wordB3", "wordB4")
+  );
+  expected <- list(
+    "slice 1"=c("wordA1", "wordA2", "wordB1", "wordB2"),
+    "slice 2"=c("wordA3", "wordA4", "wordB3", "wordB4")
+  );
+  input <- fullText(input);
+  expected <- fullText(expected);
+  found <- lexicalStat:::.get.words.by.slices(input, 2);
+  checkEquals(expected, found);
+}
+

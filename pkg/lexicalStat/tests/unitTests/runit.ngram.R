@@ -10,12 +10,12 @@ test_ngram <- function() {
 "chief mourner ."), `3` = c("Scrooge signed it", "signed it ."
 )), .Names = c("1", "2", "3"))
 
-  z <- new("FullText", x, depth=1)
+  z <- fullText(x)
 
   data(dickensFullText);
   y <- ngram(dickensFullText)
 
-  checkEqualsNumeric(class(z), class(y));
+  checkEquals(class(z), class(y));
   checkEqualsNumeric(length(z), length(y));
   for (i in 1:length(z)) {
     checkEquals(z[[i]], y[[i]]);

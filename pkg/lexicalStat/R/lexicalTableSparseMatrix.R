@@ -1,14 +1,4 @@
 ##############################################################
-#' The LexicalTableSparseMatrix class
-#'
-#' This class is the default implementation of \code{\link{LexicalTable}}.
-#'
-#' @name LexicalTableSparseMatrix
-#' @seealso \code{\link{LexicalTable}} ; \code{\link{Corpus}} for an overview of the available classes.
-#' @rdname LexicalTableSparseMatrix
-#' @aliases LexicalTableSparseMatrix-class
-#' @exportClass LexicalTableSparseMatrix
-#' @author Sylvain Loiseau
 setClass("LexicalTableSparseMatrix",
          contains = c("dgCMatrix", "LexicalTable"), # dgCMatrix sparseMatrix
          validity = function(object) {
@@ -37,8 +27,6 @@ setClass("LexicalTableSparseMatrix",
 ############################################################
 
 ##############################################################
-#' @rdname N-methods
-#' @aliases N,LexicalTableSparseMatrix-method
 setMethod("N", "LexicalTableSparseMatrix", function(corpus) sum(corpus));
 
 ############################################################
@@ -48,13 +36,9 @@ setMethod("N", "LexicalTableSparseMatrix", function(corpus) sum(corpus));
 ############################################################
 
 ##############################################################
-#' @rdname ntype-methods
-#' @aliases ntype,LexicalTableSparseMatrix-method
 setMethod("ntype", "LexicalTableSparseMatrix", function(corpus) nrow(corpus));
 
 ##############################################################
-#' @rdname types-methods
-#' @aliases types,LexicalTableSparseMatrix-method
 setMethod("types", "LexicalTableSparseMatrix", function(corpus) sort(rownames(corpus)));
 
 ############################################################
@@ -64,8 +48,6 @@ setMethod("types", "LexicalTableSparseMatrix", function(corpus) sort(rownames(co
 ############################################################
 
 ##############################################################
-#' @rdname subfreq-methods
-#' @aliases subfreq,LexicalTableSparseMatrix,ANY,ANY-method
 setMethod("subfreq", "LexicalTableSparseMatrix", function(corpus, types, parts) {
     ntype <- length(types);
     npart <- length(parts);

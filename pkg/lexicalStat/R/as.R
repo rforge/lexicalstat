@@ -18,35 +18,18 @@ setAs("FullText", "Tabulated", function(from, to) {
 });
 
 ##############################################################
-#' Convert a corpus into a \code{\link{Tabulated}} corpus
-#'
-#' Actually, only \code{\link{FullText}} corpus can be converted into
-#' \code{\link{Tabulated}}
-#'
-#' @param corpus a \code{\link{Corpus}}
-#'
-#' @return A \code{\link{Tabulated}} corpus
-#' 
-#' @seealso \code{\link{Corpus}} for an overview of the possible conversions
-#' between corpus classes
-#' 
-#' @export
-#' @docType methods
-#' @rdname as.Tabulated-methods
-#' @genericMethods
-#'
-#' @examples
-#' data(dickensFullText)
-#' as.Tabulated(dickensFullText);
 setGeneric("as.Tabulated", function(corpus) {
   return(standardGeneric("as.Tabulated"));
 })
 
 ##############################################################
-#' @rdname as.Tabulated-methods
-#' @aliases as.Tabulated,FullText-method
 setMethod("as.Tabulated", "FullText", function(corpus) {
   as(corpus, "Tabulated");
+});
+
+##############################################################
+setMethod("as.Tabulated", "Tabulated", function(corpus) {
+  return(corpus);
 });
 
 ############################################################
@@ -72,33 +55,11 @@ setMethod("as.Tabulated", "FullText", function(corpus) {
 # helpers
 
 ##############################################################
-#' Convert a corpus into a \code{\link{FullText}} corpus
-#'
-#' Actually, only \code{\link{Tabulated}} corpus can be converted into
-#' \code{\link{FullText}}
-#'
-#' @param corpus a \code{\link{Corpus}}
-#'
-#' @return A \code{\link{FullText}} corpus
-#' 
-#' @seealso \code{\link{Corpus}} for an overview of the possible conversions
-#' between corpus classes
-#' 
-#' @export
-#' @docType methods
-#' @rdname as.FullText-methods
-#' @genericMethods
-#'
-#' @examples
-#' data(dickensTabulated)
-#' as.FullText(dickensTabulated);
 setGeneric("as.FullText", function(x, positional, structural) {
   return(standardGeneric("as.FullText"));
 })
 
 ##############################################################
-#' @rdname as.FullText-methods
-#' @aliases as.FullText,Tabulated-method
 setMethod("as.FullText", c("Tabulated", "character", "character"), function(x, positional, structural) {
 #      as(x, "FullText", positional, structural);
   from <- x;
@@ -113,6 +74,11 @@ setMethod("as.FullText", c("Tabulated", "character", "character"), function(x, p
   l <- lapply(l, as.character);
   obj <- fullText(l);
   return(obj);
+});
+
+##############################################################
+setMethod("as.FullText", c("FullText"), function(x) {
+  return(x);
 });
 
 ############################################################
@@ -180,33 +146,11 @@ setAs("FullText", "LexicalTable", function(from, to) {
 # helpers
 
 ##############################################################
-#' Convert a corpus into a \code{\link{LexicalTable}} corpus
-#'
-#' @param corpus a \code{\link{Corpus}}
-#'
-#' @return A \code{\link{LexicalTable}} corpus
-#' 
-#' @seealso \code{\link{Corpus}} for an overview of the possible conversions
-#' between corpus classes
-#' 
-#' @export
-#' @docType methods
-#' @rdname as.LexicalTable-methods
-#' @genericMethods
-#'
-#' @examples
-#' data(dickensTabulated)
-#' as.LexicalTable(dickensTabulated, "word", "s");
-#'
-#' data(dickensFullText)
-#' as.LexicalTable(dickensFullText);
 setGeneric("as.LexicalTable", function(x, positional, structural) {
   return(standardGeneric("as.LexicalTable"));
 })
 
 ##############################################################
-#' @rdname as.LexicalTable-methods
-#' @aliases as.LexicalTable,Tabulated,character,character-method
 setMethod("as.LexicalTable", c("Tabulated"), function(x, positional, structural) {
 #      as(x, "LexicalTable", positional, structural);
   from <- x;
@@ -230,8 +174,11 @@ setMethod("as.LexicalTable", c("Tabulated"), function(x, positional, structural)
 });
 
 ##############################################################
-#' @rdname as.LexicalTable-methods
-#' @aliases as.LexicalTable,FullText-method
+setMethod("as.LexicalTable", c("LexicalTable"), function(x) {
+  return(x);
+});
+
+##############################################################
 setMethod("as.LexicalTable", c("FullText"), function(x) {
   as(x, "LexicalTable")
 });
@@ -265,36 +212,11 @@ setAs("LexicalTable", "FrequencyList", function(from, to) {
 # helpers
 
 ##############################################################
-#' Convert a corpus into a \code{\link{FrequencyList}} corpus
-#'
-#' @param corpus a \code{\link{Corpus}}
-#'
-#' @return A \code{\link{FrequencyList}} corpus
-#' 
-#' @seealso \code{\link{Corpus}} for an overview of the possible conversions
-#' between corpus classes
-#' 
-#' @export
-#' @docType methods
-#' @rdname as.FrequencyList-methods
-#' @genericMethods
-#'
-#' @examples
-#' data(dickensTabulated)
-#' as.FrequencyList(dickensTabulated, "word");
-#'
-#' data(dickensFullText)
-#' as.FrequencyList(dickensFullText);
-#'
-#' data(dickensLexicalTable)
-#' as.FrequencyList(dickensLexicalTable);
 setGeneric("as.FrequencyList", function(x, positional) {
   return(standardGeneric("as.FrequencyList"));
 })
 
 ##############################################################
-#' @rdname as.FrequencyList-methods
-#' @aliases as.FrequencyList,Tabulated,character-method
 setMethod("as.FrequencyList", c("Tabulated", "character"), function(x, positional) {
 #      as(x, "FrequencyList", positional);
   from <- x;
@@ -306,16 +228,17 @@ setMethod("as.FrequencyList", c("Tabulated", "character"), function(x, positiona
 });
 
 ##############################################################
-#' @rdname as.FrequencyList-methods
-#' @aliases as.FrequencyList,FullText-method
 setMethod("as.FrequencyList", c("FullText"), function(x) {
       as(x, "FrequencyList");
 });
 
 ##############################################################
-#' @rdname as.FrequencyList-methods
-#' @aliases as.FrequencyList,LexicalTable-method
 setMethod("as.FrequencyList", c("LexicalTable"), function(x) {
       as(x, "FrequencyList");
+});
+
+##############################################################
+setMethod("as.FrequencyList", "FrequencyList", function(x) {
+  return(x);
 });
 

@@ -21,12 +21,12 @@ test_wam.frequencyList <- function() {
   fileName <- system.file(c("inst", "exempleData"), "PetitLarousse1905.ttg", package="lexicalStat")
   c <- read.treetagger(fileName);
   fl <- as.FrequencyList(c, "word");
-  subc <- subcorpus(c, "def");
+  subc <- subcorpus(c, "cit");
   subfl <- as.FrequencyList(subc, "word");
   wam(corpus=fl, subcorpus=subfl);
 }
 
 test_wam.lexicalTable <- function() {
-   data(robespierre)
-   wam(robespierre);
+   data(dickensLexicalTable)
+   wam(dickensLexicalTable);
 }

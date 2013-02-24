@@ -74,6 +74,8 @@ test_as.FrequencyList.LexicalTable <- function() {
 }
 
 equals_corpus <- function(c1, c2) {
+  c1 <- as.FrequencyList(c1);
+  c2 <- as.FrequencyList(c2);
   checkEqualsNumeric(N(c1), N(c2));
   checkEqualsNumeric(ntype(c1), ntype(c2));
   checkEqualsNumeric(types(c1), types(c2));  
@@ -82,7 +84,6 @@ equals_corpus <- function(c1, c2) {
 # may do exactly the same thing as uprise, if "word" was added as default argument
 # in ntype and types method signatures
 equals_corpus_tabulated <- function(c1, c2) {
-  checkEqualsNumeric(N(c1), N(c2));
-  checkEqualsNumeric(ntype(c1, "word"), ntype(c2));
-  checkEqualsNumeric(types(c1, "word"), types(c2));  
+  c1 <- as.FrequencyList(c1, "word");
+  equals_corpus(c1, c2);
 }

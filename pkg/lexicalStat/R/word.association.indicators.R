@@ -2,65 +2,21 @@
 ## All functions take four arguments: N, n, K, k
 
 ##############################################################
-#' Word attraction measure based on Mutual information
-#'
-#' @param N number of tokens in the corpus
-#' @param n number of tokens in the subcorpus
-#' @param K frequency of the form in the corpus
-#' @param k frequency of the form in the subcorpus
-#'
-#' @export
-#' @rdname wam.indicators
-#' @examples
-#' wam.MI(10, 7, 5, 4);
 wam.MI <- function(N, n, K, k) {
   stop("not implemented yet");
 }
 
 ##############################################################
-#' Word attraction measure based on the Fisher exact test
-#'
-#' @param N number of tokens in the corpus
-#' @param n number of tokens in the subcorpus
-#' @param K frequency of the form in the corpus
-#' @param k frequency of the form in the subcorpus
-#'
-#' @export
-#' @rdname wam.indicators
-#' @examples
-#' wam.fisher(10, 7, 5, 4);
 wam.fisher <- function(N, n, K, k) {
   stop("not implemented yet");
 }
 
 ##############################################################
-#' Word attraction measure based on the hypergeometric distribution
-#'
-#' @param N number of tokens in the corpus
-#' @param n number of tokens in the subcorpus
-#' @param K frequency of the form in the corpus
-#' @param k frequency of the form in the subcorpus
-#'
-#' @export
-#' @rdname wam.indicators
-#' @examples
-#' wam.specificities(10, 7, 5, 4);
 wam.specificities <- function(N, n, K, k) {
     .wam.with.pdf(N, n, K, k, phyper);
 }
 
 ##############################################################
-#' Word attraction measure based on the binomial distribution
-#'
-#' @param N number of tokens in the corpus
-#' @param n number of tokens in the subcorpus
-#' @param K frequency of the form in the corpus
-#' @param k frequency of the form in the subcorpus
-#'
-#' @export
-#' @rdname wam.indicators
-#' @examples
-#' wam.binomial(10, 7, 5, 4);
 wam.binomial <- function(N, n, K, k) {
     .wam.with.pdf(N, n, K, k, pbinom);
 }
@@ -126,17 +82,6 @@ wam.binomial <- function(N, n, K, k) {
  #        E22 =     "    "      (proportion of other words that would belong outside window if collocate were spread evenly)
  ##
 ##############################################################
-#' Word attraction measure based on the binomial distribution
-#'
-#' @param N number of tokens in the corpus
-#' @param n number of tokens in the subcorpus
-#' @param K frequency of the form in the corpus
-#' @param k frequency of the form in the subcorpus
-#'
-#' @export
-#' @rdname wam.indicators
-#' @examples
-#' wam.loglikelihood(10, 7, 5, 4);
 wam.loglikelihood <- function(N, n, K, k) {
   N <- N;
   C1 <- K;

@@ -1,6 +1,4 @@
 ##############################################################
-#' @rdname kwic-methods
-#' @aliases kwic,FullTextList,ANY-method
 setMethod("kwic", "FullTextList", function(corpus, pattern, left, right) {
   lines.names <- names(tokens.by.part);
   lines <- lapply(tokens.by.part, function(x) paste(x, collapse=" "));
@@ -10,8 +8,6 @@ setMethod("kwic", "FullTextList", function(corpus, pattern, left, right) {
 });
 
 # TODO
-#' @rdname kwic-methods
-#' @aliases kwic,TabulatedDataFrame,ANY-method
 setMethod("kwic", "TabulatedDataFrame", function(corpus, pattern, left=5, right=5) {
   stop("not implemented yet");
 });
