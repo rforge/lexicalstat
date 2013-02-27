@@ -103,18 +103,18 @@ setAs("FullText", "LexicalTable", function(from, to) {
   part.table.lengths <- sapply(part.tables, length);
 
   if (debug) print("[list2lexical.table.sparse] ...i...");
-  i <- unlist(sapply(part.tables, function(t) which(types %in% names(t))));
+  i <- unlist(sapply(part.tables, function(t) match(names(t), types)));
   if (debug) print("[list2lexical.table.sparse] ...j...");
   j <- rep(1:length(from), part.table.lengths);
   if (debug) print("[list2lexical.table.sparse] ...v...");
   v <- as.vector(unlist(sapply(part.tables, as.numeric)));
 
   if (debug) print("[list2lexical.table.sparse] ...i...");
-  print(i);
+  if (debug) print(i);
   if (debug) print("[list2lexical.table.sparse] ...j...");
-  print(j);
+  if (debug) print(j);
   if (debug) print("[list2lexical.table.sparse] ...v...");
-  print(v);
+  if (debug) print(v);
   if (debug) print("[list2lexical.table.sparse] ...creating matrix...");
   #m <- spMatrix(nrow=length(from), ncol=length(types), i=i, j=j, x=v);
   m <- sparseMatrix(i=i, j=j, x=v);
