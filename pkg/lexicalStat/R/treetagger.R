@@ -1,5 +1,5 @@
 ##
-## TODO Voir la fin du fichier (partie ancienne) à partir de extract.field.in.treetagger.struct
+## TODO Voir la fin du fichier (partie ancienne) a partir de extract.field.in.treetagger.struct
 ##
 
 #library(koRpus);
@@ -73,10 +73,9 @@ read.treetagger <- function(file, contains.xml=TRUE, discard.xml=FALSE) {
     corpus[,s] <- as.factor(corpus[,s]);
   }
 
-  corpus <- tabulated(corpus, positional.attributes, structural.attributes);
+  corpus <- tabulated(corpus, length(structural.attributes));
   return(corpus);
 }
-
 
 ##
  # ----------------------------------------------------
@@ -148,7 +147,7 @@ read.treetagger <- function(file, contains.xml=TRUE, discard.xml=FALSE) {
 	    " (", length(index.start), ", ", length(index.end), ")",
 	    sep=""));
     }
-    if (debug) print(paste("... ... itérations:", length(index.start)));
+    if (debug) print(paste("... ... iterations:", length(index.start)));
     start.and.end <- mapply(`:`, index.start, index.end, SIMPLIFY=FALSE); # If TRUE, produces a vector-matrix when length(index.start) == 1
     if(debug) print(start.and.end);
     size.of.chunk <- sapply(start.and.end, length);

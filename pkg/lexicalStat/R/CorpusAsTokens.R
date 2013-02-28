@@ -12,11 +12,11 @@ setGeneric("tactique.subcorpus", function(corpus, slice=1, nslice=5, word, metho
 })
 
 ##############################################################
-setGeneric("slice", function(corpus, n=10) {
+setGeneric("slice", function(corpus, n=10, ...) {
   return(standardGeneric("slice"));
 })
 
 ##############################################################
-setGeneric("kwic", function(corpus, pattern, left, right) {
+setGeneric("kwic", function(corpus, pattern, left=20, right=20) {
   return(standardGeneric("kwic"));
 })

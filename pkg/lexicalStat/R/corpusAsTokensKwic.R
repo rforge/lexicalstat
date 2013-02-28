@@ -1,18 +1,19 @@
 ##############################################################
-setMethod("kwic", "FullTextList", function(corpus, pattern, left, right) {
-  lines.names <- names(tokens.by.part);
-  lines <- lapply(tokens.by.part, function(x) paste(x, collapse=" "));
+setMethod("kwic", "FullTextList", function(corpus, pattern, left=20, right=20) {
+  lines.names <- names(corpus);
+  lines <- lapply(corpus, function(x) paste(x, collapse=" "));
   lines <- as.character(lines);
   names(lines) <- lines.names;
-  return(conc(lines, pattern, left, right));
+  return(.conc(lines, pattern, left, right));
 });
 
+##############################################################
 # TODO
 setMethod("kwic", "TabulatedDataFrame", function(corpus, pattern, left=5, right=5) {
   stop("not implemented yet");
 });
 
-conc <- function(lines, pattern, left=20, right=20) {
+.conc <- function(lines, pattern, left, right) {
   lines.names <- names(lines);
   if (is.null(lines.names)) {
     lines.names <- paste("line", 1:length(lines));

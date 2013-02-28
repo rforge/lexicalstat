@@ -40,6 +40,6 @@ setMethod("subcorpus", c(corpus="Tabulated"), function(corpus, structural, posit
   } else {
     stop("either both 'positional' and 'value' must be NULL, or none of them");
   }
-  newcorpus <- tabulated(m, lpositional(corpus), lstructural(corpus));
+  newcorpus <- tabulated(m, length(lstructural(corpus)));
   return(newcorpus);
 });

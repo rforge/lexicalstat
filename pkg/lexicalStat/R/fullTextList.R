@@ -34,7 +34,8 @@ readTexts <- function(filenames, is.dir=FALSE, pattern=NULL, split.on="lines", e
     stop("no files selected");
   }
 
-# TODO : source d'erreur dans le fait d'énumérer les options ici (+ dans le message d'erreur) et encore ci-dessous dans le 'if-else'.
+# TODO : source d'erreur dans le fait d'enumerer les options ici
+# (+ dans le message d'erreur) et encore ci-dessous dans le 'if-else'.
   if (!is.character(split.on)) {
     stop("'split.on' must be a character vector");
   }
@@ -42,7 +43,7 @@ readTexts <- function(filenames, is.dir=FALSE, pattern=NULL, split.on="lines", e
     stop("'split.on' must have a length of 1");
   }
   if (! split.on %in% c("lines", "files", "sentences", "paragraphs")) {
-    stop("'parts' must be one of 'lines', 'files', 'sentences', 'paragraph'");
+    stop("'parts' must be one of 'lines', 'files', 'sentences', 'paragraphs'");
   }
 
   files <- vector(mode="list", length=length(filenames));
@@ -100,6 +101,9 @@ readTexts <- function(filenames, is.dir=FALSE, pattern=NULL, split.on="lines", e
       corpus <- line2paragraph(corpus);
     } else {
       stop("Unkwown option");
+    }
+    if (skipEmpty) {
+      corpus <- corpus[!corpus == ""];
     }
     corpus <- tokenize(corpus);
   }

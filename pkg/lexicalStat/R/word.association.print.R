@@ -71,9 +71,6 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
   if(!length(sort.by) == 1) {
     stop(paste("cannot sort with more than one key"));
   }
-  if(!sort.by %in% colnames(df)) {
-    stop(paste("cannot sort by '", sort.by, "': no column of that names (in: ", paste(colnames(df), collapse=" "), ")", sep=""));
-  }
 
   if (is.null(threshold)) {
     if (is.null(from) | is.null(to)) {
@@ -105,6 +102,9 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
 
   df <- data.frame(types=types(x), parts=parts(x), N=N(x), n=n(x), K=K(x), k=k(x));
   df <- cbind(df, association(x));
+  if(!sort.by %in% colnames(df)) {
+    stop(paste("cannot sort by '", sort.by, "': no column of that names (in: ", paste(colnames(df), collapse=" "), ")", sep=""));
+  }
 
   if (!is.null(types)) {
     df <- df[ df$types %in% types, ];

@@ -7,7 +7,7 @@
 ############################################################
 
 ##############################################################
-setMethod("tactique.subcorpus", "FullTextList", function(corpus, slice, nslice, word, method) {
+setMethod("tactique.subcorpus", "FullTextList", function(corpus, slice, nslice, word, method="ps(s,w)") {
   if (slice > nslice) {
     stop("'slice' cannot be greater than 'nslice'");
   }
@@ -30,11 +30,20 @@ setMethod("tactique.subcorpus", "FullTextList", function(corpus, slice, nslice, 
 # TODO : to be implemented for Tabulated
 
 ##############################################################
-setMethod("slice", "FullTextList", function(corpus, n) {
+setMethod("slice", "FullText", function(corpus, n) {
   .get.words.by.slices(corpus, n);
 });
 
 # TODO : to be implemented for Tabulated
+# ##############################################################
+# setMethod("slice", "Tabulated", function(corpus, n, structural.attribute) {
+#   if (!structural.attribute %in% lstructural(corpus)) {
+#     stop("unknown structural attribute 'structural.attribute'");
+#   }
+#   the.max <- max(corpus[, structural.attribute]);
+#   region.range <- lapply(0:m, function(x) range(which(corpus[, structural.attribute] == x)));
+#   region.slice <- lapply(region.range, function(x) cut(x[1]:x[2], n, labels=1:n))
+# });
 
 ## TODO
  #
@@ -241,7 +250,7 @@ setGeneric("tactique.dist", function(corpus, type) {
 #   part2=c("trois", "quatre")
 # )
 # )
-.tactique.subcorpus <- function(words.by.parts.by.slices, slice, word, method="ps(w)") {
+.tactique.subcorpus <- function(words.by.parts.by.slices, slice, word, method) {
 
   #
   # checking consistency of data
@@ -265,7 +274,7 @@ setGeneric("tactique.dist", function(corpus, type) {
   # building the sub-corpus
   #
 
-  souscorpus <- .get.sub.corpus.in.tactique(words.by.parts.by.slices, word=word, slice=slice, method="ps(s,w)");
+  souscorpus <- .get.sub.corpus.in.tactique(words.by.parts.by.slices, word=word, slice=slice, method);
   if (length(souscorpus[[1]]) == 0) {
     stop("No article contain the requested word");
   }

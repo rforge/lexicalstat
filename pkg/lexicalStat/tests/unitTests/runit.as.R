@@ -38,11 +38,35 @@ test_as.LexicalTable.Tabulated <- function() {
   equals_corpus_tabulated(i, d);
 }
 
+test_as.LexicalTable.Tabulated_frequencies <- function() {
+  corpus <- LETTERS[sample(26, 50, replace=TRUE)];
+  df <- data.frame(a=as.factor(corpus), b=as.factor(rep(c(1,2), each=25)));
+  x <- tabulated(df, 1);
+
+  y <- as.LexicalTable(dickensTabulated, "a", "b");
+  z <- as.FrequencyList(y);
+  
+  n <- table(corpus)
+  checkEqualsNumeric(n, freq(z, names(n)));
+}
+
 test_as.LexicalTable.FullText <- function() {
   data(dickensFullText);
   i <- dickensFullText;
   d <- as.LexicalTable(i);
   equals_corpus(i, d);
+}
+
+test_as.LexicalTable.FullText_frequencies <- function() {
+  corpus <- LETTERS[sample(26, 50, replace=TRUE)];
+  ft <- fullText(list(corpus=corpus));
+  lt <- as.LexicalTable(ft);
+  
+  x <- table(unlist(ft));
+  
+  y <- rowSums(lt);
+  names(y) <- rownames(lt);
+  checkEqualsNumeric(x, y[names(x)]);
 }
 
 ############################################################

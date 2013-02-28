@@ -32,36 +32,44 @@ setGeneric("lpositional", function(corpus) {
 ##
 ############################################################
 
-tabulated <- function(m, positional.attributes, structural.attributes) {
+tabulated <- function(m, structural.attributes=0) {
+  debug <- TRUE
   if (!is.data.frame(m)) {
     stop("m must be a data.frame");
   }
   c <- colnames(m);
 
-  if (length(positional.attributes) == 0) {
-    stop("a tabulated corpus must contain at least one positional attribute");
+  if (!is.numeric(structural.attributes)) {
+    stop("'structural.attributes' must be numeric");
   }
-  if (any(positional.attributes != c[1:length(positional.attributes)])) {
-    stop("some positional attributes not found (or in wrong order)");
+  if (structural.attributes < 0) {
+    stop("'structural.attributes' must be greater or equals to '0'");
+  }
+  if (! (length(colnames) <= structural.attributes)) {
+    stop("The data.frame 'm' or all column are structural.attributes. A least one column must be for positional attribute");
   }
 
-  if (length(structural.attributes) > 0) {
-    if (any(structural.attributes != c[(length(positional.attributes)+1):length(c)])) {
-      stop("some structural attributes not found (or in wrong order)");
-    }
-    is.structural.numeric <- sapply(m[,structural.attributes], is.factor);
-    if (!all(is.structural.numeric)) {
-      stop("structural attributes must be factor column-vector");
-    }
+  are.factor <- sapply(m, is.factor);
+  if (!all(are.factor)) {
+    stop("'m' must have factor columns");
+  }
+  
+
+  if (debug) print(paste("[tabulated] 1", date()))
+  if (structural.attributes > 0) {
+    if (debug) print(paste("[tabulated] 1a", date()))
+    structural.attribute.name <- c[(length(c) - structural.attributes + 1):length(c)];
     # TODO check that ids are consecutive.
+  } else {
+    structural.attribute.name <- character(0);
   }
 
-  is.positional.character <- sapply(m[,positional.attributes], is.factor);
-  if (!all(is.positional.character)) {
-    stop("positional attributes must be factor column-vector");
-  }
+  if (debug) print(paste("[tabulated] 2", date()))
+  positional.attribute.name <- c[1:(length(c) - structural.attributes)];
 
-  obj <- new("TabulatedDataFrame", m, positional=positional.attributes, structural=structural.attributes);
+  if (debug) print(paste("[tabulated] 3", date()))
+  obj <- new("TabulatedDataFrame", m, positional=positional.attribute.name, structural=structural.attribute.name);
+  if (debug) print(paste("[tabulated] 4", date()))
   return(obj);
 }
 

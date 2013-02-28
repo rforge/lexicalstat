@@ -30,8 +30,8 @@ export(readTexts);
 export(tokenize);
 export(tokenize.treetagger);
 export(tokenize.simple);
-export(print.tokens.by.parts);
-export(untokenize.by.parts);
+#export(print.tokens.by.parts);
+#export(untokenize.by.parts);
 
 # functions exported from file "R/lexicalTable.R"
 exportMethods(subfreq);
@@ -82,8 +82,8 @@ exportMethods(is.subcorpus.of);
 
 # functions exported from file "R/corpusLinearKwic.R"
 exportMethods(kwic);
-export(conc);
-export(word.conc, text.conc);
+#export(.conc);
+#export(word.conc, text.conc);
 
 # functions exported from file "R/corpusLinearNgram.R"
 
@@ -95,6 +95,12 @@ export(read.treetagger);
 # functions exported from file "R/word.association.*.R"
 export(wordAssociation)
 exportMethods(indicator.name)
+exportMethods(parts)
+#exportMethods(N)
+#exportMethods(types)
+exportMethods(n)
+exportMethods(K)
+exportMethods(k)
 exportMethods(wam);
 export(wam.fisher);
 export(wam.specificities);

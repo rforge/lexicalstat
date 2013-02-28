@@ -1,9 +1,39 @@
+WordAssociation et FrequencyList: rédcupérer la doc comme roxygen dans des révisions antérieures.
+
+
+La première forme spécifique de "Au Bonheur des dames" : À
+> phyper(100, 1142, 5168014-1142, 161705)
+[1] 1
+> phyper(100, 1142, 5168014-1142, 161705, log.p=T)
+[1] -5.018379e-20
+> 
+
+> print(res, from=1, to=100);
+Printing association measure for 1 part(s); from: 1 to: 100 
+Corpus size: 5168014 
+Sorted by: wam.specificities 
+---------------------------------------------------------------
+word                 | sub freq | tot freq | wam.specificities 
+---------------------------------------------------------------
+...............................................................
+Part name: subcorpus 
+Part size: 161705 tokens. 
+Positive specificities printed: 100 
+Negative specificities printed: 100 
+À                   |      100 |     1142 |             Inf 
+
+
+
+========================================================================
+
+
+
 stopifnot()
 
 ##################
 Implémenter [ et $ pour FrequencyList, FrequencyTable, et tabulated.
 Pour tabulated : "$" = une colonne ; [cpos, column names], ... ?
-
+voire faire des fonctions comme dans igraph
 
 ## Select rows
 setMethod("[", signature(x = "TsparseMatrix", i = "index", j = "missing",

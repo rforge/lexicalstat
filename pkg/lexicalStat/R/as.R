@@ -13,7 +13,7 @@ setAs("FullText", "Tabulated", function(from, to) {
   part <- rep(id, times=len);
   df[, "part"] <- as.factor(part);
 
-  res <- tabulated(df, "word", "part");
+  res <- tabulated(df, 1);
   return(res);
 });
 
@@ -62,7 +62,6 @@ setGeneric("as.FullText", function(x, positional, structural) {
 ##############################################################
 setMethod("as.FullText", c("Tabulated", "character", "character"), function(x, positional, structural) {
 #      as(x, "FullText", positional, structural);
-  from <- x;
   if (is.null(positional)) {
     stop("positional cannot be NULL");
   }
@@ -70,7 +69,7 @@ setMethod("as.FullText", c("Tabulated", "character", "character"), function(x, p
     stop("structural cannot be NULL");
   }
 # TODO check if structural and positional exist
-  l <- split(from[,positional], from[,structural])
+  l <- split(x[,positional], x[,structural])
   l <- lapply(l, as.character);
   obj <- fullText(l);
   return(obj);
@@ -103,7 +102,8 @@ setAs("FullText", "LexicalTable", function(from, to) {
   part.table.lengths <- sapply(part.tables, length);
 
   if (debug) print("[list2lexical.table.sparse] ...i...");
-  i <- unlist(sapply(part.tables, function(t) match(names(t), types)));
+  i <- unlist(sapply(part.tables, function(t) names(t)));
+  i <- match(i, types);
   if (debug) print("[list2lexical.table.sparse] ...j...");
   j <- rep(1:length(from), part.table.lengths);
   if (debug) print("[list2lexical.table.sparse] ...v...");

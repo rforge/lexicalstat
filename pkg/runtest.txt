@@ -1,0 +1,19 @@
+ fl <- Lexique$FrequenceLivre;
+ ff <- Lexique$FrequenceFilm;
+ x <- order(fl, decreasing=TRUE)
+ fl <- fl[x[1:100]]
+ ff <- ff[x[1:100]]
+ plot(fl,ff)
+
+
+library(lexicalStat)
+data(robespierre)
+y <- rowSums(robespierre)
+frequencyList(y)
+
+
+library(lexicalStat);
+data(robespierre);
+x <- lexicalTable(robespierre);
+wam(x, c("specificities", "loglikelihood"), "peuple", "D1")
+

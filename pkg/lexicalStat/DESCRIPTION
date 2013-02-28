@@ -13,7 +13,7 @@ Suggests:
 Description: Implementations of statistical methods such as measure of word attraction for statistical analysis of large corpora
 URL: http://www.r-project.org
 Collate: textUtils.R utils.R corpus.R CorpusAsTokens.R corpusAsFrequencies.R frequencyList.R frequencyListDataFrame.R fullText.R fullTextList.R lexicalTable.R lexicalTableSparseMatrix.R tabulated.R tabulatedDataFrame.R corpusAsTokensKwic.R corpusAsTokensNgram.R corpusAsTokensTactique.R treetagger.R is.subcorpus.of.R as.R subcorpus.R word.association.R word.association.indicators.R word.association.interfaces.R word.association.print.R
-Encoding: utf-8
+Encoding: latin1
 
 
 

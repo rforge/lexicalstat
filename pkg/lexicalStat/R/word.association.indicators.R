@@ -34,13 +34,18 @@ wam.binomial <- function(N, n, K, k) {
   pos_arg <- recycled[specif_positive, ];
   specif[specif_positive] <- pdf (
       pos_arg$whiteDrawn, pos_arg$whites, pos_arg$blacks, pos_arg$drawn
+#      , log.p=TRUE
       );
 
   neg_arg <- recycled[!specif_positive, ];
   specif[!specif_positive] <- pdf (
       neg_arg$whiteDrawn, neg_arg$whites, neg_arg$blacks, neg_arg$drawn
+#      , log.p=TRUE
       );
 
+#   spelog = specif;
+#   spelog[specif_positive] <- abs(spelog[specif_positive]);
+#   spelog[!specif_positive] <- - abs(spelog[! specif_positive]);
   spelog <- double(length=nrow(recycled));
   spelog[specif < 0.5] <- log10(2*specif[specif < 0.5]);
   spelog[specif > 0.5] <- abs(log10(2 - 2*specif[specif > 0.5]));
