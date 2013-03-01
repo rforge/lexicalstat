@@ -66,7 +66,7 @@ fileName <- system.file(c("exempleData"),
                         package="lexicalStat")
 c <- readTexts(fileName, split.on="sentences");
 sc <- subcorpus(c, "actionnaire");
-w <- wam(asFrequencyList(c), subcorpus=asFrequencyList(sc), measure="loglikelihood");
+w <- wam(as.FrequencyList(c), subcorpus=as.FrequencyList(sc), measure="wam.loglikelihood");
 print(w, from=1, to=25);
 @
 
@@ -78,7 +78,7 @@ fileName <- system.file(c("exempleData"),
                         "LeMondeEco.lines",
                         package="lexicalStat")
 t <- readTexts(fileName, split.on="sentences");
-c <- conc(t, "actionnaire");
+c <- kwic(t, "actionnaire");
 c[1:10,]
 @
 
@@ -109,10 +109,10 @@ head(tabulated)
 
 sc <- subcorpus(tabulated, "cit")
 
-scl <- asFrequencyList(sc, "word");
-cl <- asFrequencyList(tabulated, "word")
+scl <- as.FrequencyList(sc, "word");
+cl <- as.FrequencyList(tabulated, "word")
 
-w <- wam(cl, subcorpus=scl, measure="loglikelihood");
+w <- wam(cl, subcorpus=scl, measure="wam.loglikelihood");
 print(w, from=1, to=20);
 @
 
@@ -123,14 +123,14 @@ A lexical table contains the word frequencies in 10 discourses (nammed \texttt{D
 
 <<sample_session5, echo=T>>=
 data(robespierre);
-head(robespierre);
+#head(robespierre);
 @
 
 For the first and the last discours, which are the 10 most characteristic words?
 
 <<sample_session5, echo=T>>=
-w <- wam(robespierre, measure="loglikelihood");
-print(w, from=1, to=20, parts=c("D1", "D10"));
+#w <- wam(robespierre, measure="loglikelihood");
+#print(w, from=1, to=20, parts=c("D1", "D10"));
 @
 
 % ----------------------------------------------------------------
@@ -211,7 +211,7 @@ are also provided. They are, first, the very general functions: \texttt{N}\index
 data(dickensFrequencyList);
 head(dickensFrequencyList);
 N(dickensFrequencyList)
-V(dickensFrequencyList)
+ntype(dickensFrequencyList)
 summary(dickensFrequencyList);
 types(dickensFrequencyList);
 @
@@ -223,7 +223,7 @@ or for asking if a given type is available in this frequency list
 
 <<frequencyList_other_functions, echo=T>>=
 freq(dickensFrequencyList, c("the", "."))
-has.types(dickensFrequencyList, c("the", "blabla"))
+contains.types(dickensFrequencyList, c("the", "blabla"))
 @
 
 A frequency list can be created with a named numeric vector thanks to the function
@@ -255,20 +255,31 @@ subfrequency of the corresponding type in the corresponding sub-part
 (see table \ref{tab:lexicaltable-sample} p.~\pageref{tab:lexicaltable-sample}).
 A lexical table is a \textbf{contingency table}.
 
-Here is the first lines for the \texttt{robespierre} lexical table, giving the frequency
+Here is the first lines for the \texttt{dickensLexicalTable} lexical table, giving the frequency
 for the different types across 10 discourses :
 
 <<label=lexicalTable1,echo=FALSE,results=tex>>=
 library(xtable)
-data(robespierre);
-x <- as.matrix(robespierre)[1:10,];
+data(dickensLexicalTable);
+x <- as.matrix(dickensLexicalTable)[1:10,];
 x <- rbind(x, rep("...", 10))
 rownames(x)[11] <- "..." 
-print(xtable(as.data.frame(x), align=c("l", rep("r", 10)),
-    caption = "Robespierre discourses (frequency table)",
+print(xtable(as.data.frame(x), align=c("l", rep("r", 3)),
+    caption = "Frequency table: Dickens",
     label = "tab:lexicaltable-sample",
     digits = 0), table.placement = "h",
     caption.placement = "top")
+
+#library(xtable)
+#data(robespierre);
+#x <- as.matrix(robespierre)[1:10,];
+#x <- rbind(x, rep("...", 10))
+#rownames(x)[11] <- "..." 
+#print(xtable(as.data.frame(x), align=c("l", rep("r", 10)),
+#    caption = "Robespierre discourses (frequency table)",
+#    label = "tab:lexicaltable-sample",
+#    digits = 0), table.placement = "h",
+#    caption.placement = "top")
 @
 
 A \textbf{part} is a subset of a corpus and, thus, a \textbf{subcorpus}. But it is a
@@ -279,15 +290,16 @@ Lexical table is a compact way of representing frequence information and to
 study variation of frequency of a type accross parts.
 
 A lexical table object have the \texttt{N}\index{N}
-\texttt{V}\index{V} and
+\texttt{ntype}\index{ntype} and
 \texttt{types}\index{types}
 functions:
+
 <<label=lexicalTable2,echo=TRUE>>=
 data(robespierre);
-head(robespierre);
+#head(robespierre);
 summary(robespierre);
 N(robespierre);
-V(robespierre);
+ntype(robespierre);
 types(robespierre)[1:10];
 @
 
@@ -582,9 +594,8 @@ argument, you can give the name of of the parts (columns) you're interested in.
 <<wam_lexicalTable, echo=TRUE>>=
 library(lexicalStat);
 data(robespierre);
-x <- lexicalTable(robespierre);
-w <- wam(x)
-print(w, from=1, to=5)
+#w <- wam(robespierre)
+#print(w, from=1, to=5)
 @
 
 % ................................................................
@@ -618,8 +629,7 @@ In every case, you can specify the \texttt{types} for which you want the indicat
 <<wam_otherArguments_types, echo=TRUE>>=
 library(lexicalStat);
 data(robespierre);
-x <- lexicalTable(robespierre);
-w <- wam(x, types=c("peuple", "patrie"))
+#w <- wam(robespierre, types=c("peuple", "patrie"))
 @
 
 % ................................................................
@@ -633,9 +643,8 @@ calculated.
 <<wam_otherArguments_parts, echo=TRUE>>=
 library(lexicalStat);
 data(robespierre);
-x <- lexicalTable(robespierre);
-w <- wam(x, parts=c("D1", "D2"))
-print(w, from=1, to=5)
+#w <- wam(robespierre, parts=c("D1", "D2"))
+#print(w, from=1, to=5)
 @
 
 % ................................................................
@@ -650,9 +659,8 @@ several indicators:
 <<wam_otherArguments_parts, echo=TRUE>>=
 library(lexicalStat);
 data(robespierre);
-x <- lexicalTable(robespierre);
-w <- wam(x, measure=c("specificities", "loglikelihood"))
-print(w, from=1, to=5)
+#w <- wam(robespierre, measure=c("specificities", "loglikelihood"))
+#print(w, from=1, to=5)
 @
 
 % ----------------------------------------------------------------
