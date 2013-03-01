@@ -13,7 +13,7 @@
 }
 \examples{
 fileName <- system.file(c("inst",  "exempleData"), "small.paragraphs", package="lexicalStat")
-lines - readLines(fileName)
+lines <- readLines(fileName)
 line2paragraph(lines);
 }
 

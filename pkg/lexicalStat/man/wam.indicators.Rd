@@ -40,8 +40,8 @@
   distribution
 }
 \examples{
-wam.MI(10, 7, 5, 4);
-wam.fisher(10, 7, 5, 4);
+#wam.MI(10, 7, 5, 4);
+#wam.fisher(10, 7, 5, 4);
 wam.specificities(10, 7, 5, 4);
 wam.binomial(10, 7, 5, 4);
 wam.loglikelihood(10, 7, 5, 4);

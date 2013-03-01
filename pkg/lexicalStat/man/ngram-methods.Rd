@@ -23,13 +23,15 @@
 \item{\code{signature(corpus = "FullTextList")}}{
 %%  ~~describe this method here~~
 }
+
 }}
 \examples{
 data(dickensFullText)
 ngram(dickensFullText);
 
-data(dickensTabulated)
-ngram(dickensTabulated);
+%# Not implemented yet:
+%#data(dickensTabulated)
+%#ngram(dickensTabulated);
 }
 
 \keyword{methods}

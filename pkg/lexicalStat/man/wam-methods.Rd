@@ -49,12 +49,12 @@
 \arguments{
   \item{corpus}{a \code{\link{Corpus}}}
 
-  \item{subcorpus}{a \code{\link{Corpus}} representing a
-  subset of the \code{Corpus} argument. For the Corpus with
-  part (\code{\link{LexicalTable}}, \code{\link{FullText}}),
+  \item{subcorpus}{a \code{\link{Corpus}} object containing a
+  subset of the \code{corpus} argument. For the \code{corpus} argument is \code{\link{Corpus}} object 
+  having parts (i.e. \code{\link{LexicalTable}} or \code{\link{FullText}}), the subcorpus argument
   may be missing or NULL (in which case the attracted forms
-  are measured for each part) or numeric vector giving the
-  index of the parts of the corpus to be used as
+  are measured for each part successively) or numeric vector giving the
+  index of the part of the corpus to be used as
   subcorpus.}
 }
 \value{

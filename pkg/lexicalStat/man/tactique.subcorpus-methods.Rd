@@ -27,11 +27,8 @@
   type.
 }
 \examples{
-# The first half of all parts in the corpus
-data(dickensFullText)
-tactique.subcorpus(dickensFullText, 1, 2);
-
 # The first half containing 'the' of all parts in the corpus
+data(dickensFullText)
 tactique.subcorpus(dickensFullText, 1, 2, "the");
 }
 
