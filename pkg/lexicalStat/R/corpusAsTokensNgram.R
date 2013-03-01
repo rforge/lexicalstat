@@ -8,6 +8,10 @@ setMethod("ngram", "FullTextList", function(corpus, n, sep) {
 });
 
 # TODO : to be implemented for Tabulated
+##############################################################
+# setMethod("ngram", "Tabulated", function(corpus, n, sep) {
+#   stop("not implemented yet");
+# });
 
 ##
  #

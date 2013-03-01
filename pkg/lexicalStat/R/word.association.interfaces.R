@@ -18,7 +18,8 @@ setMethod("wam", c("FullText", "NULL"), function(corpus, subcorpus, measure, for
 ##############################################################
 setMethod("wam", c("FullText", "numeric"), function(corpus, subcorpus, measure, for.types) {
   m <- as.FrequencyList(corpus);
-  x <- as.FrequencyList(corpus[subcorpus]);
+  # TODO : fullText() should be removed here when the [ operator will be overriden:
+  x <- as.FrequencyList(fullText(corpus[subcorpus]));
   w <- wam(corpus=m, subcorpus=x, measure=measure, for.types=for.types);
   return(w);
 });
