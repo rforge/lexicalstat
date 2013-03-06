@@ -1,5 +1,5 @@
 ##############################################################
-setClass("CorpusAsTokens", contains="Corpus");
+setClass("CorpusAsTokens", contains=c("Corpus", "VIRTUAL"));
 
 ##############################################################
 setGeneric("ngram", function(corpus, n=3, sep=" ") {

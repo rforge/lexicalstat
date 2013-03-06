@@ -56,6 +56,8 @@ setMethod("kwic", "TabulatedDataFrame", function(corpus, pattern, left=5, right=
 ###
 
 word.conc <- function(tokens.by.part, pattern, left, right) {
+  debug <- TRUE;
+
   lines.names <- names(tokens.by.part);
   if (is.null(lines.names)) {
     lines.names <- 1:length(tokens.by.part);
@@ -70,6 +72,7 @@ word.conc <- function(tokens.by.part, pattern, left, right) {
 
      is.in.line <- sapply(where.found, function(x) { x[1] != -1 })
      index.line <- which(is.in.line);
+     if (debug) print(paste("Number of match:", length(index.line)))
 
      if (length(index.line) > 0) {
        conc.line <- matrix("", nrow=length(index.line), ncol=left + right + 1);

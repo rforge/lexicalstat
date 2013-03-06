@@ -36,14 +36,37 @@ setMethod("slice", "FullText", function(corpus, n) {
 
 # TODO : to be implemented for Tabulated
 # ##############################################################
-# setMethod("slice", "Tabulated", function(corpus, n, structural.attribute) {
-#   if (!structural.attribute %in% lstructural(corpus)) {
-#     stop("unknown structural attribute 'structural.attribute'");
-#   }
+setMethod("slice", "Tabulated", function(corpus, n, structural.attribute) {
+  debug <- TRUE;
+  if (!structural.attribute %in% lstructural(corpus)) {
+    stop("unknown structural attribute 'structural.attribute'");
+   }
 #   the.max <- max(corpus[, structural.attribute]);
 #   region.range <- lapply(0:m, function(x) range(which(corpus[, structural.attribute] == x)));
 #   region.slice <- lapply(region.range, function(x) cut(x[1]:x[2], n, labels=1:n))
-# });
+
+  x <- 1:N(corpus);
+  if (debug) print(x);
+  
+  y <- tapply(x, corpus[, structural.attribute], range);
+  if (any(order(unlist(y)) != 1:(length(y)*2))) {
+    stop(paste("the structural attribute", structural.attribute, "is not correctly encoded"));
+  }
+  if (debug) print(y);
+
+  z <- lapply(y, function (x) { y <- x[1]:x[2] ; cut(y, n, labels=1:n)});
+  if (debug) print(z);
+  
+  corpus <- corpus[,lpositional(corpus)]
+
+  z <- unlist(z);
+  zz <- order(z);
+  
+  corpus <- corpus[zz,];
+  corpus$Slice <- factor(z[zz]);
+  corpus <- tabulated(corpus, 1);
+  return(corpus);
+});
 
 ## TODO
  #

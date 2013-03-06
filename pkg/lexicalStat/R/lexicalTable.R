@@ -1,6 +1,5 @@
 ##############################################################
-setClass("LexicalTable", contains = "CorpusAsFrequencies");
-
+setClass("LexicalTable", contains=c("CorpusAsFrequencies", "VIRTUAL"));
 
 ##############################################################
 setGeneric("subfreq", function(corpus, types, parts) standardGeneric("subfreq"));

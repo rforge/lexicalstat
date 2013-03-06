@@ -1,6 +1,6 @@
 ##############################################################
 #
-setClass("Tabulated", contains = "CorpusAsTokens");
+setClass("Tabulated", contains=c("CorpusAsTokens", "VIRTUAL"));
 
 # TODO : faire une fonction pour créer une partition sur la base de la position dans une autre partition
 
@@ -33,7 +33,7 @@ setGeneric("lpositional", function(corpus) {
 ############################################################
 
 tabulated <- function(m, structural.attributes=0) {
-  debug <- TRUE
+  debug <- FALSE;
   if (!is.data.frame(m)) {
     stop("m must be a data.frame");
   }

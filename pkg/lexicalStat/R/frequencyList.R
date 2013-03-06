@@ -1,5 +1,5 @@
 ##############################################################
-setClass("FrequencyList", contains="CorpusAsFrequencies");
+setClass("FrequencyList", contains=c("CorpusAsFrequencies", "VIRTUAL"));
 
 ##############################################################
 setGeneric("freq", function(corpus, types) {

@@ -1,5 +1,5 @@
 ##############################################################
-setClass("FullText", contains="CorpusAsTokens");
+setClass("FullText", contains=c("CorpusAsTokens", "VIRTUAL"));
 
 ############################################################
 ##

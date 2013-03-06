@@ -29,6 +29,8 @@ setMethod("N", "FullTextList", function(corpus) sum(sapply(corpus, length)));
  ##
 readTexts <- function(filenames, is.dir=FALSE, pattern=NULL, split.on="lines", enc="UTF-8", skipEmpty=TRUE) {
   
+  debug <- FALSE
+  
   filenames <- .filename(filenames, is.dir, pattern);
   if (length(filenames) == 0) {
     stop("no files selected");
@@ -72,13 +74,13 @@ readTexts <- function(filenames, is.dir=FALSE, pattern=NULL, split.on="lines", e
     files <- files[-which(is.empty)];
   }
 
-  print("---");
-  print(length(files));
-  print("---");
+  if (debug) print("---");
+  if (debug) print(length(files));
+  if (debug) print("---");
 
     for (i in 1:length(files)) {
-      print(filenames[i]);
-      print(length(files[[i]]));
+      if (debug) print(filenames[i]);
+      if (debug) print(length(files[[i]]));
       files[[i]] <- tokenize(files[[i]]);
     }
 
@@ -106,9 +108,11 @@ readTexts <- function(filenames, is.dir=FALSE, pattern=NULL, split.on="lines", e
       corpus <- corpus[!corpus == ""];
     }
     corpus <- tokenize(corpus);
+    if (debug) print(corpus[[1]]);
   }
 
   obj <- fullText(corpus);
+  if (debug) print(obj[[1]]);
   return(obj);
 }
 
