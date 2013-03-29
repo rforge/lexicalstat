@@ -1,0 +1,9 @@
+export(
+	"specif_calc",
+	"specif_cdf",
+	"specif_density",
+	"specif_mode2cdf",
+	"specif_mode2density",
+	"specif_plot",
+	"specif_cdmo"
+)

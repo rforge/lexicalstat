@@ -1,0 +1,13 @@
+Package: specif
+Type: Package
+Title: Word Specificity
+Version: 0.1
+Date: 2013-03-26
+Author: Bernard Desgraupes <bernard.desgraupes@u-paris10.fr>, Sylvain Loiseau <sylvain.loiseau@univ-paris13.fr>
+Maintainer: Bernard Desgraupes <bernard.desgraupes@u-paris10.fr>
+Description: functions related to word specificities
+License: GPL (>= 2)
+Lazyload: yes
+URL: http://www.r-project.org
+Collate: main.R 
+Encoding: UTF-8
