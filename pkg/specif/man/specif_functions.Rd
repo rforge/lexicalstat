@@ -39,7 +39,7 @@
 \details{
 	Utility functions to play with specificities.
 	
-	The possible method names are : "base", "log", "diff" or "scale".
+	The possible method names are : "base", "log", "diff", "scale" or "logscale".
 
 }
 
