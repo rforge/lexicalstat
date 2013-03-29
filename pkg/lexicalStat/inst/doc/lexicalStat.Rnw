@@ -22,9 +22,9 @@
 \maketitle
 
 \begin{abstract}
-The \texttt{lexicalStat} R library provide functions for reading corpora,
+The \texttt{lexicalStat} R library provides functions for reading corpora,
 converting them between several representations, and applying exploratory
-functions like word attraction measure and keyword in context.
+tools like word attraction measure and keyword in context.
 \end{abstract}
 
 \vspace{5mm}
@@ -55,8 +55,8 @@ These sample sessions show typical use of this package.
 
 A plain text file contains articles extracted from the economic section of a daily
 newspaper (French newspaper \emph{Le Monde}). The corpus is read, segmented in
-sentences and tokenzied. A subcorpus is created by extracting the sentences
-containing \emph{actionnaire}. Which lexical types are over-frequent in this subcorpus?
+sentences and tokenized. A subcorpus is created by extracting the sentences
+containing the word \emph{actionnaire} (shareholder). Which lexical types are over-frequent in this subcorpus?
 The 25 types most strongly over-frequent (according to the log-likelihood measure)
 are printed.
 
@@ -71,7 +71,7 @@ w <- wam(as.FrequencyList(c), subcorpus=as.FrequencyList(sc), measure="wam.logli
 print(w, from=1, to=25);
 @
 
-\subsection{Inspect context of \emph{action} trough a concordancer (KWIC)}
+\subsection{Inspect context of \emph{action} through a concordancer (KWIC)}
 
 <<sample_session2, echo=T>>=
 library(lexicalStat);
@@ -86,7 +86,7 @@ c[1:10,]
 \subsection{Specific words of the different novels by an author}
 
 A directory contains files, each of whom contains a novel by the novelist Emile Zola.
-Which are the word distinguishing each novels? (here, only the first paragraphs for
+Which are the words distinguishing each novel? (here, only the first paragraphs for
 only three novels are given).
 
 <<sample_session3, echo=T>>=
@@ -119,15 +119,15 @@ print(w, from=1, to=20);
 
 \subsection{Robespierre}
 
-A lexical table contains the word frequencies in 10 discourses (nammed \texttt{D1},
-\texttt{D2}, \ldots \texttt{D10}) by Maximilien de Robespierre. Here are the first lines:
+A lexical table contains the word frequencies in 10 discourses (named \texttt{D1},
+\texttt{D2}, \ldots, \texttt{D10}) by Maximilien de Robespierre (1758-1794). Here are the first lines:
 
 <<sample_session5, echo=T>>=
 data(robespierre);
 #head(robespierre);
 @
 
-For the first and the last discours, which are the 10 most characteristic words?
+For the first and the last discourse, which are the 10 most characteristic words?
 
 <<sample_session5, echo=T>>=
 #w <- wam(robespierre, measure="loglikelihood");
@@ -146,24 +146,31 @@ For the first and the last discours, which are the 10 most characteristic words?
 % ----------------------------------------------------------------
 \label{subsec:classes-corpora}
 
-There are four classes for representing a corpus. Each is suited for some tasks
-or for some sources.
+There are four classes for representing a corpus:
+\begin{itemize}
+\item \texttt{frequencyList}
+\item \texttt{lexicalTable}
+\item \texttt{tabulated}
+\item \texttt{fullText}
+\end{itemize}
 
+Each class is suited for some tasks or for some sources.
 All classes have the three following basic functions:
 \begin{itemize}
-\item \texttt{N}\index{N} : the number of tokens in the corpus
-\item \texttt{V}\index{V} : the number of different types (V stand for vocabulary)
+\item \texttt{N}\index{N} : the number of tokens in the corpus ;
+\item \texttt{V}\index{V} : the number of different types (V stand 
+for vocabulary) ;
 \item \texttt{types}\index{types} : the sorted list of the different types.
 \end{itemize}
 Each of them has also specific functions. The function \texttt{summary}\index{summary}
-applied on this data structures provide short resumes of their content.
+applied on these data structures provides short resumes of their 
+contents.
 
 % TODO : classes not types
-For each of these four types, a ready-to-use tool corpus is provided as a
+For each of these four types, a ready-to-use toy corpus is provided as a
 dataset (dataset are objects that can be easily loaded into the R environnement with the
-function \texttt{data}). All of these tool-corpora represent the two first sentences
-of \textit{A Christmas Carol} by Ch. Dickens. They are:
-
+function \texttt{data}). All of these toy-corpora represent the first two sentences
+of \textit{A Christmas Carol} by Charles Dickens. They are:
 \begin{itemize}
 \item \texttt{dickensFrequencyList}
 \item \texttt{dickensLexicalTable}
@@ -171,13 +178,18 @@ of \textit{A Christmas Carol} by Ch. Dickens. They are:
 \item \texttt{dickensFullText}
 \end{itemize}
 
-In this section the structure and basic functionalities for each of these four classes
-are presented.
+% % 			<< There is no doubt whatever about that. The register
+% % 			of his burial was signed by the clergyman, the clerk,
+% % 			the undertaker, and the chief mourner. Scrooge signed
+% % 			it >> 
 
-In the next sections we will see the functions
+In this section, the structure and basic functionalities for each of
+these four classes are presented.
+
+In the next sections, we will see the functions
 for extracting subcorpora (p.~\pageref{subsec:subcorpora}),
 for converting from one format
-toward another (p.~\pageref{sec:classes}) and for
+into another (p.~\pageref{sec:classes}) and for
 creating this data structures with files containing
 actual corpora (p.~\pageref{subsec:read-corpora}).
 
@@ -256,7 +268,7 @@ subfrequency of the corresponding type in the corresponding sub-part
 (see table \ref{tab:lexicaltable-sample} p.~\pageref{tab:lexicaltable-sample}).
 A lexical table is a \textbf{contingency table}.
 
-Here is the first lines for the \texttt{dickensLexicalTable} lexical table, giving the frequency
+Here are the first lines for the \texttt{dickensLexicalTable} lexical table, giving the frequency
 for the different types across 10 discourses :
 
 <<label=lexicalTable1,echo=FALSE,results=tex>>=
@@ -287,10 +299,10 @@ A \textbf{part} is a subset of a corpus and, thus, a \textbf{subcorpus}. But it 
 special kind of subcorpus, belonging to a set of such subcorpus that divide exhaustively the corpus,
 and that are most probably corresponding to an object of analysis -- here, different discourses.
 
-Lexical table is a compact way of representing frequence information and to
-study variation of frequency of a type accross parts.
+A lexical table is a compact way of representing frequency information and to
+study variations of a type's frequency accross parts.
 
-A lexical table object have the \texttt{N}\index{N}
+A lexical table object supports the \texttt{N}\index{N},
 \texttt{ntype}\index{ntype} and
 \texttt{types}\index{types}
 functions:
