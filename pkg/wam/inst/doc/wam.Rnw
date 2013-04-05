@@ -127,7 +127,7 @@ For the fifth discourse above ($N=61449$, $n=7896$), the possible frequencies of
 where in this discours). Here is the corresponding values for the specificities
 indicator:
 
-<<wam_specificities, echo=FALSE, fig=TRUE>>=
+<<wam_specificities_fig, echo=FALSE, fig=TRUE>>=
 plot(wam.specificities(61449, 7896, 296, 0:296, method="base"), type="l", xlab="k", ylab="specificities", main="Specificities indicateur", sub="N=61449, n=7896, K=296")
 @
 
@@ -149,11 +149,11 @@ plot(wam.specificities(61449, 7896, 296, 0:296, method="log"), type="l", xlab="k
 % ----------------------------------------------------------------
 \label{sec:comparison-indicators}
 
-<<wam_comparison_indicators, echo=FALSE, fig=TRUE>>=
-par(mfrow=c(1,2))
-plot(wam.loglikelihood(61449, 7896, 296, 0:296), type="l", xlab="k", ylab="specificities", main="Log likelihood", sub="N=61449, n=7896, K=296")
-plot(wam.specificities(61449, 7896, 296, 0:296, method="log"), type="l", xlab="k", ylab="specificities", main="Specificities indicateur (log)", sub="N=61449, n=7896, K=296")
-@
+% <<wam_comparison_indicators, echo=FALSE, fig=TRUE>>=
+% par(mfrow=c(1,2))
+% plot(wam.loglikelihood(61449, 7896, 296, 0:296), type="l", xlab="k", ylab="specificities", main="Log likelihood", sub="N=61449, n=7896, K=296")
+% plot(wam.specificities(61449, 7896, 296, 0:296, method="log"), type="l", xlab="k", ylab="specificities", main="Specificities indicateur (log)", sub="N=61449, n=7896, K=296")
+% @
 
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
@@ -162,20 +162,20 @@ plot(wam.specificities(61449, 7896, 296, 0:296, method="log"), type="l", xlab="k
 % ----------------------------------------------------------------
 \label{sec:distribution-subcorpus}
 
-<<wam_distribution, echo=FALSE, fig=TRUE>>=
-library(rcqp);
-c <- corpus("DICKENS");
-x <- cqp_ftable(c, "book", "lemma");
-z <- cast(x, lemma~book, fun.aggregate=sum, value="freq")
-F <- rowSums(z);
-
-#N <- sum(x$freq);
-#f <- x[x[,1] == "1", "freq"];
-#l <- x[x[,1] == "1", "lemma"];
-#n <- sum(f);
-#F <- rowSums(x);
-s <- wam.specificities(sum(F), sum(z[1]), F, x[1])
-hist(s, breaks=100);
+<<wam_distribution, echo=FALSE, fig=FALSE>>=
+#library(rcqp);
+#c <- corpus("DICKENS");
+#x <- cqp_ftable(c, "book", "lemma");
+#z <- cast(x, lemma~book, fun.aggregate=sum, value="freq")
+#F <- rowSums(z);
+#
+##N <- sum(x$freq);
+##f <- x[x[,1] == "1", "freq"];
+##l <- x[x[,1] == "1", "lemma"];
+##n <- sum(f);
+##F <- rowSums(x);
+#s <- wam.specificities(sum(F), sum(z[1]), F, x[1])
+#hist(s, breaks=100);
 @
 
 % ----------------------------------------------------------------

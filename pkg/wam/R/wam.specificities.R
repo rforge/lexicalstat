@@ -16,7 +16,7 @@
 #
 
 wam.specificities <- function(N, n, K, k, method="log") {
-  len <- max(N, n, K, k);
+  len <- max(length(N), length(n), length(K), length(k));
   N <- rep(N, length.out=len);
   n <- rep(n, length.out=len);
   K <- rep(K, length.out=len);
@@ -29,10 +29,11 @@ wam.specificities <- function(N, n, K, k, method="log") {
   mo <- floor((n+1)*(B+1)/(N+2));
   #mode <- ((recycled$whites + 1) * (recycled$drawn + 1)) / (N + 2);
 
+  specif <- double(len);
   if (method == "log") { # use log.p and lower.tail
-    specif <- ifelse(k <= mo, -phyper(k, B, N-B, n, log.p=TRUE), phyper(k, B, N-B, n, log.p=TRUE, lower.tail=TRUE));
+    specif <- ifelse(k <= mo, -abs(phyper(k, K, N-K, n, log.p=TRUE)), abs(phyper(k, K, N-K, n, log.p=TRUE, lower.tail=FALSE)));
   } else { # compute cdk
-    cdk <- ifelse(k <= mo, -phyper(k, B, N-B, n), 1-phyper(k-1, B, N-B, n));
+    cdk <- ifelse(k <= mo, -phyper(k, K, N-K, n), 1-phyper(k-1, K, N-K, n));
     if (method == "base") {
       specif <- cdk;
     } else { # compute cdmo (cumulative probability for the mode)
