@@ -2,7 +2,7 @@
 \alias{wam}
 \alias{wam-package}
 
-\title{~ Overview: ... ~}
+\title{~ Word Association Measures ~}
 \description{
   \tabular{ll}{
     Version: \tab \Sexpr[stage=render]{library(utils); packageVersion("wam")}\cr
@@ -19,10 +19,14 @@
   Bernard Desgraupes \cr
   \email{bernard.desgraupes@u-paris10.fr}\cr
   University of Paris Ouest - Nanterre - Lab Modal'X \cr \cr
+
+  Sylvain Loiseau \cr
+  \email{sylvain.loiseau@univ-paris13.fr} \cr
+  University Paris-13 - Lab LDI \cr \cr
 }
 
-\references{}
+\references{TODO}
 
-\seealso{}
+\seealso{TODO}
 
-\keyword{package}
+\keyword{linguistics, word association}
