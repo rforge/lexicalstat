@@ -15,7 +15,7 @@
 # http://www.persee.fr/web/revues/home/prescript/article/mots_0243-6450_1980_num_1_1_1008
 #
 
-wam.specificities <- function(N, n, K, k, method="base") {
+wam.specificities <- function(N, n, K, k, method="log") {
   len <- max(N, n, K, k);
   N <- rep(N, length.out=len);
   n <- rep(n, length.out=len);
@@ -37,11 +37,11 @@ wam.specificities <- function(N, n, K, k, method="base") {
       specif <- cdk;
     } else { # compute cdmo (cumulative probability for the mode)
       cdmo <- phyper(mo, B, N-B, n);
-      if else (method == "gap") {
+      if (method == "gap") {
 	specif <- ifelse(k <= mo, -abs(cdmo-cdk), abs(cdmo-cdk));
-      } if else (method == "logscale") {
+      } else if (method == "logscale") {
 	specif <- ifelse(k <= mo, -abs((cdmo-cdk)/cdk) , abs((cdmo-cdk)/cdk));
-      } if else (method == "scale") {
+      } else if (method == "scale") {
 	specif <- ifelse(k <= mo, -abs(cdmo-cdk)/cdmo, abs(cdmo-cdk)/cdmo);
       }
     }
