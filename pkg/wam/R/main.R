@@ -17,10 +17,10 @@
  # 
  # ------------------------------------------------------------------------
  ##
-cphyper <- function(q, m, n, k, lower.tail = TRUE, log.p = FALSE) {
-	ans <- .Call("wam_cphyper", q, m, n, k, lower.tail, log.p, PACKAGE="wam")
-    return(ans)
-}
+#cphyper <- function(q, m, n, k, lower.tail = TRUE, log.p = FALSE) {
+#	ans <- .Call("wam_cphyper", q, m, n, k, lower.tail, log.p, PACKAGE="wam")
+#    return(ans)
+#}
 
 
 
