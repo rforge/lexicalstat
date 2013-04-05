@@ -1,0 +1,13 @@
+Package: wam
+Type: Package
+Title: 
+Version: 0.1
+Date: 2013-04-05
+Author: Bernard Desgraupes (University of Paris Ouest - Lab Modal'X)
+Maintainer: Bernard Desgraupes <bernard.desgraupes@u-paris10.fr>
+Description: 
+License: GPL (>= 2)
+Lazyload: yes
+URL: http://www.r-project.org
+Collate: main.R zzz.R
+Encoding: latin1
