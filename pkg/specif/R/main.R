@@ -28,7 +28,7 @@ specif_density <- function(parts, data, token="peuple", R=10, new=TRUE, ...)
 	nc <- length(parts)
 	dsz <- colSums(data)
 	N <- sum(dsz)
-	B <- sum(data[token,])
+	K <- sum(data[token,])
 	colnm <- colnames(data)
 	
 	nr <- 1
@@ -56,7 +56,7 @@ specif_density <- function(parts, data, token="peuple", R=10, new=TRUE, ...)
 		k <- data[token,d]
 		
 		# Calculate the mode
-		mo <- floor((n+1)*(B+1)/(N+2))
+		mo <- floor((n+1)*(K+1)/(N+2))
 		
 		# Keep R values on both sides of the mode
 		if (k <= mo) {
@@ -67,13 +67,13 @@ specif_density <- function(parts, data, token="peuple", R=10, new=TRUE, ...)
 			M <- max(c(k+1, mo+R))
 		}
 		if (m < 0) {m <- 0}
-		if (M > B) {M <- B}
+		if (M > K) {M <- K}
 
 		x <- m:M
-		plot(x, dhyper(x, B, N-B, n), 'h', main=paste(colnm[d], ": n = ", n, sep=""),
+		plot(x, dhyper(x, K, N-K, n), 'h', main=paste(colnm[d], ": n = ", n, sep=""),
 			sub=paste("mode =",mo), xlab=paste("k=",k), ylab="", ...)
 		
-		points(k, dhyper(k, B, N-B, n), col="red")
+		points(k, dhyper(k, K, N-K, n), col="red")
 	}
 	
 	layout(1)
@@ -101,7 +101,7 @@ specif_cdf <- function(parts, data, token="peuple", R=10, new=TRUE, method="base
 	nc <- length(parts)
 	dsz <- colSums(data)
 	N <- sum(dsz)
-	B <- sum(data[token,])
+	K <- sum(data[token,])
 	colnm <- colnames(data)
 
 	nr <- 1
@@ -126,7 +126,7 @@ specif_cdf <- function(parts, data, token="peuple", R=10, new=TRUE, method="base
 		n <- dsz[d]
 		
 		# Calculate the mode
-		mo <- floor((n+1)*(B+1)/(N+2))
+		mo <- floor((n+1)*(K+1)/(N+2))
 		
 		# Observed frequency
 		k <- data[token,d]
@@ -140,29 +140,29 @@ specif_cdf <- function(parts, data, token="peuple", R=10, new=TRUE, method="base
 			M <- max(c(k+1, mo+R))
 		}
 		if (m < 0) {m <- 0}
-		if (M > B) {M <- B}
+		if (M > K) {M <- K}
 		
 		klf <- m:mo
-		plot(klf, phyper(klf, B, N-B, n), 'o', xlim=c(m,M), ylim=c(0,1), 
+		plot(klf, phyper(klf, K, N-K, n), 'o', xlim=c(m,M), ylim=c(0,1), 
 			main=paste(token, " - ", colnm[d], ": n = ", n, sep=""),
 			sub=paste("mode =",mo), xlab=paste("k=",k), 
 			ylab="", col="blue", pch=20, ...)
 		krt <- mo:M
-		lines(krt, phyper(krt, B, N-B, n), 'o', col="lightblue", pch=20, ...)
+		lines(krt, phyper(krt, K, N-K, n), 'o', col="lightblue", pch=20, ...)
 		klf <- m:(mo+1)
-		lines(klf, 1-phyper(klf-1, B, N-B, n), 'o', col="lightpink", pch=20, ...)
+		lines(klf, 1-phyper(klf-1, K, N-K, n), 'o', col="lightpink", pch=20, ...)
 		krt <- (mo+1):M
-		lines(krt, 1-phyper(krt-1, B, N-B, n), 'o', col="red", pch=20, ...)
+		lines(krt, 1-phyper(krt-1, K, N-K, n), 'o', col="red", pch=20, ...)
 		legend("right",legend=c("spec","mode"), pch=c(5,2), cex=0.75)
 
 		# Specificity for observed value
-		spec <- ifelse(k <= mo, phyper(k, B, N-B, n), 1-phyper(k-1, B, N-B, n))
-		pmo <- phyper(mo, B, N-B, n)
+		spec <- ifelse(k <= mo, phyper(k, K, N-K, n), 1-phyper(k-1, K, N-K, n))
+		pmo <- phyper(mo, K, N-K, n)
 		points(c(k, mo), c(spec, pmo), pch=c(5,2))
 		abline(h=0, col="lightgray")
 		points(c(k, mo), c(0,0), pch=c(5,2))
 		
-		S <- specif_value(N, n, B, k, method=method) 
+		S <- specif_value(N, n, K, k, method=method) 
 		text(m,0.5, paste("S =",round(S,3)), pos=4)
 	}
 
@@ -192,7 +192,7 @@ specif_calc <- function(parts, data, token="peuple", method="base")
 	np <- length(parts)	
 	dsz <- colSums(data)
 	N <- sum(dsz)
-	B <- sum(data[token,])
+	K <- sum(data[token,])
 	colnm <- colnames(data)
 	
 	S <- vector(length=np)
@@ -205,7 +205,7 @@ specif_calc <- function(parts, data, token="peuple", method="base")
 		# Observed frequency
 		k <- data[token,d]
 
-		S[i] <- specif_value(N, n, B, k, method)
+		S[i] <- specif_value(N, n, K, k, method)
 		i <- i+1
 	}
 	return(S)
@@ -216,43 +216,36 @@ specif_calc <- function(parts, data, token="peuple", method="base")
 ## 
  # ------------------------------------------------------------------------
  # 
- # "specif_value <- function(N, n, B, k, method="base")" --
+ # "specif_value <- function(N, n, K, k, method="base")" --
  # 
  # Compute a specificity using the specified method.
- #     N, n, B are integers.
+ #     N, n, K are integers.
  #     k is an integer vector of observed values.
  # 
- # Possible methods: "base", "log", "diff", "scale", "logscale".
+ # Possible methods: "base", "log", "gap", "scale", "logscale".
  # 
  # ------------------------------------------------------------------------
  ##
-specif_value <- function(N, n, B, k, method="base") 
+specif_value <- function(N, n, K, k, method="base") 
 {
 	# Calculate the mode
 	islog <- (method %in% c("log","logscale"))
-	mo <- floor((n+1)*(B+1)/(N+2))
-	cdmo <- phyper(mo, B, N-B, n, log.p=islog)
+	mo <- floor((n+1)*(K+1)/(N+2))
+	cdmo <- phyper(mo, K, N-K, n, log.p=islog)
 	
 	res <- vector(mode="numeric", length=length(k))
-	i <- 1
 	
-	for (b in k) {
-		# Specificity for observed value
-		cdk <- ifelse(b <= mo, phyper(b, B, N-B, n), 1-phyper(b-1, B, N-B, n))
-		if (islog) {
-			cdk <- log(cdk)
-		}
-		
-		res[i] <- switch(method,
-			"base"=ifelse(b <= mo, -cdk, cdk),
-			"log"=ifelse(b <= mo, -abs(cdmo-cdk), abs(cdmo-cdk)),
-			"diff"=ifelse(b <= mo, -abs(cdmo-cdk), abs(cdmo-cdk)),
-			"scale"=ifelse(b <= mo, -abs(cdmo-cdk)/cdmo, abs(cdmo-cdk)/cdmo),
-			"logscale"=ifelse(b <= mo, -abs((cdmo-cdk)/cdk) , abs((cdmo-cdk)/cdk))
-		)
-		i <- i+1
-	}
-
+	# Specificity for observed value
+	cdk <- ifelse(k <= mo, phyper(k, K, N-K, n, log.p=islog), phyper(k-1, K, N-K, n, log.p=islog, lower.tail=FALSE))
+	
+	res <- switch(method,
+		"base"=ifelse(k <= mo, -cdk, cdk),
+		"log"=ifelse(k <= mo, -abs(cdmo-cdk), abs(cdmo-cdk)),
+		"gap"=ifelse(k <= mo, -abs(cdmo-cdk), abs(cdmo-cdk)),
+		"scale"=ifelse(k <= mo, -abs(cdmo-cdk)/cdmo, abs(cdmo-cdk)/cdmo),
+		"logscale"=ifelse(k <= mo, -abs((cdmo-cdk)/cdk) , abs((cdmo-cdk)/cdk))
+	)
+	
 	return(res)
 }
 
@@ -277,25 +270,25 @@ specif_plot <- function(d, data, token="peuple", R=NULL, method="base", ...)
 	
 	dsz <- colSums(data)
 	N <- sum(dsz)
-	B <- sum(data[token,])
+	K <- sum(data[token,])
 	colnm <- colnames(data)
 	n <- dsz[d]
 
 	if (is.null(R)) {
-		p <- B/N
+		p <- K/N
 		var <- n*p*(1-p)*(N-n)/(N-1)
 		R <- floor(2*sqrt(var))+1
 	}
 
 	# Calculate the mode
-	mo <- floor((n+1)*(B+1)/(N+2))
+	mo <- floor((n+1)*(K+1)/(N+2))
 
 	# Adjust the range
 	m <- max(c(0, mo-R))
 	M <- mo+R
 	
 	x <- m:M
-	y <- specif_value(N, n, B, x, method=method)
+	y <- specif_value(N, n, K, x, method=method)
 	
 	plot(x, abs(y), type='o', main=paste(token,"-", colnm[d],"- method:",method),
 		xlab=paste("mode =",mo), ylab="abs(specif)", ...)
@@ -325,7 +318,7 @@ specif_cdmo <- function(parts, data, token="peuple")
 	np <- length(parts)	
 	dsz <- colSums(data)
 	N <- sum(dsz)
-	B <- sum(data[token,])
+	K <- sum(data[token,])
 	colnm <- colnames(data)
 	
 	S <- vector(length=np)
@@ -334,8 +327,8 @@ specif_cdmo <- function(parts, data, token="peuple")
 	
 	for (d in parts) {
 		n <- dsz[d]
-		mo <- floor((n+1)*(B+1)/(N+2))
-		S[i] <- phyper(mo, B, N-B, n)
+		mo <- floor((n+1)*(K+1)/(N+2))
+		S[i] <- phyper(mo, K, N-K, n)
 		i <- i+1
 	}
 	return(S)
@@ -355,9 +348,9 @@ specif_cdmo <- function(parts, data, token="peuple")
  ##
 specif_mode2density <- function(data, maxi=sum(data), token="peuple", ...) 
 {
-	B <- sum(data[token,])
+	K <- sum(data[token,])
 	N <- sum(data)
-	J <- (N+2)/(B+1)
+	J <- (N+2)/(K+1)
 
 	if (missing(maxi)) {
 		maxi <- N
@@ -367,13 +360,13 @@ specif_mode2density <- function(data, maxi=sum(data), token="peuple", ...)
 	}
 	
 	# Mode increases by 1 at each jump J
-	x <- round(seq(B, maxi, J))
+	x <- round(seq(K, maxi, J))
 
 	# Calculate the mode
-	mo <- floor((x+1)*(B+1)/(N+2))
+	mo <- floor((x+1)*(K+1)/(N+2))
 	
 	# Corresponding mass density
-	md <- dhyper(mo, B, N-B, x)
+	md <- dhyper(mo, K, N-K, x)
 	
 	plot(mo, md, 'l', main=expression(P(X<=mo)),
 		xlab="Modes", ylab="")
@@ -393,9 +386,9 @@ specif_mode2density <- function(data, maxi=sum(data), token="peuple", ...)
  ##
 specif_mode2cdf <- function(data, maxi=sum(data), token="peuple", ...) 
 {
-	B <- sum(data[token,])
+	K <- sum(data[token,])
 	N <- sum(data)
-	J <- (N+2)/(B+1)
+	J <- (N+2)/(K+1)
 
 	if (missing(maxi)) {
 		maxi <- N
@@ -405,13 +398,13 @@ specif_mode2cdf <- function(data, maxi=sum(data), token="peuple", ...)
 	}
 	
 	# Mode increases by 1 at each jump J
-	x <- round(seq(B, maxi, J))
+	x <- round(seq(K, maxi, J))
 
 	# Calculate the mode
-	mo <- floor((x+1)*(B+1)/(N+2))
+	mo <- floor((x+1)*(K+1)/(N+2))
 	
 	# Corresponding cdf
-	cd <- phyper(mo, B, N-B, x)
+	cd <- phyper(mo, K, N-K, x)
 	
 	plot(mo, cd, 'l', main=expression(P(X<=mo)),
 		xlab="Modes", ylab="")

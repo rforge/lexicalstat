@@ -5,6 +5,7 @@
 \alias{specif_cdf}
 \alias{specif_plot}
 \alias{specif_calc}
+\alias{specif_value}
 \alias{specif_cdmo}
 
 \title{* Test specificities *}
@@ -15,6 +16,7 @@
 
 \usage{
 	specif_calc(parts, data, token="peuple", method="base")
+	specif_value(N, n, K, k, method="base")
 	specif_cdf(parts, data, token="peuple", R=10, new=TRUE, method="base", ...)
 	specif_cdmo(parts, data, token="peuple")
 	specif_density(parts, data, token="peuple", R=10, new=TRUE, ...)
@@ -34,12 +36,16 @@
 	\item{new}{if TRUE start a new window device}
 	\item{method}{method used to calculate the specificity}
 	\item{...}{other arguments passed to plot functions}
+	\item{N}{number of balls in the urn}
+	\item{K}{number of white balls in the urn}
+	\item{n}{number of balls drawn from the urn}
+	\item{k}{vector of observed white balls}
 }
 
 \details{
 	Utility functions to play with specificities.
 	
-	The possible method names are : "base", "log", "diff", "scale" or "logscale".
+	The possible method names are : "base", "log", "gap", "scale" or "logscale".
 
 }
 

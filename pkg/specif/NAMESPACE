@@ -1,5 +1,6 @@
 export(
 	"specif_calc",
+	"specif_value",
 	"specif_cdf",
 	"specif_density",
 	"specif_mode2cdf",
