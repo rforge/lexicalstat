@@ -1,8 +1,8 @@
-\name{wordAssociation}
-\alias{wordAssociation}
+\name{wam}
+\alias{wam}
 \title{Compute association measure and construct a \code{\link{WordAssociation}} object.}
 \usage{
-  wordAssociation(N, n, K, k,
+  wam(N, n, K, k,
     measure = "wam.specificities", types, parts)
 }
 \arguments{
