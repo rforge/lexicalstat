@@ -9,5 +9,5 @@ Description: functions to compute several measures of word association
 License: GPL (>= 2)
 Lazyload: yes
 URL: http://www.r-project.org
-Collate: main.R zzz.R wam.specificities.R wam.loglikelihood.R
+Collate: main.R zzz.R wam.specificities.R wam.loglikelihood.R other.R
 Encoding: UTF-8

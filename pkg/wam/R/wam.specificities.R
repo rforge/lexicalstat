@@ -7,14 +7,6 @@
 # This file is part of the wam project.
 # ===========================================================================
 
-#
-# word association measure defined in : LAFON, Pierre, 1980. « Sur la
-# variabilité de la fréquence des formes dans un corpus », /Mots/, 1, pp.
-# 127--165
-#
-# http://www.persee.fr/web/revues/home/prescript/article/mots_0243-6450_1980_num_1_1_1008
-#
-
 wam.specificities <- function(N, n, K, k, method="log") {
 	# mode
 	mo <- floor((n+1)*(K+1)/(N+2));
