@@ -60,4 +60,10 @@ Sylvain Loiseau
 See Also as \code{\link{wam}}
 }
 \examples{
+wam.specificities(100, 20, 10, 4)
+
+data(robespierre)
+attach(robespierre)
+wam(N, n, K, k, measure = wam.specificities, types, parts)
+detach(robespierre)
 }

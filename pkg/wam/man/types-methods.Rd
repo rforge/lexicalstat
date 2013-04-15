@@ -1,46 +1,38 @@
 \docType{methods}
 \name{types}
 \alias{types}
-\alias{types,FrequencyListDataFrame-method}
-\alias{types,LexicalTableSparseMatrix-method}
 \alias{types,WordAssociation-method}
 \title{List of the types of a corpus.}
 \usage{
-\S4method{types}{LexicalTableSparseMatrix}(corpus)
-\S4method{types}{FrequencyListDataFrame}(corpus)
+\S4method{types}{WordAssociation}(obj)
 }
 \section{Methods}{
 \describe{
 
-\item{\code{signature(corpus = "FrequencyListDataFrame")}}{
-%%  ~~describe this method here~~
-}
-
-\item{\code{signature(corpus = "LexicalTableSparseMatrix")}}{
-%%  ~~describe this method here~~
-}
-
-\item{\code{signature(corpus = "WordAssociation")}}{
+\item{\code{signature(obj = "WordAssociation")}}{
 %%  ~~describe this method here~~
 }
 }}
 \arguments{
-  \item{corpus}{Any \code{\link{CorpusAsFrequencies}}
-  concrete subclass.}
+  \item{obj}{\code{\link{WordAssociation}} subclass.}
 }
 \value{
   A character vector containing the list of the linguistic
-  types (unique tokens) in the corpus.
+  types corresponding to the computed association measure.
 }
 \description{
   List of the types of a corpus.
 }
 \examples{
-data(dickensFrequencyList)
-types(dickensFrequencyList);
+data(robespierre)
+attach(robespierre)
+x <- wam(N, n, K, k, measure = c(wam.chisq, wam.loglikelihood), types, parts)
+detach(robespierre)
+types(x)
+
 }
 \seealso{
-  \code{\link{ntype}}
+  \code{\link{parts}}
 }
 
 \keyword{methods}

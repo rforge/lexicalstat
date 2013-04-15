@@ -2,52 +2,39 @@
 \docType{methods}
 \alias{N}
 \alias{N-methods}
-\alias{N,FrequencyListDataFrame-method}
-\alias{N,FullTextList-method}
-\alias{N,LexicalTableSparseMatrix-method}
-\alias{N,TabulatedDataFrame-method}
 \alias{N,WordAssociation-method}
 \title{Number of tokens of a corpus}
 \description{
-Get the number of tokens of a corpus.
+Number of tokens in its corpus for each forms in a \code{\link{WordAssociation}} object.
 }
 
 \usage{
-\S4method{N}{FullTextList}(corpus)
-\S4method{N}{LexicalTableSparseMatrix}(corpus)
-\S4method{N}{TabulatedDataFrame}(corpus)
-\S4method{N}{FrequencyListDataFrame}(corpus)
+\S4method{N}{WordAssociation}(obj)
 }
 \arguments{
-  \item{corpus}{A \code{\link{Corpus}} object}
+  \item{obj}{A \code{\link{obj}} object}
 }
 
 \section{Methods}{
 \describe{
 
-\item{\code{signature(corpus = "FrequencyListDataFrame")}}{
-}
-
-\item{\code{signature(corpus = "FullTextList")}}{
-}
-
-\item{\code{signature(corpus = "LexicalTableSparseMatrix")}}{
-}
-
-\item{\code{signature(corpus = "TabulatedDataFrame")}}{
-}
-
-\item{\code{signature(corpus = "WordAssociation")}}{
+\item{\code{signature(obj = "WordAssociation")}}{
+Any word association object (see \code{\link{wam}}).
 }
 }}
 \value{
   The number of tokens in the corpus.
 }
 \examples{
-data(dickensFrequencyList)
-N(dickensFrequencyList);
+
+data(robespierre)
+attach(robespierre)
+x <- wam(N, n, K, k, measure = c(wam.chisq, wam.loglikelihood), types, parts)
+detach(robespierre)
+N(x)
+
 }
 \seealso{
-  \code{\link{ntypes}} and \code{\link{type}}
+  \code{\link{types}}
 }
 \keyword{methods}

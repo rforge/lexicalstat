@@ -5,18 +5,25 @@
 \alias{n,WordAssociation-method}
 \title{The size of the sub corpus in a word association list}
 \description{
-
+Number of tokens in its subcorpus for each forms in a \code{\link{WordAssociation}} object.
 }
 \section{Methods}{
 \describe{
 \item{\code{signature(obj = "WordAssociation")}}{
-%%  ~~describe this method here~~
+Any word association object (see \code{\link{wam}}).
 }
 }}
 \seealso{
   \code{\link{N}}, \code{\link{K}}, \code{\link{k}}, and \code{\link{WordAssociation}} for
   the big picture.
 }
+\examples{
+data(robespierre)
+attach(robespierre)
+x <- wam(N, n, K, k, measure = c(wam.chisq, wam.loglikelihood), types, parts)
+detach(robespierre)
+n(x)
+
+}
 
 \keyword{methods}
-\keyword{ ~~ other possible keyword(s) ~~ }

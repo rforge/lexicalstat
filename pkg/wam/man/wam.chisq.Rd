@@ -60,4 +60,12 @@ Sylvain Loiseau
 See Also as \code{\link{wam}}
 }
 \examples{
+
+wam.chisq(100, 20, 10, 4)
+
+data(robespierre)
+attach(robespierre)
+wam(N, n, K, k, measure = wam.chisq, types, parts)
+detach(robespierre)
+
 }

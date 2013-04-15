@@ -11,7 +11,7 @@ The list of the indicator names.
 \describe{
 
 \item{\code{signature(obj = "WordAssociation")}}{
-%%  ~~describe this method here~~
+A word association object.
 }
 }}
 \keyword{methods}

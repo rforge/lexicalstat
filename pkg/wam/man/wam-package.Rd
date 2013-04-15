@@ -1,5 +1,5 @@
-\name{wam}
-\alias{wam}
+\name{wam-package}
+\alias{wam-intro}
 \alias{wam-package}
 
 \title{Word Association Measures}

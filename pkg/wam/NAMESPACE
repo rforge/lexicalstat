@@ -1,4 +1,22 @@
 export(
 wam.specificities,
-wam.loglikelihood
+wam.loglikelihood,
+wam.chisq,
+wam.t,
+wam.z
 )
+
+#export(wam.fisher);
+#export(wam.binomial);
+#export(wam.MI);
+
+# functions exported from file "R/word.association.*.R"
+export(wam)
+exportMethods(indicator.name)
+exportMethods(parts)
+exportMethods(types)
+exportMethods(N)
+exportMethods(n)
+exportMethods(K)
+exportMethods(k)
+

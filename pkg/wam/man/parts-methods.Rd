@@ -14,4 +14,13 @@ The part of the corpus each entry belong to in a \code{\link{WordAssociation}} o
 %%  ~~describe this method here~~
 }
 }}
+\examples{
+data(robespierre)
+attach(robespierre)
+x <- wam(N, n, K, k, measure = c(wam.chisq, wam.loglikelihood), types, parts)
+detach(robespierre)
+parts(x)
+
+}
+
 \keyword{methods}
