@@ -92,21 +92,5 @@ exportMethods(kwic);
 # functions exported from file "R/treetagger.R"
 export(read.treetagger);
 
-# functions exported from file "R/word.association.*.R"
-export(wordAssociation)
-exportMethods(indicator.name)
-exportMethods(parts)
-#exportMethods(N)
-#exportMethods(types)
-exportMethods(n)
-exportMethods(K)
-exportMethods(k)
-exportMethods(wam);
-export(wam.fisher);
-export(wam.specificities);
-export(wam.binomial);
-export(wam.loglikelihood);
-export(wam.MI);
-
 # functions exported from file "R/textUtils.R"
 export(line2paragraph);
