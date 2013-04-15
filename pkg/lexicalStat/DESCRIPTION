@@ -6,7 +6,7 @@ Date: 2010-04-06
 Author: Sylvain Loiseau <sylvain.loiseau@univ-paris13.fr>, Bernard Desgraupes <bernard.desgraupes@u-paris10.fr>
 Maintainer: Sylvain Loiseau <sylvain.loiseau@univ-paris13.fr>
 Description: Different methods for statistics for textual corpora.
-Depends: R (>= 2.9.0), Matrix, XML, plyr
+Depends: R (>= 2.9.0), Matrix, XML, plyr, wam
 License: BSD
 LazyLoad: yes
 Suggests: 
