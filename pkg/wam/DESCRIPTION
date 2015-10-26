@@ -10,5 +10,5 @@ Depends: R (>= 2.9.0), methods
 License: GPL (>= 2)
 Lazyload: yes
 URL: http://www.r-project.org
-Collate: main.R zzz.R wam.R wam.object.R wam.print.R utils.R
+Collate: main.R zzz.R wam-functions.R wam.object.R wam.print.R utils.R
 Encoding: UTF-8
