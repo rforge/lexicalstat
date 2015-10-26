@@ -55,6 +55,6 @@ wam.t(100, 20, 10, 4)
 
 data(robespierre)
 attach(robespierre)
-wam(N, n, K, k, measure = wam.t, types, parts)
+wam(N, n, K, k, measure = "t", types, parts)
 detach(robespierre)
 }

@@ -31,7 +31,7 @@ LAFON, Pierre, 1980. « Sur la variabilité de la fréquence des formes dans un 
 \examples{
 data(robespierre)
 attach(robespierre)
-wam(N, n, K, k, measure = wam.chisq, types, parts)
+wam(N, n, K, k, measure = "chisq", types, parts)
 detach(robespierre)
 }
 \keyword{datasets}

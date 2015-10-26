@@ -8,11 +8,11 @@
 # ===========================================================================
 
 
-#Dunning 1993 accurate method for the Statistics of Surprise and coincidence
+# Dunning 1993 accurate method for the Statistics of Surprise and coincidence
 
-#http://pioneer.chula.ac.th/~awirote/colloc/statmethod1.htm
+# http://pioneer.chula.ac.th/~awirote/colloc/statmethod1.htm
 
-wam.loglikelihood <- function(N, n, K, k, p.value=TRUE, two.sided=FALSE) {
+wam.loglikelihood <- function(N, n, K, k, p.value=FALSE, two.sided=TRUE) {
   N <- N;
   C1 <- K;
   C2 <- N-K;
@@ -71,7 +71,6 @@ wam.specificities <- function(N, n, K, k, method="log") {
       specif <- ifelse(k <= mo, -abs((cdmo-cdk)/cdk) , abs((cdmo-cdk)/cdk));
     } 
   }
-
   return(specif);
 }
 
@@ -89,7 +88,7 @@ wam.z <- function(N, n, K, k, yates.correction=FALSE) {
 }
 
 wam.t <- function(N, n, K, k) {
-  cont <- .make.contingency(N, n, K, k)
+  cont <- make.contingency(N, n, K, k)
 
     C1 <- K;
   R1 <- n;
@@ -142,15 +141,12 @@ wam.chisq <- function(N, n, K, k, yates.correction=TRUE, p.value=TRUE, two.sided
 #    }
 
 wam.fisher <- function(N, n, K, k) {
-    c <-.make.contingency(N, n, K, k);
+    c <-make.contingency(N, n, K, k);
     return(fisher.test(c)$p.value);
 }
 
 wam.g <- function(N, n, K, k) {
+	stop("not implemented yet")
 }
 
-.make.contingency <- function(N, n, K, k) {
-    c <- matrix(c(k, K-k, n-k, (N-K)-(n-k)), 2, 2, dimnames=list(c("n", "!n"), c("k", "!k")));
-    return(c);
-}
 

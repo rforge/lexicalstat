@@ -26,10 +26,9 @@
 \examples{
 data(robespierre)
 attach(robespierre)
-x <- wam(N, n, K, k, measure = c(wam.chisq, wam.loglikelihood), types, parts)
-detach(robespierre)
+x <- wam(N, n, K, k, measure = c("chisq", "loglikelihood"), types, parts)
 types(x)
-
+detach(robespierre)
 }
 \seealso{
   \code{\link{parts}}

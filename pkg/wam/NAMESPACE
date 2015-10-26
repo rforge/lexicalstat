@@ -3,8 +3,10 @@ wam.specificities,
 wam.loglikelihood,
 wam.chisq,
 wam.t,
-wam.z
+wam.z,
+wam.fisher
 )
+export(make.contingency)
 
 #export(wam.fisher);
 #export(wam.binomial);
@@ -13,10 +15,15 @@ wam.z
 # functions exported from file "R/word.association.*.R"
 export(wam)
 exportMethods(indicator.name)
+exportMethods(association)
 exportMethods(parts)
 exportMethods(types)
 exportMethods(N)
 exportMethods(n)
 exportMethods(K)
 exportMethods(k)
+exportMethods(summary)
+exportMethods(show)
+exportMethods(print)
 
+import(methods)

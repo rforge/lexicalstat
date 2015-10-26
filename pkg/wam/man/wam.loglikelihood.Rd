@@ -7,7 +7,7 @@ Calculate word association according to log likelihood.
 Calculate word association according to log likelihood.
 }
 \usage{
-wam.loglikelihood(N, n, K, k, p.value = TRUE, two.sided = FALSE)
+wam.loglikelihood(N, n, K, k, p.value = FALSE, two.sided = TRUE)
 }
 \arguments{
   \item{N}{
@@ -56,7 +56,7 @@ wam.loglikelihood(100, 20, 10, 4)
 
 data(robespierre)
 attach(robespierre)
-wam(N, n, K, k, measure = wam.loglikelihood, types, parts)
+wam(N, n, K, k, measure = "loglikelihood", types, parts)
 detach(robespierre)
 
 }

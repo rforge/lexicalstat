@@ -1,17 +1,16 @@
-\name{indicator.name-methods}
+\name{association-methods}
 \docType{methods}
-\alias{indicator.name-methods}
-\alias{indicator.name}
-\alias{indicator.name,WordAssociation-method}
-\title{ The names of the statistical indicators used in a \code{\link{WordAssociation}} object}
+\alias{association-methods}
+\alias{association,WordAssociation-method}
+\title{ Get the association strengh }
 \description{
-The list of the indicator names.
+ Get the association strengh for all association computed in this \code{\link{WordAssociation}} object
 }
 \section{Methods}{
 \describe{
 
 \item{\code{signature(obj = "WordAssociation")}}{
-A word association object.
+The association strength as a vector of numeric
 }
 }}
 \examples{
@@ -21,5 +20,6 @@ x <- wam(N, n, K, k, measure = c("chisq", "loglikelihood", "specificities"), typ
 indicator.name(x)
 detach(robespierre)
 }
+
 \keyword{methods}
 

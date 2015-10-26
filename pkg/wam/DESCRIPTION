@@ -5,10 +5,10 @@ Version: 0.1
 Date: 2013-04-05
 Author: Bernard Desgraupes <bernard.desgraupes@u-paris10.fr>, Sylvain Loiseau <sylvain.loiseau@univ-paris13.fr>
 Maintainer: Sylvain Loiseau <sylvain.loiseau@univ-paris13.fr>
-Description: functions to compute several measures of word association
+Description: functions to compute several measures of word association used in linguistics.
 Depends: R (>= 2.9.0), methods
 License: GPL (>= 2)
 Lazyload: yes
 URL: http://www.r-project.org
-Collate: main.R zzz.R wam.R wam.object.R wam.print.R
+Collate: main.R zzz.R wam.R wam.object.R wam.print.R utils.R
 Encoding: UTF-8

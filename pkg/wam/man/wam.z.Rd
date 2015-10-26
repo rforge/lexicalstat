@@ -58,7 +58,7 @@ wam.z(100, 20, 10, 4)
 
 data(robespierre)
 attach(robespierre)
-wam(N, n, K, k, measure = wam.z, types, parts)
+wam(N, n, K, k, measure = "z", types, parts)
 detach(robespierre)
 
 }

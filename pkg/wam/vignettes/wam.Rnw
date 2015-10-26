@@ -10,7 +10,7 @@
 
 \makeindex 
 
-\title{Word association measure}
+\title{wam package: computing Word association measure}
 
 \author{Bernard Desgraupes and Sylvain Loiseau\\
 <bernard.desgraupes@u-paris10.fr>, <sylvain.loiseau@univ-paris13.fr>}
@@ -35,7 +35,7 @@
 
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
-%\section{Introduction}
+\section{Introduction: Indicators of word association}
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
 \label{sec:Intro}
@@ -43,30 +43,34 @@
 <<wam_setup, echo=TRUE>>=
 library(wam);
 @
+% ................................................................
+\subsection{Introduction}
+% ................................................................
 
-% ----------------------------------------------------------------
-% ----------------------------------------------------------------
-\section{Indicator of word association}
-% ----------------------------------------------------------------
-% ----------------------------------------------------------------
-\label{sec:indicators}
+This package contains various functions for computing word association measure
+as well as a high level function for conveniently applying these functions
+on all the lexical types of a corpora.
 
-Each association measure return a numeric vector indicating, for each
-corresponding index in the arguments, the association strengh between the word
-under scrutiny and the subcorpus.
+% ................................................................
+\subsection{Value}
+% ................................................................
 
-These association measures, unless otherwise stated in the help page of the
-function, are positive when the word is over-represented ("attracted"), and
+All association measure functions are prefixed with "wam." and return a numeric
+vector indicating the association strengh between the word(s)
+under scrutiny and subcorpus/ora.
+
+These association measures, unless otherwise stated in the help pages of the
+functions, are positive when the word is over-represented ("attracted"), and
 negative when the word is under-represented.
 
 In absolute value, the more the word is over-representend or under-represented,
-the more the association measure givien is hight.
+the more the association measure givien is high.
 
 % ................................................................
-\subsection{Arguments of the functions}
+\subsection{Arguments}
 % ................................................................
 
-All functions have the following signature: ($N$, $n$, $K$, $k$), where:
+All association measure functions have the following signature: ($N$, $n$, $K$, $k$), where:
 
 \begin{enumerate}
 	\item $N$ is the total size of the corpora
@@ -78,8 +82,8 @@ All functions have the following signature: ($N$, $n$, $K$, $k$), where:
 This can be easily turn into the "contingency table" representation used in some
 presentation (according to Stefan Evert UCS documentation) :
 
-\begin{tabular}{llll}
-                  word & $¬ word$ &  T  \\\hline
+\begin{tabular}{l|ll|l}\hline
+                & word & $¬ word$ &  T  \\\hline
  subcorpus      & O11  & O12      & R1  \\
                 & E11  & E12      &     \\\hline
  $¬ subcorpus$  & O21  & O22      & R2  \\
@@ -107,11 +111,11 @@ where :
 
 Conversion from $N$, $n$, $K$, $k$ notation :
 
-\begin{tabular}{llll}
-                        & word & $¬ word$    & $T$   \\
+\begin{tabular}{l|ll|l}\hline
+                        & word & $¬ word$    & $T$   \\\hline
          subcorpus      & $k$    & $n-k$         & $n$   \\
-         $¬ subcorpus$  & $K-k$  & $N-K-(n-k)$   & $N-n$ \\
-         Totals         & $K$    & $N-K$         & $N$   \\
+         $¬ subcorpus$  & $K-k$  & $N-K-(n-k)$   & $N-n$ \\\hline
+         Totals         & $K$    & $N-K$         & $N$   \\\hline
 \end{tabular}
 
 	
@@ -124,122 +128,252 @@ Conversion to $N$, $n$, $K$, $k$ notation :
   \item $k = O11$
 }
 
-We will use the arguments from the data set \emph{robespierre}, focusing on the
-subfrequency of the types \emph{peuple} (people) in the second discourse by Robespierre.
-Is this type over- or under-represented in this discouse, according to its frequency
-in the corpus of all its discourses? See Lafon 1980.
-
-<<wam_argument_setup, echo=TRUE, fig=FALSE>>=
-data(robespierre)
-head(robespierre)
-robespierre <- robespierre[2,]
-robespierre
-attach(robespierre)
-@
-
 % ................................................................
 \subsection{Recycling arguments}
 % ................................................................
 
-Arguments are recycled.
+For all functions arguments are recycled.
+
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+\section{The indicators}
+% ----------------------------------------------------------------
+% ----------------------------------------------------------------
+\label{sec:indicators}
+
+% ................................................................
+\subsection{Introduction}
+% ................................................................
+
+All word association functions will be illustrated with data from the robespierre dataset.
+We will consider the subfrequency of the lexical types \emph{peuple}
+in a subcorpora containing the fourth discourse by Robespierre. Is this type over- or under-represented in this discouse, 
+according to its frequency in the corpus of all the discourses?
+
+<<wam_argument_setup, echo=TRUE, fig=FALSE>>=
+data(robespierre, package="wam")
+head(robespierre)
+
+peuple_D4 <- robespierre[robespierre$types=="peuple" & robespierre$parts == "D4",]
+peuple_D4
+N <- peuple_D4$N
+n <- peuple_D4$n
+K <- peuple_D4$K
+k <- peuple_D4$k
+@
+
+A graph of the function is provided for all the possible values of $k$. The interval of
+the possible value of $K$ is $[0, min(k,n)]$. (it is not possible to have more
+occurrences of the lexical type than the size of the subcorpus or more than
+the total frequency of the type in the whole corpus).
+
+<<wam_argument_setup2, echo=TRUE, fig=FALSE>>=
+maxk <- min(K,n)
+maxk
+allk <- 0:maxk
+@
+
+The expected subfrequency of "peuple" if the subcorpus D4 (the fourth discourse
+by Robespierre) is: $K \times n / N$. The mode
+is the closest positive integers to the expected frequency.
+
+<<wam_argument_setup3, echo=TRUE, fig=FALSE>>=
+expected = round(K * n / N, 2)
+expected
+mode <- floor((n+1)*(K+1)/(N+2));
+mode
+@
+
+A form is over-used (attracted) if the subfrequency $k$ in the subcorpus is
+greater than the expected expected frequency and under-used otherwise.
+Here, the form peuple is under-represented.
 
 % ................................................................
 \subsection{Log-likelihood}
 % ................................................................
+\label{sec:log-likelihood}
 
-A given value of attraction between a form and a subcorpus:
+See Dunning 1993.
 
 <<wam_loglikelihood, echo=TRUE, fig=FALSE>>=
 wam.loglikelihood(N, n, K, k);
 @
 
-Graph of the function:
+<<wam_loglikelihood2, echo=TRUE, fig=FALSE>>=
+wam.loglikelihood(N, n, K, mode);
+@
+
+Graph of the function :
 
 <<wam_loglikelihood3, echo=TRUE, fig=TRUE>>=
-plot(wam.loglikelihood(N[1], n[1], K[1], 0:k[1]),
+plot(wam.loglikelihood(N, n, K, allk),
      type="l", xlab="k", ylab="Log likelihood",
 	  main="Graph of the Log likelihood function",
 	  sub="(N=61449, n=7896, K=296)")
+points(k, wam.loglikelihood(N, n, K, k), pch="+")
+points(mode, wam.loglikelihood(N, n, K, mode), pch="x")
 @
 
 % ................................................................
 \subsection{Specificities}
 % ................................................................
+\label{sec:specificities}
 
-This is an implementation of the indicator that has been proposed by Lafon 1980.
-
-A given value of attraction between a form and a subcorpus:
+See Lafon 1980.
 
 <<wam_specificities, echo=TRUE, fig=FALSE>>=
-wam.specificities(N, n, K, k);
+wam.specificities(N, n, K, k, method="base");
+@
+
+<<wam_specificities2, echo=TRUE, fig=FALSE>>=
+wam.specificities(N, n, K, mode, method="base");
 @
 
 Graph of the function:
 
 <<wam_specificities3, echo=TRUE, fig=TRUE>>=
-plot(wam.specificities(N[1], n[1], K[1], 0:k[1], method="base"), type="l", xlab="k", ylab="specificities", main="Graph of the specificities function", sub="(N=61449, n=7896, K=296)")
+plot(wam.specificities(N, n, K, allk, method="base"),
+     type="l", xlab="k", ylab="specificities",
+	  main="Graph of the specificities function",
+	  sub="(N=61449, n=7896, K=296)")
+points(k, wam.specificities(N, n, K, k, method="base"), pch="+")
+points(mode, wam.specificities(N, n, K, mode, method="base"), pch="x")
 @
 
-These exemple is the lexical frequency of the form \emph{peuple} (French for people) in three public discourses
-by Robespierre in a corpus of 10 discourses containing $N = 61449$ occurrences in total (Lafon 1980) :
+% ................................................................
+\subsubsection{Analysis of the specificities indicator : Standard indicator (method="base")}
+% ................................................................
 
-\begin{tabular}{l|rrrr}
-Discours & N & n & K & k\\\hline
-4 & 61449 & 6903 & 296 & 14  \\
-5 & 61449 & 7896 & 296 & 53  \\
-8 & 61449 & 2063 & 296 & 16  \\\hline
-\end{tabular}
+The presentation below follows (Lafon, 1980).
 
-For each line we can compute the expected frequency of the form ($K \times n / N$) and
-mark $+$ if the form is more frequent than expected or $-$ otherwise.
+The hypergeometric distribution give the probability associated with a drawing
+without replacement. For all the possible subfrequencys of \emph{peuple}
+in the fourth discourses we can compute the density of probability in the hypergeometric distribution.
+The graph contains also the observed frequency as well as the mode.
 
-\begin{tabular}{l|rrrrrr}\hline
-Discours & N & n & K & k & expected & $k > expected$\\\hline
-4 & 61449 & 6903 & 296 & 14 & \Sexpr{sprintf("%.2f", round(292 * 6903 / 61449, 2))} & $-$\\ 
-5 & 61449 & 7896 & 296 & 53 & \Sexpr{sprintf("%.2f", round(292 * 7896 / 61449, 2))} & $+$\\
-8 & 61449 & 2063 & 296 & 16 & \Sexpr{sprintf("%.2f", round(292 * 2063 / 61449, 2))} & $+$\\\hline
-\end{tabular}
-
-The form \emph{peuple} is less frequent in the fourth discourse than expected.
-On the contrary, \emph{peuple} is more frequent than expected in the fifth and
-eigth discourses.
+<<wam_specificities_presentation3, echo=TRUE, fig=TRUE>>=
+plot(dhyper(allk, K, N-K, n),
+type="l", xlab="k (possible subfrequency of peuple)", ylab="Density of probability",
+main="Hypergeometric distribution", sub="density fonction")
+points(k, dhyper(k, K, N-K, n), pch="+")
+points(mode, dhyper(mode, K, N-K, n), pch="x")
+@
 
 If the observed frequency is less than the expected frequency, we compute the sum of the
-probability for a frequency lesser or equal to the observed frequency ($Prob(X \leq k)$).
+probability for a frequency lesser or equal to the observed frequency ($Prob(X \leq k)$)
+-- that is, the cumulative probability.
+
 If the observed frequency is greater than the expected frequency, we compute the sum of the
-probability for a frequency greater to the observed frequency ($Prob(X > k)$) (Lafon 1980 : 152).
+probability for a frequency greater to the observed frequency ($Prob(X > k)$) (Lafon 1980 : 141) --
+that is, the cumulative probability for the upper tail of the distribution.
 
-In both cases, the more unexpected is the frequency, the smaller is the indicator.
-
-\begin{tabular}{l|rrrrrrr}\hline
-Discours & N & n & K & k & expected & $k > expected$ & cumulative extreme probability\\\hline
-4 & 61449 & 6903 & 296 & 14 & \Sexpr{sprintf("%.2f", round(292 * 6903 / 61449, 2))} & $-$ & \Sexpr{sprintf("%.10f", phyper(14, 296, 61449-296, 6903))}\\
-5 & 61449 & 7896 & 296 & 53 & \Sexpr{sprintf("%.2f", round(292 * 7896 / 61449, 2))} & $+$ & \Sexpr{sprintf("%.10f", 1 - phyper(53-1, 296, 61449-296, 7896))}\\
-8 & 61449 & 2063 & 296 & 16 & \Sexpr{sprintf("%.2f", round(292 * 2063 / 61449, 2))} & $+$ & \Sexpr{sprintf("%.10f", 1 - phyper(16-1, 296, 61449-296, 2063))}\\\hline
-\end{tabular}
-
-According to this indicator, the second case is more "surprising" than the third or, in other
-terms, \emph{peuple} is more attracted by, or specific to the second discourse than to the third.
-
-According to relative frequency, one could conclude the other way around:
-$ 53 / 7896 = \Sexpr{round(53 / 7896, 4)} < 16 / 2063 = \Sexpr{round(16 / 2063, 4)}$
-(cf. Lafon 1980 : 152).
-
-For the fifth discourse above ($N=61449$, $n=7896$), the possible frequencies of
-\emph{peuple} range from $0$ to $296$ (if all occurrences of \emph{peuple}
-where in this discours). Here is the corresponding values for the specificities
-indicator:
-
-% ................................................................
-\subsubsection{Log of specificities}
-% ................................................................
-
-The log of the probability; with "-" sign if specificity is negative and "+" if
-it is positive.
-
-<<wam_specificities_log, echo=TRUE, fig=TRUE>>=
-plot(wam.specificities(N[1], n[1], K[1], 0:k[1], method="log"), type="l", xlab="k", ylab="specificities", main="Specificities indicateur (log)", sub="N=61449, n=7896, K=296")
+<<wam_specificities_presentation5, echo=TRUE, fig=TRUE>>=
+y <- ifelse(allk <= mode, phyper(allk, K, N-K, n), 
+                          phyper(allk-1, K, N-K, n, lower.tail=FALSE))
+plot(allk, y,
+	type="l", xlab="k (possible subfrequency of peuple)",
+	ylab="Cumulative probability",
+	main="Hypergeometric distribution",
+	sub="lower tail for k < mode, upper tail for k >= mode")
 @
+
+We add a sign: negative if the frequency is lower than expected, positive if it is greater.
+
+<<wam_specificities_presentation5b, echo=TRUE, fig=TRUE>>=
+y <- ifelse(allk <= mode, phyper(allk, K, N-K, n),
+                       phyper(allk-1, K, N-K, n, lower.tail=FALSE))
+y <- ifelse(allk <= mode, -y, y);
+plot(allk, y,
+	type="l", xlab="k (possible subfrequency of peuple)",
+	ylab="Cumulative probability",
+	main="Hypergeometric distribution",
+	sub="-(lower tail) for k < mode, upper tail for k >= mode")
+@
+
+It is the standard Specificities function (Lafon 1980),
+as implemented in the function wam.specificities with method="base" :
+
+<<wam_specificities_presentation5c, echo=TRUE, fig=TRUE>>=
+plot(allk, wam.specificities(N, n, K, allk, method="base"),
+	type="l", xlab="k (possible subfrequency of peuple)",
+	ylab="Specificities",
+	main="Specificities word association measure")
+@
+
+% ................................................................
+\subsubsection{Analysis of the specificities indicator : log (method="log")}
+% ................................................................
+
+In order to ease the reading, log are used:
+
+<<wam_specificities_presentation6, echo=TRUE, fig=TRUE>>=
+y <- ifelse(allk <= mode, phyper(allk, K, N-K, n, log.p=TRUE), 
+                       phyper(allk-1, K, N-K, n, lower.tail=FALSE, log.p=TRUE))
+y <- ifelse(allk <= mode, -abs(y), abs(y));
+plot(allk, y,
+	type="l", xlab="k (possible subfrequency of peuple)",
+	ylab="log probability of hypergeometric distribution",
+	main="Log-Specificities function");
+points(k, phyper(k, K, N-K, n, log.p=TRUE), , pch="+")
+points(mode, phyper(mode, K, N-K, n, log.p=TRUE), pch="x")
+@
+
+Another issue is that the mode is different from $0$:
+
+<<wam_specificities_presentation6b, echo=TRUE, fig=FALSE>>=
+phyper(mode, K, N-K, n, log.p=TRUE)
+@
+
+in order to have $mode = 0$, the value of the mode is substracted from all values:
+
+<<wam_specificities_presentation7, echo=TRUE, fig=TRUE>>=
+y <- ifelse(allk <= mode, phyper(allk, K, N-K, n, log.p=TRUE),
+                       phyper(allk-1, K, N-K, n, lower.tail=FALSE, log.p=TRUE))
+cdmo <- phyper(mode, K, N-K, n, log.p=TRUE);
+y <- ifelse(allk <= mode, -abs(cdmo-y), abs(cdmo-y));
+plot(allk, y, 
+	type="l", xlab="k (possible subfrequency of peuple)",
+	ylab="log probability of hypergeometric distribution",
+	main="Specificities")
+points(k, wam.specificities(N, n, K, k, method="log"), pch="+")
+points(mode, wam.specificities(N, n, K, mode, method="log"), pch="x")
+@
+
+That is the wam.specificities function with method="log":
+
+<<wam_specificities_presentation8, echo=TRUE, fig=TRUE>>=
+plot(allk, wam.specificities(N, n, K, allk, method="log"), 
+	type="l", xlab="k (possible subfrequency of peuple)",
+	ylab="log probability of hypergeometric distribution",
+	main="Specificities")
+points(k, wam.specificities(N, n, K, k, method="log"), pch="+")
+points(mode, wam.specificities(N, n, K, mode, method="log"), pch="x")
+@
+
+where the mode is $0$ :
+
+<<wam_specificities_presentation9, echo=TRUE, fig=FALSE>>=
+wam.specificities(N, n, K, mode, method="log");
+@
+
+% \begin{tabular}{l|rrrrrrr}\hline
+% Discours & N & n & K & k & expected & $k > expected$ & cumulative extreme probability\\\hline
+% 4 & 61449 & 6903 & 296 & 14 & \Sexpr{sprintf("%.2f", round(292 * 6903 / 61449, 2))} & $-$ & \Sexpr{sprintf("%.10f", phyper(14, 296, 61449-296, 6903))}\\
+% 5 & 61449 & 7896 & 296 & 53 & \Sexpr{sprintf("%.2f", round(292 * 7896 / 61449, 2))} & $+$ & \Sexpr{sprintf("%.10f", 1 - phyper(53-1, 296, 61449-296, 7896))}\\
+% 8 & 61449 & 2063 & 296 & 16 & \Sexpr{sprintf("%.2f", round(292 * 2063 / 61449, 2))} & $+$ & \Sexpr{sprintf("%.10f", 1 - phyper(16-1, 296, 61449-296, 2063))}\\\hline
+% \end{tabular}
+%
+% According to this indicator, the second case is more "surprising" than the third or, in other
+% terms, \emph{peuple} is more attracted by, or specific to the second discourse than to the third.
+%
+% According to relative frequency, one could conclude the other way around:
+% $ 53 / 7896 = \Sexpr{round(53 / 7896, 4)} < 16 / 2063 = \Sexpr{round(16 / 2063, 4)}$
+% (cf. Lafon 1980 : 152).
+%
+% For the fifth discourse above ($N=61449$, $n=7896$), the possible frequencies of
+% \emph{peuple} range from $0$ to $296$ (if all occurrences of \emph{peuple}
+% where in this discours). Here is the corresponding values for the specificities
+% indicator:
 
 % % ----------------------------------------------------------------
 % % ----------------------------------------------------------------
@@ -281,6 +415,102 @@ plot(wam.specificities(N[1], n[1], K[1], 0:k[1], method="log"), type="l", xlab="
 % #hist(s, breaks=100);
 % @
 
+% ................................................................
+\subsection{z}
+% ................................................................
+\label{sec:z}
+
+<<wam_z, echo=TRUE, fig=FALSE>>=
+wam.z(N, n, K, k);
+@
+
+<<wam_z2, echo=TRUE, fig=FALSE>>=
+wam.z(N, n, K, mode);
+@
+
+Graph of the function :
+
+<<wam_z3, echo=TRUE, fig=TRUE>>=
+plot(wam.z(N, n, K, allk),
+     type="l", xlab="k", ylab="Log likelihood",
+	  main="Z",
+	  sub="(N=61449, n=7896, K=296)")
+points(k, wam.z(N, n, K, k), pch="+")
+points(mode, wam.z(N, n, K, mode), pch="x")
+@
+
+% ................................................................
+\subsection{t}
+% ................................................................
+\label{sec:t}
+
+<<wam_t, echo=TRUE, fig=FALSE>>=
+wam.t(N, n, K, k);
+@
+
+<<wam_t2, echo=TRUE, fig=FALSE>>=
+wam.t(N, n, K, mode);
+@
+
+Graph of the function :
+
+<<wam_t3, echo=TRUE, fig=TRUE>>=
+plot(wam.t(N, n, K, allk),
+     type="l", xlab="k", ylab="Log likelihood",
+	  main="t",
+	  sub="(N=61449, n=7896, K=296)")
+points(k, wam.t(N, n, K, k), pch="+")
+points(mode, wam.t(N, n, K, mode), pch="x")
+@
+
+% ................................................................
+\subsection{chisq}
+% ................................................................
+\label{sec:chisq}
+
+<<wam_chisq, echo=TRUE, fig=FALSE>>=
+wam.chisq(N, n, K, k);
+@
+
+<<wam_chisq2, echo=TRUE, fig=FALSE>>=
+wam.chisq(N, n, K, mode);
+@
+
+Graph of the function :
+
+<<wam_chisq3, echo=TRUE, fig=TRUE>>=
+plot(wam.chisq(N, n, K, allk),
+     type="l", xlab="k", ylab="Log likelihood",
+	  main="Chi square",
+	  sub="(N=61449, n=7896, K=296)")
+points(k, wam.chisq(N, n, K, k), pch="+")
+points(mode, wam.chisq(N, n, K, mode), pch="x")
+@
+
+% ................................................................
+\subsection{fisher}
+% ................................................................
+\label{sec:fisher}
+
+<<wam_fisher, echo=TRUE, fig=FALSE>>=
+wam.fisher(N, n, K, k);
+@
+
+<<wam_fisher2, echo=TRUE, fig=FALSE>>=
+wam.fisher(N, n, K, mode);
+@
+
+Graph of the function :
+
+<<wam_fisher3, echo=TRUE, fig=TRUE>>=
+plot(wam.fisher(N, n, K, allk),
+     type="l", xlab="k", ylab="Log likelihood",
+	  main="Fisher",
+	  sub="(N=61449, n=7896, K=296)")
+points(k, wam.fisher(N, n, K, k), pch="+")
+points(mode, wam.fisher(N, n, K, mode), pch="x")
+@
+
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
 \section{High level interface}
@@ -290,28 +520,35 @@ plot(wam.specificities(N[1], n[1], K[1], 0:k[1], method="log"), type="l", xlab="
 
 The function \emph{wam} provide a more high level interface to the actual functions.
 
-This function allows for computing several indicator at the same time.
+This function allows for computing several indicators at the same time.
 
 It takes also as argument the subcorpus name and lexical types.
 
 <<wam_wam, echo=TRUE, fig=FALSE>>=
+rm(list=ls())
+data(robespierre, package="wam")
 attach(robespierre)
-wam.res <- wam(N, n, K, k, measure=c("loglikelihood", "specificities"), parts, types)
+wam.res <- wam(N, n, K, k, measure=c("loglikelihood", "specificities"),
+types=types, parts=parts)
 @
 
-function allows for retrieving the basic information:
+function allows for retrieving the basic information (see the manual page for WordAssociation):
 
 <<wam_wam2, echo=TRUE, fig=FALSE>>=
-attach(robespierre)
-wam.res <- wam(N, n, K, k, measure=c("loglikelihood", "specificities"), parts, types)
+head(k(wam.res));
 @
 
-A print implementation allows for an easy to use reading of the results:
+<<wam_wam2, echo=TRUE, fig=FALSE>>=
+head(association(wam.res));
+indicator.name(wam.res)
+@
+
+The print function allows for an easy to use reading of the results. See :
 
 <<wam_wam3, echo=TRUE, fig=FALSE>>=
-attach(robespierre)
-wam.res <- wam(N, n, K, k, measure=c("loglikelihood", "specificities"), parts, types)
-wam.res
+wam.res <- wam(N, n, K, k, measure=c("loglikelihood", "specificities"),
+types=types, parts=parts)
+print(wam.res, from=1, to=10, parts="D4");
 @
 
 % ----------------------------------------------------------------
@@ -335,7 +572,6 @@ Kilgarriff, A. 1996. "Which words are particularly characteristic of a text? A s
 
 \url{http://www.cse.iitb.ac.in/~shwetaghonge/prec_recall.pdf}
 
- in
 Lafon P. 1980. "Sur la variabilité de la fréquence des formes dans un corpus". \emph{Mots}, 1, 1980, 127--165.
 
 \url{http://www.persee.fr/web/revues/home/prescript/article/mots_0243-6450_1980_num_1_1_1008}.

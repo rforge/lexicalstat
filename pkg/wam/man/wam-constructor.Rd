@@ -3,7 +3,7 @@
 \title{Compute association measure and construct a \code{\link{WordAssociation}} object.}
 \usage{
   wam(N, n, K, k,
-    measure = wam.loglikelihood, types = NULL, parts = NULL, ...)
+    measure = loglikelihood, types = NULL, parts = NULL, ...)
 }
 \arguments{
   \item{types}{graphical form of the linguistic types}
@@ -20,7 +20,7 @@
   \item{k}{frequency of the type in the subcorpus}
 
   \item{measure}{function implementing statistical attraction measures. These functions must
-  accept 'N', 'n', 'K' and 'k' arguments}
+  accept 'N', 'n', 'K' and 'k' arguments. Available functions: specificities, loglikelihood, z, t, chisq, fisher.}
 
   \item{...}{argument provided to function "measure"}
 }
@@ -36,7 +36,7 @@
 
 data(robespierre)
 attach(robespierre)
-wam(N, n, K, k, measure = c(wam.chisq, wam.loglikelihood), types, parts)
+wam(N, n, K, k, measure = c("chisq", "loglikelihood"), types, parts)
 detach(robespierre)
 
 }

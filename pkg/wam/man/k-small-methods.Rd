@@ -17,10 +17,9 @@ Any word association object (see \code{\link{wam}}).
 \examples{
 data(robespierre)
 attach(robespierre)
-x <- wam(N, n, K, k, measure = c(wam.chisq, wam.loglikelihood), types, parts)
-detach(robespierre)
+x <- wam(N, n, K, k, measure = c("chisq", "loglikelihood"), types, parts)
 k(x)
-
+detach(robespierre)
 }
 
 \keyword{methods}

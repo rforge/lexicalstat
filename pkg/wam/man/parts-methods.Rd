@@ -17,10 +17,9 @@ The part of the corpus each entry belong to in a \code{\link{WordAssociation}} o
 \examples{
 data(robespierre)
 attach(robespierre)
-x <- wam(N, n, K, k, measure = c(wam.chisq, wam.loglikelihood), types, parts)
-detach(robespierre)
+x <- wam(N, n, K, k, measure = c("chisq", "loglikelihood"), types, parts)
 parts(x)
-
+detach(robespierre)
 }
 
 \keyword{methods}

@@ -1,13 +1,11 @@
 \name{WordAssociation}
 \alias{WordAssociation}
 \alias{WordAssociation-class}
-\title{The result of word association measure.}
+\title{WordAssociation object}
 \description{
-Compute and hold word association measure indicators.
+See \code{\link{wam}} for constructing an WordAssociation object.
 
-See \code{\link{wam}} for constructing WordAssociation object thanks to high level
-objects such as \code{\link{Corpus}} and \code{\link{wordAssociation}} for the low-level
-constructor.
+Contains word association measure indicators.
 }
 \details{
   For each element the following pieces of information are available :
@@ -21,7 +19,8 @@ constructor.
    \item one or several computed association measure indicators
    }
 
-See the functions \code{\link{N}}, \code{\link{n}}, \code{\link{K}} and \code{\link{k}}
+See the functions \code{\link{N}}, \code{\link{n}}, \code{\link{K}}, \code{\link{k}},
+\code{\link{types}}, \code{\link{parts}}, \code{\link{indicator.name}} and \code{\link{association}}
 for retrieving these pieces of information.
    
 }
@@ -29,6 +28,5 @@ for retrieving these pieces of information.
   Sylvain Loiseau
 }
 \seealso{
-\code{\link{wam}}, \code{\link{wordAssociation}}
+\code{\link{wam}}
 }
-

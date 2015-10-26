@@ -7,14 +7,6 @@
 \description{
 Number of tokens in its corpus for each forms in a \code{\link{WordAssociation}} object.
 }
-
-\usage{
-\S4method{N}{WordAssociation}(obj)
-}
-\arguments{
-  \item{obj}{A \code{\link{obj}} object}
-}
-
 \section{Methods}{
 \describe{
 
@@ -26,13 +18,11 @@ Any word association object (see \code{\link{wam}}).
   The number of tokens in the corpus.
 }
 \examples{
-
 data(robespierre)
 attach(robespierre)
-x <- wam(N, n, K, k, measure = c(wam.chisq, wam.loglikelihood), types, parts)
-detach(robespierre)
+x <- wam(N, n, K, k, measure = c("chisq", "loglikelihood"), types, parts)
 N(x)
-
+detach(robespierre)
 }
 \seealso{
   \code{\link{types}}

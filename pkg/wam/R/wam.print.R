@@ -2,14 +2,14 @@
 # sort.by
 
 setMethod("summary", signature(object = "WordAssociation"), function(object) {
-  cat(paste("Word association measure for ", length(types(object)), " types.\n"));
+  cat(paste("Word association measure for ", length(unique(types(object))), " types in ", length(unique(types(parts))), " parts.\n", sep=""));
 })
 
 setMethod("show", signature(object="WordAssociation"), function(object) {
   print(object);
 });
 
-setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, threshold=NULL,
+setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=100, threshold=NULL,
         types=NULL, parts=NULL,
         sort.by=indicator.name(x)[1], file="", append=FALSE, ...) {
 
@@ -99,7 +99,7 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=50, th
       stop("'threshold' must be greater than 0");
     }
   }
-
+  
   df <- data.frame(types=types(x), parts=parts(x), N=N(x), n=n(x), K=K(x), k=k(x));
   df <- cbind(df, association(x));
   if(!sort.by %in% colnames(df)) {
