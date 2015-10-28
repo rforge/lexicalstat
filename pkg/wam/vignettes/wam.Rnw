@@ -51,6 +51,12 @@ This package contains various functions for computing word association measure
 as well as a high level function for conveniently applying these functions
 on all the lexical types of a corpora.
 
+Word association can serve two goals: analyzing the association strength between
+a word and a subcorpora or analyzing the association strength between two words.
+The two are modelized with the same quantitative framework: association between two words
+is simply the association between a word and the subcorpus made of all its
+cooccurrences with the other word.
+
 % ................................................................
 \subsection{Value}
 % ................................................................
@@ -84,11 +90,9 @@ presentation (according to Stefan Evert UCS documentation) :
 
 \begin{tabular}{l|ll|l}\hline
                 & word & $¬ word$ &  T  \\\hline
- subcorpus      & O11  & O12      & R1  \\
-                & E11  & E12      &     \\\hline
- $¬ subcorpus$  & O21  & O22      & R2  \\
-                & E21  & E22      &     \\\hline
-Totals          & C1   & C2       & N   \\\hline
+ subcorpus      & 11  & 12      & R1  \\
+ $¬ subcorpus$  & 21  & 22      & R2  \\
+Totals          & C1  & C2      & N   \\\hline
 \end{tabular}
 
 where :
@@ -99,14 +103,10 @@ where :
 \item         C2  = frequency of words that aren't the collocate in the corpus
 \item         R1  = total words in window
 \item         R2  = total words outside of window
-\item         O11 = how many of collocate there are in the window 
-\item         O12 = how many words other than the collocate there are in the window (calculated from row total)
-\item         O21 = how many of collocate there are outside the window
-\item         O22 = how many words other than the collocate there are outside the window
-\item         E11 = expected values (proportion of collocate that would belong in window if collocate were spread evenly)
-\item         E12 =     "    "      (proportion of collocate that would belong outside window if collocate were spread evenly)
-\item         E21 =     "    "      (proportion of other words that would belong in window if collocate were spread evenly)
-\item         E22 =     "    "      (proportion of other words that would belong outside window if collocate were spread evenly)
+\item         11 = how many of collocate there are in the window 
+\item         12 = how many words other than the collocate there are in the window (calculated from row total)
+\item         21 = how many of collocate there are outside the window
+\item         22 = how many words other than the collocate there are outside the window
 \end{itemize}
 
 Conversion from $N$, $n$, $K$, $k$ notation :
@@ -118,7 +118,6 @@ Conversion from $N$, $n$, $K$, $k$ notation :
          Totals         & $K$    & $N-K$         & $N$   \\\hline
 \end{tabular}
 
-	
 Conversion to $N$, $n$, $K$, $k$ notation :
 
 \itemize{
@@ -127,6 +126,9 @@ Conversion to $N$, $n$, $K$, $k$ notation :
   \item $K = O11 + O21$
   \item $k = O11$
 }
+
+See the functions
+make.contingency and make.list for an easy way of doing these conversions.
 
 % ................................................................
 \subsection{Recycling arguments}
@@ -173,20 +175,17 @@ maxk
 allk <- 0:maxk
 @
 
-The expected subfrequency of "peuple" if the subcorpus D4 (the fourth discourse
-by Robespierre) is: $K \times n / N$. The mode
-is the closest positive integers to the expected frequency.
+The expected subfrequency of "peuple" in the subcorpus D4 (the fourth discourse
+by Robespierre) is: $K \times n / N$.
 
 <<wam_argument_setup3, echo=TRUE, fig=FALSE>>=
-expected = round(K * n / N, 2)
+expected = round(K * n / N)
 expected
-mode <- floor((n+1)*(K+1)/(N+2));
-mode
 @
 
 A form is over-used (attracted) if the subfrequency $k$ in the subcorpus is
 greater than the expected expected frequency and under-used otherwise.
-Here, the form peuple is under-represented.
+Here, the form \emph{peuple} is under-represented.
 
 % ................................................................
 \subsection{Log-likelihood}
@@ -197,21 +196,19 @@ See Dunning 1993.
 
 <<wam_loglikelihood, echo=TRUE, fig=FALSE>>=
 wam.loglikelihood(N, n, K, k);
-@
-
-<<wam_loglikelihood2, echo=TRUE, fig=FALSE>>=
-wam.loglikelihood(N, n, K, mode);
+wam.loglikelihood(N, n, K, expected);
 @
 
 Graph of the function :
 
-<<wam_loglikelihood3, echo=TRUE, fig=TRUE>>=
+<<wam_loglikelihood_graph, echo=TRUE, fig=TRUE>>=
 plot(wam.loglikelihood(N, n, K, allk),
      type="l", xlab="k", ylab="Log likelihood",
 	  main="Graph of the Log likelihood function",
 	  sub="(N=61449, n=7896, K=296)")
 points(k, wam.loglikelihood(N, n, K, k), pch="+")
-points(mode, wam.loglikelihood(N, n, K, mode), pch="x")
+points(expected, wam.loglikelihood(N, n, K, expected), pch="x")
+legend("right",legend=c("k","expected"), pch=c("+","x"), cex=0.75)
 @
 
 % ................................................................
@@ -223,21 +220,19 @@ See Lafon 1980.
 
 <<wam_specificities, echo=TRUE, fig=FALSE>>=
 wam.specificities(N, n, K, k, method="base");
-@
-
-<<wam_specificities2, echo=TRUE, fig=FALSE>>=
-wam.specificities(N, n, K, mode, method="base");
+wam.specificities(N, n, K, expected, method="base");
 @
 
 Graph of the function:
 
-<<wam_specificities3, echo=TRUE, fig=TRUE>>=
+<<wam_specificities_graph, echo=TRUE, fig=TRUE>>=
 plot(wam.specificities(N, n, K, allk, method="base"),
      type="l", xlab="k", ylab="specificities",
 	  main="Graph of the specificities function",
 	  sub="(N=61449, n=7896, K=296)")
 points(k, wam.specificities(N, n, K, k, method="base"), pch="+")
-points(mode, wam.specificities(N, n, K, mode, method="base"), pch="x")
+points(expected, wam.specificities(N, n, K, expected, method="base"), pch="x")
+legend("top",legend=c("k","expected"), pch=c("+","x"), cex=0.75)
 @
 
 % ................................................................
@@ -246,12 +241,18 @@ points(mode, wam.specificities(N, n, K, mode, method="base"), pch="x")
 
 The presentation below follows (Lafon, 1980).
 
-The hypergeometric distribution give the probability associated with a drawing
-without replacement. For all the possible subfrequencys of \emph{peuple}
+The specificities indicator is based on the hypergeometric distribution. This distribution
+give the probability associated with a drawing without replacement.
+
+For all the possible subfrequencys of \emph{peuple}
 in the fourth discourses we can compute the density of probability in the hypergeometric distribution.
-The graph contains also the observed frequency as well as the mode.
+The graph contains also the observed frequency as well as the mode. The mode
+is the closest positive integers to the expected frequency.
 
 <<wam_specificities_presentation3, echo=TRUE, fig=TRUE>>=
+mode <- floor((n+1)*(K+1)/(N+2));
+mode
+
 plot(dhyper(allk, K, N-K, n),
 type="l", xlab="k (possible subfrequency of peuple)", ylab="Density of probability",
 main="Hypergeometric distribution", sub="density fonction")
@@ -422,21 +423,19 @@ wam.specificities(N, n, K, mode, method="log");
 
 <<wam_z, echo=TRUE, fig=FALSE>>=
 wam.z(N, n, K, k);
-@
-
-<<wam_z2, echo=TRUE, fig=FALSE>>=
 wam.z(N, n, K, mode);
 @
 
 Graph of the function :
 
-<<wam_z3, echo=TRUE, fig=TRUE>>=
+<<wam_z_graph, echo=TRUE, fig=TRUE>>=
 plot(wam.z(N, n, K, allk),
-     type="l", xlab="k", ylab="Log likelihood",
+     type="l", xlab="k", ylab="Z",
 	  main="Z",
 	  sub="(N=61449, n=7896, K=296)")
 points(k, wam.z(N, n, K, k), pch="+")
 points(mode, wam.z(N, n, K, mode), pch="x")
+legend("right",legend=c("k","expected"), pch=c("+","x"), cex=0.75)
 @
 
 % ................................................................
@@ -446,21 +445,19 @@ points(mode, wam.z(N, n, K, mode), pch="x")
 
 <<wam_t, echo=TRUE, fig=FALSE>>=
 wam.t(N, n, K, k);
-@
-
-<<wam_t2, echo=TRUE, fig=FALSE>>=
 wam.t(N, n, K, mode);
 @
 
 Graph of the function :
 
-<<wam_t3, echo=TRUE, fig=TRUE>>=
-plot(wam.t(N, n, K, allk),
-     type="l", xlab="k", ylab="Log likelihood",
+<<wam_t_graph, echo=TRUE, fig=TRUE>>=
+plot(allk, wam.t(N, n, K, allk),
+     type="l", xlab="k", ylab="T",
 	  main="t",
 	  sub="(N=61449, n=7896, K=296)")
 points(k, wam.t(N, n, K, k), pch="+")
 points(mode, wam.t(N, n, K, mode), pch="x")
+legend("right",legend=c("k","expected"), pch=c("+","x"), cex=0.75)
 @
 
 % ................................................................
@@ -470,21 +467,19 @@ points(mode, wam.t(N, n, K, mode), pch="x")
 
 <<wam_chisq, echo=TRUE, fig=FALSE>>=
 wam.chisq(N, n, K, k);
-@
-
-<<wam_chisq2, echo=TRUE, fig=FALSE>>=
 wam.chisq(N, n, K, mode);
 @
 
 Graph of the function :
 
-<<wam_chisq3, echo=TRUE, fig=TRUE>>=
-plot(wam.chisq(N, n, K, allk),
-     type="l", xlab="k", ylab="Log likelihood",
+<<wam_chisq_graph, echo=TRUE, fig=TRUE>>=
+plot(allk, wam.chisq(N, n, K, allk),
+     type="l", xlab="k", ylab="Chi square",
 	  main="Chi square",
 	  sub="(N=61449, n=7896, K=296)")
 points(k, wam.chisq(N, n, K, k), pch="+")
 points(mode, wam.chisq(N, n, K, mode), pch="x")
+legend("right",legend=c("k","expected"), pch=c("+","x"), cex=0.75)
 @
 
 % ................................................................
@@ -494,21 +489,19 @@ points(mode, wam.chisq(N, n, K, mode), pch="x")
 
 <<wam_fisher, echo=TRUE, fig=FALSE>>=
 wam.fisher(N, n, K, k);
-@
-
-<<wam_fisher2, echo=TRUE, fig=FALSE>>=
-wam.fisher(N, n, K, mode);
+wam.fisher(N, n, K, expected);
 @
 
 Graph of the function :
 
-<<wam_fisher3, echo=TRUE, fig=TRUE>>=
-plot(wam.fisher(N, n, K, allk),
-     type="l", xlab="k", ylab="Log likelihood",
+<<wam_fisher_graph, echo=TRUE, fig=TRUE>>=
+plot(allk, wam.fisher(N, n, K, allk),
+     type="l", xlab="k", ylab="Fisher",
 	  main="Fisher",
 	  sub="(N=61449, n=7896, K=296)")
 points(k, wam.fisher(N, n, K, k), pch="+")
-points(mode, wam.fisher(N, n, K, mode), pch="x")
+points(expected, wam.fisher(N, n, K, expected), pch="x")
+legend("right",legend=c("k","expected"), pch=c("+","x"), cex=0.75)
 @
 
 % ----------------------------------------------------------------
