@@ -1,41 +1,58 @@
-\name{wam.ar}
+\name{wam-functions}
 \alias{wam.ar}
+\alias{wam.fisher}
+\alias{wam.chisq}
+\alias{wam.frequency}
+\alias{wam.jaccard}
+\alias{wam.loglikelihood}
+\alias{wam.MI}
+\alias{wam.specificities}
+\alias{wam.t}
+\alias{wam.z}
 \title{
-Calculate word association measure
+Calculate word association measure according to various fomula
 }
 \description{
-The association ratio is a 
+Word association measures give an information about the tendency of two
+words to co-occurr with greater (or lesser) than chance frequency.
 }
+
 \usage{
 wam.ar(N, n, K, k)
+wam.fisher(N, n, K, k)
+wam.chisq(N, n, K, k)
+wam.frequency(N, n, K, k)
+wam.jaccard(N, n, K, k)
+wam.loglikelihood(N, n, K, k)
+wam.MI(N, n, K, k)
+wam.specificities(N, n, K, k)
+wam.t(N, n, K, k)
+wam.z(N, n, K, k)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{N}{
-%%     ~~Describe \code{N} here~~
+The total number of occurrences in the corpus
 }
   \item{n}{
-%%     ~~Describe \code{n} here~~
+The frequency of word 1
 }
   \item{K}{
-%%     ~~Describe \code{K} here~~
+The frequency of word 2
 }
   \item{k}{
-%%     ~~Describe \code{k} here~~
+The frequency of the cooccurrence or word 1 and word 2.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+
+
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A numeric values. All function are vectorized.
 }
 \references{
-Kenneth Ward Church, Patrick Hanks (1990) \textit{Computational Linguistics}, 16/1, pages 22-29.
+
+For association ratio : Kenneth Ward Church, Patrick Hanks (1990) \textit{Computational Linguistics}, 16/1, pages 22-29.
 }
 \author{
 Sylvain Loiseau
