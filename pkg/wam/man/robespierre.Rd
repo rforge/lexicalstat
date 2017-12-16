@@ -5,7 +5,8 @@
 A tiny corpus ready for word association measures.
 }
 \description{
-A tiny corpus containing with frequencies of 6 words in 10 discourses par Robespierre.
+
+A tiny corpus containing with frequencies of 6 words in 10 discourses par Robespierre (between november 1793 and july 1794)
 
 This data frame study 6 words in 10 discourses ; it contains therefore 60 rows.
 

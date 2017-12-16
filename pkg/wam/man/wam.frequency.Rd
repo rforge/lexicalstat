@@ -1,10 +1,10 @@
-\name{wam.chisq}
-\alias{wam.chisq}
+\name{wam.frequency}
+\alias{wam.frequency}
 \title{
-Calculate word association according to the chi square test.
+Calculate word association according to the raw frequency of the word under scrutiny.
 }
 \description{
-Calculate word association according to the chi square test.
+Calculate word association according to the raw frequency of the word under scrutiny
 }
 \usage{
 wam.chisq(N, n, K, k, yates.correction = TRUE, p.value = TRUE, two.sided = FALSE)
@@ -23,18 +23,9 @@ the number of occurrences of the form under scrutiny in the corpus
 the number of occurrences of the form under scrutiny in the subcorpus
 }
 
-  \item{yates.correction}{
-
-}
-  \item{p.value}{
-
-}
-  \item{two.sided}{
-
-}
 }
 \details{
-See \code{\link{wam}}
+See \code{\link{wam}}. The \code{k} argument is returned.
 
 }
 \value{
@@ -42,9 +33,6 @@ See \code{\link{wam}}
  See \code{\link{wam}}
 }
 \references{
-CHURCH, K., GALE, W., HANKS, P. & HINDLE, D.,  1991. « Using Statistics
-in Lexical Analysis ». In : ZERNIK, U. (ed.), Lexical Acquisition.
-Hillsdale, Lawrence Erlbaum Ass., pp. 115--164
 }
 \author{
 Bernard Desgraupes
@@ -56,11 +44,6 @@ See Also as \code{\link{wam}}
 }
 \examples{
 
-wam.chisq(100, 20, 10, 4)
-
-data(robespierre)
-attach(robespierre)
-wam(N, n, K, k, measure = "chisq", types, parts)
-detach(robespierre)
+wam.frequency(100, 20, 10, 4)
 
 }

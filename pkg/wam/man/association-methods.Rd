@@ -1,5 +1,6 @@
 \name{association-methods}
 \docType{methods}
+\alias{association}
 \alias{association-methods}
 \alias{association,WordAssociation-method}
 \title{ Get the association strengh }

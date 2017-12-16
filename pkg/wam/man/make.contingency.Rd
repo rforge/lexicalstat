@@ -28,7 +28,7 @@ The subfrequency of the form in the subcorpora
 \value{
 Return a 2*2 contingency table :
   \tabular{lll}{
-       \tab k       \tab ¬k          \cr
+       \tab K       \tab ¬K          \cr
     n  \tab k       \tab n-k         \cr
     ¬n \tab K-k     \tab (N-K)-(n-k) \cr
   }
