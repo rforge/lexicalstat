@@ -1,16 +1,20 @@
 export(
 wam.specificities,
+wam.collostruction,
 wam.loglikelihood,
+wam.MI,
+wam.frequency,
 wam.chisq,
 wam.t,
 wam.z,
-wam.fisher
+#wam.fisher,
+wam.ar,
+wam.jaccard
 )
-export(make.contingency)
-
-#export(wam.fisher);
 #export(wam.binomial);
-#export(wam.MI);
+
+export(make.contingency)
+export(make.list)
 
 # functions exported from file "R/word.association.*.R"
 export(wam)
@@ -25,5 +29,6 @@ exportMethods(k)
 exportMethods(summary)
 exportMethods(show)
 exportMethods(print)
-
 import(methods)
+importFrom("stats", "fisher.test", "pchisq", "phyper", "pnorm")
+importFrom("utils", "write.csv")

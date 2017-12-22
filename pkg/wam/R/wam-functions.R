@@ -1,16 +1,24 @@
 # ===========================================================================
-# File: "wam.R"
+# File: "wam-functions.R"
 #                        Created: 2013-04-05 14:55:29
-#              Last modification: 2013-04-08 11:59:45
+#              Last modification: 2017-12-16 11:59:45
 # Authors: Bernard Desgraupes <bernard.desgraupes@u-paris10.fr>
 #          Sylvain Loiseau <sylvain.loiseau@univ-paris13.fr>
 # This file is part of the wam project.
 # ===========================================================================
 
+wam.jaccard <- function(N, n, K, k) {
+  return(k / (K + n - k));
+}
 
-# Dunning 1993 accurate method for the Statistics of Surprise and coincidence
+wam.MI <- function(N, n, K, k) {
+  expected <- (K/N) * (n/N);
+  return(ifelse(k > expected, log10(k / expected), -log10(k / expected)));
+}
 
-# http://pioneer.chula.ac.th/~awirote/colloc/statmethod1.htm
+wam.frequency <- function(N, n, K, k) {
+  return(k);
+}
 
 wam.loglikelihood <- function(N, n, K, k, p.value=FALSE, two.sided=TRUE) {
   N <- N;
@@ -46,6 +54,32 @@ wam.loglikelihood <- function(N, n, K, k, p.value=FALSE, two.sided=TRUE) {
   return(ll);      
 }
 
+wam.collostruction <- function(N, n, K, k) {
+  # res <- mapply(function(N, n, K, k) {
+  #   c <-make.contingency(N, n, K, k);
+  #   return(fisher.test(c)$p.value)
+  # }, N, n, K, k);
+  # return(res);
+  mo <- floor((n+1)*(K+1)/(N+2));
+  x <- data.frame(N, n, K, k, mo)
+  res <- vector(mode="double", length=nrow(x))
+  for (i in 1:nrow(x)) {
+    N <- x[i,"N"]
+    n <- x[i,"n"]
+    K <- x[i,"K"]
+    k <- x[i,"k"]
+    mo <- x[i,"mo"]
+    crosst <- make.contingency(N, n, K, k);
+    fisher <- fisher.test(crosst);
+    res[i] <- fisher$p.value    
+  }
+  return(res)
+  #islog <- TRUE;
+  #cdk <- ifelse(k <= mo, phyper(k, K, N-K, n, log.p=islog), phyper(k-1, K, N-K, n, log.p=islog, lower.tail=FALSE));
+  #cdmo <- phyper(mo, K, N-K, n, log.p=islog);
+  #collo <- ifelse(k <= mo, -abs(cdmo-cdk), abs(cdmo-cdk));
+  #return(collo)
+}
 
 wam.specificities <- function(N, n, K, k, method="log") {
 # mode
@@ -75,28 +109,24 @@ wam.specificities <- function(N, n, K, k, method="log") {
 }
 
 wam.z <- function(N, n, K, k, yates.correction=FALSE) {
-  C1 <- K;
-  R1 <- n;
   O11 <- k;
-  E11 = R1 * C1 / N;
+  E11 = (K * n) / N;
 
   diff <- O11 - E11;
   if (yates.correction) {
-    diff <- diff - 0.5;
+    diff <- diff + ifelse(O11 > E11, -0.5, 0.5);
   }
   return(diff / sqrt(E11));
 }
 
 wam.t <- function(N, n, K, k) {
-  cont <- make.contingency(N, n, K, k)
-
-    C1 <- K;
-  R1 <- n;
+  #'(%O11% - %E11%) / sqrt(%O11%)',
   O11 <- k;
-  E11 = R1 * C1 / N;
+  E11 = n * K / N;
 
   t <- (O11 - E11) / sqrt(O11);
-  return ( - pnorm(t, 0, 1, lower.tail=FALSE, log.p=TRUE) / log(10) );
+  #  - pnorm(t, 0, 1, lower.tail=FALSE, log.p=TRUE) / log(10) 
+  return (t);
 }
 
 wam.chisq <- function(N, n, K, k, yates.correction=TRUE, p.value=TRUE, two.sided=FALSE) {
@@ -140,13 +170,10 @@ wam.chisq <- function(N, n, K, k, yates.correction=TRUE, p.value=TRUE, two.sided
 #    wam.mi <- function(N, n, K, k) {
 #    }
 
-wam.fisher <- function(N, n, K, k) {
-    c <-make.contingency(N, n, K, k);
-    return(fisher.test(c)$p.value);
+wam.ar <- function(N, n, K, k) {
+  log2((k/N)/((n/N)*(K/N)))
 }
 
 wam.g <- function(N, n, K, k) {
 	stop("not implemented yet")
 }
-
-

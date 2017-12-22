@@ -72,6 +72,18 @@ setMethod("print", signature(x="WordAssociation"), function(x, from=1, to=100, t
     stop(paste("cannot sort with more than one key"));
   }
 
+  if (!is.null(types)) {
+    if (any(!(types %in% types(x)))) {
+		 stop("some types are not availabe")
+    }
+  }
+
+  if (!is.null(parts)) {
+     if (any(!(parts %in% parts(x)))) {
+ 		 stop("some parts are not availabe")
+     }
+  }
+
   if (is.null(threshold)) {
     if (is.null(from) | is.null(to)) {
       stop("either 'threshold' or 'from' and 'to' options must be given");

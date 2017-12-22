@@ -1,3 +1,24 @@
+%semantic differences between near synonyms (cf., e.g., Church & Hanks 1990).
+%p. 216
+
+% for the identification of subtle semantic differences between near-synonyms (cf. Manning & SchÃ¼tze 2000: 153).
+%p. 216
+
+%In a series of papers, Church and his collaborators address these problems and argue in favor of statistical, information-theoretical methods of quanti- fying (significant) degrees of association between words (i.e. degrees of collo- cational strength) (Church et al. 1990, 1991, 1994). However, while the basic argument is by now generally accepted, it is far from clear which method is optimally suited for linguistic research, and Church et al.â€™s work has triggered a number of studies proposing a variety of measures for this purpose (cf. Dun- ning (1993), Pedersen (1996); cf. Oakes (1998) as well as Manning & SchÃ¼tze (2000) for overviews).
+
+%Stefanowitch et Gries 2003 : 217
+
+%(e.g. Berry-Roggheâ€™s (1974) z-score, Church et al.â€™s (1991) t-score).
+%Stefanowitch et Gries 2003 : 217
+
+%Second, some statistics are particularly prone to strongly overestimating association strengths and/or underestimating the probability of error when extremely rare collocations are investigated (e.g. MI)
+
+% Dunningâ€™s (1993) log-likelihood coefficient
+
+%(cf. e.g. Church and Hanks 1990; Clear 1993; Stubbs 1995; Manning
+% and SchÃ¼tze 2001; see also Evert and Krenn 2001; Evert 2004)
+% http://www.anglistik.uni-muenchen.de/personen/professoren/schmid/schmid_publ/collostructional-analysis.pdf
+
 \documentclass{article}
 %\VignetteIndexEntry{Introduction to lexicalStat}
 \usepackage{lmodern}
@@ -18,6 +39,7 @@
 \date{\today}
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 
 \maketitle
 
@@ -40,105 +62,50 @@
 % ----------------------------------------------------------------
 \label{sec:Intro}
 
-<<wam_setup, echo=TRUE>>=
+<<wam_setup, echo=FALSE>>=
 library(wam);
 @
-% ................................................................
-\subsection{Introduction}
-% ................................................................
 
-This package contains various functions for computing word association measure
-as well as a high level function for conveniently applying these functions
-on all the lexical types of a corpora.
-
-Word association can serve two goals: analyzing the association strength between
-a word and a subcorpora or analyzing the association strength between two words.
-The two are modelized with the same quantitative framework: association between two words
-is simply the association between a word and the subcorpus made of all its
-cooccurrences with the other word.
-
-% ................................................................
-\subsection{Value}
-% ................................................................
-
-All association measure functions are prefixed with "wam." and return a numeric
-vector indicating the association strengh between the word(s)
-under scrutiny and subcorpus/ora.
-
-These association measures, unless otherwise stated in the help pages of the
-functions, are positive when the word is over-represented ("attracted"), and
-negative when the word is under-represented.
-
-In absolute value, the more the word is over-representend or under-represented,
-the more the association measure givien is high.
-
-% ................................................................
-\subsection{Arguments}
-% ................................................................
-
-All association measure functions have the following signature: ($N$, $n$, $K$, $k$), where:
-
-\begin{enumerate}
-	\item $N$ is the total size of the corpora
-	\item $n$ is the size of the subcorpora
-	\item $K$ is the total frequency of the form under scrutiny in the corpora
-	\item $k$ is the sub-frequency of the form under scrutinty in the subcorpora
-\end{enumerate}
-
-This can be easily turn into the "contingency table" representation used in some
-presentation (according to Stefan Evert UCS documentation) :
-
-\begin{tabular}{l|ll|l}\hline
-                & word & $¬ word$ &  T  \\\hline
- subcorpus      & 11  & 12      & R1  \\
- $¬ subcorpus$  & 21  & 22      & R2  \\
-Totals          & C1  & C2      & N   \\\hline
-\end{tabular}
-
-where :
+This package contains
 
 \begin{itemize}
-\item         N   = total words in corpus (or subcorpus or restriction, but they are not implemented yet)
-\item         C1  = frequency of the collocate in the whole corpus
-\item         C2  = frequency of words that aren't the collocate in the corpus
-\item         R1  = total words in window
-\item         R2  = total words outside of window
-\item         11 = how many of collocate there are in the window 
-\item         12 = how many words other than the collocate there are in the window (calculated from row total)
-\item         21 = how many of collocate there are outside the window
-\item         22 = how many words other than the collocate there are outside the window
+\item implementations of several functions for computing word association strength ;
+\item a hig level set of functions for conveniently apply these functions to corpora.
 \end{itemize}
 
-Conversion from $N$, $n$, $K$, $k$ notation :
+Word association can serve two goals:
 
-\begin{tabular}{l|ll|l}\hline
-                        & word & $¬ word$    & $T$   \\\hline
-         subcorpus      & $k$    & $n-k$         & $n$   \\
-         $¬ subcorpus$  & $K-k$  & $N-K-(n-k)$   & $N-n$ \\\hline
-         Totals         & $K$    & $N-K$         & $N$   \\\hline
-\end{tabular}
+\begin{itemize}
+\item analyzing the association strength between
+a word and a subcorpora
+\item analyzing the association strength between two words (the tendency of these two words to co-occur).
+\end{itemize}
 
-Conversion to $N$, $n$, $K$, $k$ notation :
+% This four argument may be used for either:
+% 
+% \begin{enumerate}
+% \item compute the association strength \emph{between two words}, \emph{word1} and \emph{word2} (i.e. their tendency to co-occur with greater than chance frequency).
+% \item compute the association strength between a word word1 and a subcorpus (i.e. the tendency for this word to appear in the subcorpus with greater than chance frequency.)
+% \end{enumerate}
 
-\itemize{
-  \item $N = N$
-  \item $n = O11 + O12$
-  \item $K = O11 + O21$
-  \item $k = O11$
-}
+%The same quantitative framework can serve the two goals.
+% : association between two words
+% is simply the association between a word and the subcorpus made of all its
+% cooccurrences with the other word.
 
-See the functions
-make.contingency and make.list for an easy way of doing these conversions.
-
-% ................................................................
-\subsection{Recycling arguments}
-% ................................................................
-
-For all functions arguments are recycled.
+% % ................................................................
+% \subsection{Example 1 : computing the association between two words}
+% % ................................................................
+% 
+% 
+% 
+% % ................................................................
+% \subsection{Example 2 : computing the association between a word and a subcorpora}
+% % ................................................................
 
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
-\section{The indicators}
+\section{Functions for computing words association strength}
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
 \label{sec:indicators}
@@ -147,10 +114,114 @@ For all functions arguments are recycled.
 \subsection{Introduction}
 % ................................................................
 
-All word association functions will be illustrated with data from the robespierre dataset.
-We will consider the subfrequency of the lexical types \emph{peuple}
-in a subcorpora containing the fourth discourse by Robespierre. Is this type over- or under-represented in this discouse, 
-according to its frequency in the corpus of all the discourses?
+Several low-level functions allow for computing association strengh given raw frequencies and according to several indicators proposed in the literature.
+
+All association measure functions are prefixed with "wam." and return a numeric vector indicating the association strengh.
+
+% ................................................................
+\subsection{Arguments}
+% ................................................................
+
+All word association measure functions have the first four arguments: ($N$, $n$, $K$, $k$), where:
+
+\begin{enumerate}
+	\item $N$ is the total size of the corpus
+	\item $n$ is the size of the subcorpus (or the frequency of word2)
+	\item $K$ is the frequency of word1
+	\item $k$ is the sub-frequency of word1 in the subcorpus (or the number of co-occurrence between word1 and word2)
+\end{enumerate}
+
+Arguments are recycled.
+
+% ................................................................
+\subsection{Comparison with contingency table}
+% ................................................................
+
+These four arguments can be easily turn into the "contingency table" used in some publications:
+
+\begin{center}
+\begin{tabular}{lrrr}\hline
+                & word1 & $\neg$ word1 &  Total  \\\hline
+ subcorpus (or word2)      & 11  & 12      & R1  \\
+ $\neg$ subcorpus (or word2)  & 21  & 22      & R2  \\
+Total          & C1  & C2      & N   \\\hline
+\end{tabular}
+\end{center}
+
+%where :
+
+% \begin{itemize}
+% \item         N   = total words in corpus (or subcorpus or restriction, but they are not implemented yet)
+% \item         C1  = frequency of the collocate in the whole corpus
+% \item         C2  = frequency of words that aren't the collocate in the corpus
+% \item         R1  = total words in window
+% \item         R2  = total words outside of window
+% \item         11 = how many of collocate there are in the window 
+% \item         12 = how many words other than the collocate there are in the window (calculated from row total)
+% \item         21 = how many of collocate there are outside the window
+% \item         22 = how many words other than the collocate there are outside the window
+% \end{itemize}
+
+Conversion from $N$, $n$, $K$, $k$ :
+
+\begin{center}
+\begin{tabular}{lrrr}\hline
+                        & word1 & $\neg$ word1    & Total   \\\hline
+         subcorpus (or word2)      & $k$    & $n-k$         & $n$   \\
+         $\neg$ subcorpus (or word2)  & $K-k$  & $N-K-(n-k)$   & $N-n$ \\
+         Total         & $K$    & $N-K$         & $N$   \\\hline
+\end{tabular}
+\end{center}
+
+Conversion to $N$, $n$, $K$, $k$ :
+
+\itemize{
+  \item $N = N$
+  \item $n = O11 + O12$
+  \item $K = O11 + O21$
+  \item $k = O11$
+}
+
+The functions \texttt{make.contingency} and \texttt{make.list} help converting from one format toward the other.
+
+% % ................................................................
+% \subsection{TODO Documentation of the section below}
+% % ................................................................
+% 
+% All word association functions will be illustrated with data from the robespierre dataset.
+% We will consider the subfrequency of the lexical types \emph{peuple}
+% in a subcorpora containing the fourth discourse by Robespierre. Is this type over- or under-represented in this discouse,
+% according to its frequency in the corpus of all the discourses?
+% 
+
+% 
+% %         N  word1   n    word2   K  k
+% %1 15000000 doctor 621 honorary 111 12
+% 
+% A graph of the function is provided for all the possible values of $k$. The interval of
+% the possible value of $K$ is $[0, min(k,n)]$. (it is not possible to have more
+% occurrences of the lexical type than the size of the subcorpus or more than
+% the total frequency of the type in the whole corpus).
+% 
+
+% 
+% The expected subfrequency of "peuple" in the subcorpus D4 (the fourth discourse
+% by Robespierre) is: $K \times n / N$.
+% 
+% 
+% A form is over-used (attracted) if the subfrequency $k$ in the subcorpus is
+% greater than the expected expected frequency and under-used otherwise.
+% Here, the form \emph{peuple} is under-represented.
+
+% ................................................................
+\subsection{Comparison between function}
+% ................................................................
+
+TODO : max, mode (expected) for each function, negative or positive, etc.
+
+The indicator, unless otherwise stated in the help pages of the functions, are positive when word1 is over-represented ("attracted"), and negative when word1 is under-represented.
+
+In absolute value, the more the word is over-representend or under-represented, the more the association measure is high.
 
 <<wam_argument_setup, echo=TRUE, fig=FALSE>>=
 data(robespierre, package="wam")
@@ -162,30 +233,49 @@ N <- peuple_D4$N
 n <- peuple_D4$n
 K <- peuple_D4$K
 k <- peuple_D4$k
-@
-
-A graph of the function is provided for all the possible values of $k$. The interval of
-the possible value of $K$ is $[0, min(k,n)]$. (it is not possible to have more
-occurrences of the lexical type than the size of the subcorpus or more than
-the total frequency of the type in the whole corpus).
-
-<<wam_argument_setup2, echo=TRUE, fig=FALSE>>=
 maxk <- min(K,n)
 maxk
 allk <- 0:maxk
-@
 
-The expected subfrequency of "peuple" in the subcorpus D4 (the fourth discourse
-by Robespierre) is: $K \times n / N$.
-
-<<wam_argument_setup3, echo=TRUE, fig=FALSE>>=
 expected = round(K * n / N)
 expected
 @
 
-A form is over-used (attracted) if the subfrequency $k$ in the subcorpus is
-greater than the expected expected frequency and under-used otherwise.
-Here, the form \emph{peuple} is under-represented.
+<<comparison, echo=FALSE, fig=TRUE, width=4, height=8>>=
+# data(ar)
+# ar <- ar[1,]
+# attach(ar)
+op <- par(mfrow = c(4, 2)) #pty = "s", fin =c(4,6)
+x <- "frequency"
+y <- "Association strength"
+# square plotting region,independent of device size
+
+plot(1:K, wam.MI(N, n, K, 1:K), type="l", main="Mutual information", xlab = x, ylab = y)
+points(expected, wam.MI(N, n, K, expected))
+
+plot(1:K, wam.specificities(N, n, K, 1:K), type="l", main="Specificities", xlab = x, ylab = y)
+points(expected, wam.specificities(N, n, K, expected))
+
+plot(1:K, wam.jaccard(N, n, K, 1:K), type="l", main="Jaccard", xlab = x, ylab = y)
+points(expected, wam.jaccard(N, n, K, expected))
+
+plot(1:K, wam.loglikelihood(N, n, K, 1:K), type="l", main="Loglikelihood", xlab = x, ylab = y)
+points(expected, wam.loglikelihood(N, n, K, expected))
+
+plot(1:K, wam.z(N, n, K, 1:K), type="l", main="Z", xlab = x, ylab = y)
+points(expected, wam.z(N, n, K, expected))
+
+plot(1:K, wam.t(N, n, K, 1:K), type="l", main="T", xlab = x, ylab = y)
+points(expected, wam.t(N, n, K, expected))
+
+plot(1:K, wam.chisq(N, n, K, 1:K), type="l", main="Chi square", xlab = x, ylab = y)
+points(expected, wam.chisq(N, n, K, expected))
+
+plot(1:K, wam.fisher(N, n, K, 1:K), type="l", main="Fisher", xlab = x, ylab = y)
+points(expected, wam.fisher(N, n, K, expected))
+
+par(op)
+@
 
 % ................................................................
 \subsection{Log-likelihood}
@@ -196,12 +286,17 @@ See Dunning 1993.
 
 <<wam_loglikelihood, echo=TRUE, fig=FALSE>>=
 wam.loglikelihood(N, n, K, k);
+expected <- round(K * n / N)
 wam.loglikelihood(N, n, K, expected);
 @
 
 Graph of the function :
 
 <<wam_loglikelihood_graph, echo=TRUE, fig=TRUE>>=
+maxk <- min(K,n)
+maxk
+allk <- 0:maxk
+
 plot(wam.loglikelihood(N, n, K, allk),
      type="l", xlab="k", ylab="Log likelihood",
 	  main="Graph of the Log likelihood function",
@@ -443,6 +538,8 @@ legend("right",legend=c("k","expected"), pch=c("+","x"), cex=0.75)
 % ................................................................
 \label{sec:t}
 
+See Church et al. 1991.
+
 <<wam_t, echo=TRUE, fig=FALSE>>=
 wam.t(N, n, K, k);
 wam.t(N, n, K, mode);
@@ -546,14 +643,20 @@ print(wam.res, from=1, to=10, parts="D4");
 
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
-\section{Bibliographie}
+\section{Bibliography}
 % ----------------------------------------------------------------
 % ----------------------------------------------------------------
+Kenneth Ward Church, Patrick Hanks (1990) "Word Association Norms,
+Mutual Information, and Lexicography" \emph{Computational Linguistics},
+16/1, pages 22-29.
+\url{http://www.aclweb.org/anthology/P89-1010.pdf}
 
 Chaudhari, D. L., Damani, O. P. \& Laxman, S. 2011. "Lexical co-occurrence, statistical significance, and word association". In: Conference on Empirical Methods in Natural Language Processing (Edinburgh, Scotland, UK, July 27-31).
 pp. 1058-68
 
 \url{http://www.aclweb.org/anthology-new/D/D11/D11-1098.pdf}
+
+Church K., Gale W., Hanks P., Hindle D. 1991. "Using Statistics in Lexical Analysis", In: Zernik U. (ed.) Lexical Acquisition: Exploiting on-line resources to build a lexicon. Hillsdale NJ: Lawrence Erlbaum, pp. 115-164.
 
 Dunning, T. 1993. "Accurate methods for the statistics of surprise and coincidence." In: Computational Linguistics. 19(1). Pp 61--74.
 
@@ -565,9 +668,11 @@ Kilgarriff, A. 1996. "Which words are particularly characteristic of a text? A s
 
 \url{http://www.cse.iitb.ac.in/~shwetaghonge/prec_recall.pdf}
 
-Lafon P. 1980. "Sur la variabilité de la fréquence des formes dans un corpus". \emph{Mots}, 1, 1980, 127--165.
+Lafon P. 1980. "Sur la variabilit? de la fr?quence des formes dans un corpus". \emph{Mots}, 1, 1980, 127--165.
 
 \url{http://www.persee.fr/web/revues/home/prescript/article/mots_0243-6450_1980_num_1_1_1008}.
+
+Stefanowitsch A. \& Gries St. Th. 2003 "Collostructions: Investigating the interaction of words and constructions", \emph{International Journal of Corpus Linguistics}, 8/2, 209-234.
 
 \printindex
 
