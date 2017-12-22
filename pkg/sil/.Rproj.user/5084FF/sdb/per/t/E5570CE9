@@ -1,0 +1,22 @@
+{
+    "contents" : "",
+    "created" : 1427740401648.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E5570CE9",
+    "lastKnownWriteTime" : 4298825984,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "caption" : "pair",
+        "contentUrl" : "content?title=pair&file=45fe4c91bf154f28bd1f63bcfac6a5ed.htm",
+        "displayedObservations" : 439,
+        "displayedVariables" : 2,
+        "totalObservations" : 439,
+        "variables" : 1
+    },
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

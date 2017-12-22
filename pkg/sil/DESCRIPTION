@@ -1,0 +1,9 @@
+Package: sil
+Type: Package
+Title: Reading and help for analyzing SIL Toolbox's file format
+Version: 1.0
+Date: 2015-03-18
+Author: Sylvain Loiseau
+Maintainer: Sylvain Loiseau <sylvain.loiseau@univ-paris13.fr>
+Description: Reader corpus and text corpora from Toolbox file format and provide some fonction for computing basic distributional statistics and printing concordance.
+License: BSD Licence

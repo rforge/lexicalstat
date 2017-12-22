@@ -1,0 +1,17 @@
+{
+    "contents" : "library(HTMLUtils)\n\n#phonem.inventory\n#phonem.frequency\n\n# il faudrait segmenter en mot plutôt qu'en phrase, ce que je ne peux pas faire :\n# pas de marque de la segmentation de mots dans la ligne mb.\n.make.morphem.ngram <- function(corpus) {\n   corpus <- lapply(corpus, function(x) {x[\"mb\"]});\n   corpus <- lapply(corpus, function(x) {c(\"#\", x[[\"mb\"]], \"#\")});\n\n   ngram <- .make.ngram(corpus);\n   id <- unlist(sapply(ngram, sapply, `[`, 2))\n\n   ngram <- unlist(lapply(ngram, sapply, paste, collapse=\"-\"))\n   ngram <- split(ngram, f=id)\n   ngram <- lapply(ngram, table)\n   return(ngram)\n}\n\n.make.ngram <- function(l) {\n  ngram <- lapply(l,  function(x){\n    if (length(x) < 3) return(list())\n    r <- lapply(1:(length(x)-2), function(y) x[y:(y+2)])\n    #r <- list()\n    #for (i in 1:(length(x)-2)) {\n    #  r[[i]] <- x[i:(i+2)]\n    #}\n    return(r)\n  });\n  return(ngram)\n}\n.make.phonem.ngram <- function(dictionary) {\n  entry <- read.dictionary('/Users/sylvainloiseau/Recherche/Terrain/Corpus/Transcriptions/Toolbox/Dictionary.txt')\nlex <- sapply(entry, function(x) x[\"lx\"])\nnames(entry) <- lex\n\n#is.noun <- sapply(entry, function(x) grepl(x=x[\"ps\"],  pattern=\"^n\" ))\n\nlex_and_pos <- lapply(entry, function(x) x[c(\"lx\", \"ps\")]);\nlex_and_pos <- t(as.data.frame(lex_and_pos))\n#is.noun <- grepl(x=lex_and_pos[, \"ps\"],  pattern=\"^n\")\nis.noun <- TRUE\n\nnoun <- lex_and_pos[is.noun ,1]\nnoun <- paste(\"#\", noun, sep=\"\")\nnoun <- paste(noun, \"#\", sep=\"\")\nnoun <- strsplit(noun, split=\"\")\n\nngram <- .make.ngram(noun);\n\nngram.v <- unlist(lapply(ngram, sapply, paste, collapse=\"\"))\nphonem <- substr(ngram.v, start=2, stop=2)\nngram.p <- split(ngram.v, f=phonem)\nngram.p.t <- lapply(ngram.p, table)\nreturn(ngram.p.t)\n}\n\n.make.table <- function(ngram.table) {\n  f <- \"out_mngram.html\";\ncat(\"<html>\", file=f, append=FALSE)\nnames <- names(ngram.table)\nfor (i in 1:(length(ngram.table))) {\n  HTML(paste(\"<h1>/\", names[i], \"/</h1>\"), file=f);\n  t <- ngram.table[[i]];\n  m <- as.matrix(t);\n  m <- m[order(m[,1], decreasing=T),, drop=F]\n  HTML(m, file=f)\n}\ncat(\"</html>\", file=f, append=TRUE)\n\n}\n\n#c <- readLines('/Users/sylvainloiseau/Recherche/Terrain/Corpus/Transcriptions/Toolbox/Texts/2014.VI.txt')\n#sapply(c, strsplit, split=\"\\\\W+\")\n\n.make.minimal.pair <- function(dictionary) {\n  ## paire minimale\nnames(lex) <- lex\nx <- adist(lex, count=T)\ncn <- colnames(x)\nrn <- rownames(x)\nr <- row(x)\nc <- col(x)\ndf <- data.frame(lex1=rn[as.vector(r)],\n                 lex2=cn[as.vector(c)],\n                 dist=as.vector(x),\n                 ins=as.vector((attr(x,\"counts\"))[,,\"ins\"]),\n                 del=as.vector((attr(x,\"counts\"))[,,\"del\"]),\n                 sub=as.vector((attr(x,\"counts\"))[,,\"sub\"])\n)\n\ndf[df[,\"dist\"] == 1 & df[,\"sub\"] == 1,]\n}\n\n",
+    "created" : 1427741860226.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3843660531",
+    "id" : "B97A3D6",
+    "lastKnownWriteTime" : 1427743449,
+    "path" : "~/Recherche/Corpus/workspace/LexicalStat/Current/pkg/sil/R/ngram.R",
+    "project_path" : "R/ngram.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
