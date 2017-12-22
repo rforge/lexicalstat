@@ -5,7 +5,7 @@
 Data for testing word association measures.
 }
 \description{
-The data are presented in Kenneth Ward Church, Patrick Hanks (1990) \textit{Computational Linguistics}, 16/1, pages 22-29.
+The data are presented in Kenneth Ward Church, Patrick Hanks (1990) \emph{Computational Linguistics}, 16/1, pages 22-29.
 }
 \usage{data(ar)}
 \format{
@@ -20,12 +20,12 @@ The data are presented in Kenneth Ward Church, Patrick Hanks (1990) \textit{Comp
   }
 }
 \source{
-Kenneth Ward Church, Patrick Hanks (1990) \textit{Computational Linguistics}, 16/1, pages 22-29.
+Kenneth Ward Church, Patrick Hanks (1990) \emph{Computational Linguistics}, 16/1, pages 22-29.
 }
 \examples{
 data(ar)
 attach(ar)
 wam.ar(N, n, K, k)
-detach(robespierre)
+detach(ar)
 }
 \keyword{datasets}
