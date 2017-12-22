@@ -1,0 +1,5 @@
+N word1 n word2 K k
+15000000 doctor 621 honorary 111 12
+15000000 dentists 44 doctors 1105 8
+15000000 nurses 241 doctors 1105 30
+15000000 treating 154 doctors 1105 8

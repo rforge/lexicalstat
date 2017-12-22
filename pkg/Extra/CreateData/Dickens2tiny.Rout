@@ -1,0 +1,50 @@
+
+R version 2.15.0 (2012-03-30)
+Copyright (C) 2012 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+R est un logiciel libre livré sans AUCUNE GARANTIE.
+Vous pouvez le redistribuer sous certaines conditions.
+Tapez 'license()' ou 'licence()' pour plus de détails.
+
+R est un projet collaboratif avec de nombreux contributeurs.
+Tapez 'contributors()' pour plus d'information et
+'citation()' pour la façon de le citer dans les publications.
+
+Tapez 'demo()' pour des démonstrations, 'help()' pour l'aide
+en ligne ou 'help.start()' pour obtenir l'aide au format HTML.
+Tapez 'q()' pour quitter R.
+
+[Sauvegarde de la session précédente restaurée]
+
+> library(lexicalStat)
+Le chargement a nécessité le package : Matrix
+Le chargement a nécessité le package : lattice
+Le chargement a nécessité le package : XML
+Le chargement a nécessité le package : plyr
+> x <- read.table("Dickens.tab", header=FALSE);
+> colnames(x) <- c("word", "pos", "lemma", "sentence", "np");
+> x$sentence <- as.numeric(as.factor(x$sentence));
+> x$np <- as.numeric(as.factor(x$np));
+> 
+> x$sentence <- as.factor(x$sentence);
+> x$np <- as.factor(x$np);
+> dickensTabulated <- tabulated(as.data.frame(x), c("word", "pos", "lemma"), c("sentence", "np"));
+> save(dickensTabulated, file="dickensTabulated.rda");
+> 
+> t <- sapply(split(x$word, x$sentence), as.character)
+> dickensFullText <- fullText(t);
+> save(dickensFullText, file="dickensFullText.rda");
+> 
+> dickensFrequencyList <- frequencyList(table(x$word));
+> save(dickensFrequencyList, file="dickensFrequencyList.rda");
+> 
+> dickensLexicalTable <- lexicalTable(as.matrix(table(x$word, x$sentence)));
+> save(dickensLexicalTable, file="dickensLexicalTable.rda");
+> 
+> 
+> 
+> proc.time()
+utilisateur     système      écoulé 
+      2.885       0.077       2.963 

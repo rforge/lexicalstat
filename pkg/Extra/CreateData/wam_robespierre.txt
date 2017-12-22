@@ -1,0 +1,13 @@
+library(specif)
+data(rob)
+N <- sum(rob)
+n <- colSums(rob)
+n <- rep(n, times=nrow(rob))
+K <- rowSums(rob)
+K <- rep(K, ncol(rob))
+k <- as.vector(rob)
+
+robespierre <- data.frame(N=N, n=n, K=K, k=k, types=names(K), parts=names(n));
+
+save(robespierre, file="robespierre.rda")
+

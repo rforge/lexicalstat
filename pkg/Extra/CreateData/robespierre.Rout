@@ -1,0 +1,33 @@
+
+R version 2.15.0 (2012-03-30)
+Copyright (C) 2012 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+R est un logiciel libre livré sans AUCUNE GARANTIE.
+Vous pouvez le redistribuer sous certaines conditions.
+Tapez 'license()' ou 'licence()' pour plus de détails.
+
+R est un projet collaboratif avec de nombreux contributeurs.
+Tapez 'contributors()' pour plus d'information et
+'citation()' pour la façon de le citer dans les publications.
+
+Tapez 'demo()' pour des démonstrations, 'help()' pour l'aide
+en ligne ou 'help.start()' pour obtenir l'aide au format HTML.
+Tapez 'q()' pour quitter R.
+
+[Sauvegarde de la session précédente restaurée]
+
+> library(lexicalStat);
+Le chargement a nécessité le package : Matrix
+Le chargement a nécessité le package : lattice
+Le chargement a nécessité le package : XML
+Le chargement a nécessité le package : plyr
+> robespierre <- read.table("robespierre.tab")
+> rownames(robespierre) <- tolower(rownames(robespierre));
+> robespierre <- lexicalTable(robespierre);
+> save(robespierre, file="robespierre.rda");
+> 
+> proc.time()
+utilisateur     système      écoulé 
+      3.156       0.081       3.240 
